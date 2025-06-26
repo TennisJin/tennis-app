@@ -1,0 +1,127 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/booking/booking",
+      "style": {
+        "navigationBarTitleText": "订场"
+      }
+    },
+    {
+      "path": "pages/clubs/clubs",
+      "style": {
+        "navigationBarTitleText": "俱乐部"
+      }
+    },
+    {
+      "path": "pages/profile/profile",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/coaches/coaches",
+      "style": {
+        "navigationBarTitleText": "教练陪练"
+      }
+    },
+    {
+      "path": "pages/activities/activities",
+      "style": {
+        "navigationBarTitleText": "UTR活动"
+      }
+    },
+    {
+      "path": "pages/club-detail/club-detail",
+      "style": {
+        "navigationBarTitleText": "俱乐部详情"
+      }
+    },
+    {
+      "path": "pages/coach-detail/coach-detail",
+      "style": {
+        "navigationBarTitleText": "教练详情"
+      }
+    },
+    {
+      "path": "pages/activity-detail/activity-detail",
+      "style": {
+        "navigationBarTitleText": "活动详情"
+      }
+    },
+    {
+      "path": "pages/my-orders/my-orders",
+      "style": {
+        "navigationBarTitleText": "我的订单"
+      }
+    },
+    {
+      "path": "pages/my-activities/my-activities",
+      "style": {
+        "navigationBarTitleText": "我的活动"
+      }
+    },
+    {
+      "path": "pages/apply-club/apply-club",
+      "style": {
+        "navigationBarTitleText": "申请创建俱乐部"
+      }
+    },
+    {
+      "path": "pages/apply-coach/apply-coach",
+      "style": {
+        "navigationBarTitleText": "申请成为教练"
+      }
+    },
+    {
+      "path": "pages/my-coaches/my-coaches",
+      "style": {
+        "navigationBarTitleText": "我的教练"
+      }
+    },
+    {
+      "path": "pages/my-venues/my-venues",
+      "style": {
+        "navigationBarTitleText": "我的场地"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "网球UTR",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-current.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/clubs/clubs",
+        "iconPath": "static/tab-clubs.png",
+        "selectedIconPath": "static/tab-clubs-current.png",
+        "text": "俱乐部"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "iconPath": "static/tab-profile.png",
+        "selectedIconPath": "static/tab-profile-current.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "uniIdRouter": {}
+}
