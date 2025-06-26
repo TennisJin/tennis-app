@@ -25,7 +25,7 @@
         <view class="menu-item" @click="goToOrders">
           <image
             class="menu-icon"
-            src="@/static/icons/action/icon-order.svg"
+            src="/static/icons/action/icon-order.svg"
             mode="aspectFit"
           ></image>
           <text class="menu-text">订单</text>
@@ -33,7 +33,7 @@
         <view class="menu-item" @click="goToWallet">
           <image
             class="menu-icon"
-            src="@/static/icons/action/icon-wallet.svg"
+            src="/static/icons/action/icon-wallet.svg"
             mode="aspectFit"
           ></image>
           <text class="menu-text">卡包</text>
@@ -46,7 +46,7 @@
       <view class="list-item" @click="goToMyActivities">
         <image
           class="item-icon"
-          src="@/static/icons/action/icon-activity.svg"
+          src="/static/icons/action/icon-activity.svg"
           mode="aspectFit"
         ></image>
         <text class="item-text">我的活动</text>
@@ -56,7 +56,7 @@
       <view class="list-item" @click="goToMatchRecords">
         <image
           class="item-icon"
-          src="@/static/icons/action/icon-match.svg"
+          src="/static/icons/action/icon-match.svg"
           mode="aspectFit"
         ></image>
         <text class="item-text">比赛记录</text>
@@ -66,7 +66,7 @@
       <view class="list-item" @click="goToApplyClub">
         <image
           class="item-icon"
-          src="@/static/icons/action/icon-club.svg"
+          src="/static/icons/action/icon-club.svg"
           mode="aspectFit"
         ></image>
         <text class="item-text">申请创建俱乐部</text>
@@ -76,7 +76,7 @@
       <view class="list-item" @click="goToApplyCoach">
         <image
           class="item-icon"
-          src="@/static/icons/action/icon-coach.svg"
+          src="/static/icons/action/icon-coach.svg"
           mode="aspectFit"
         ></image>
         <text class="item-text">申请成为教练或陪练</text>
@@ -86,7 +86,7 @@
       <view class="list-item" @click="goToHelp">
         <image
           class="item-icon"
-          src="@/static/icons/action/icon-help.svg"
+          src="/static/icons/action/icon-help.svg"
           mode="aspectFit"
         ></image>
         <text class="item-text">帮助&反馈</text>

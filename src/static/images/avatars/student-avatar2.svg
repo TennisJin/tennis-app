@@ -1,0 +1,11 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="#f6ffed"/>
+  <!-- Head -->
+  <circle cx="60" cy="44" r="16" fill="#237804"/>
+  <!-- Body -->
+  <path d="M20 100v-8c0-12 8-20 20-20h40c12 0 20 8 20 20v8" fill="#237804"/>
+  <!-- Graduation cap symbol -->
+  <path d="M45 30h30l-5 8H50l-5-8z" fill="#52c41a"/>
+  <circle cx="70" cy="34" r="2" fill="#52c41a"/>
+</svg>
