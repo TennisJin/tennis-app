@@ -174,7 +174,7 @@ function loadBookingList() {
         coach: {
           id: 1,
           name: "张教练",
-          avatar: "/static/images/coach1.jpg",
+          avatar: "/static/images/avatars/coach1.jpg",
           level: "PTR认证教练",
           phone: "13800138001",
         },
@@ -190,7 +190,7 @@ function loadBookingList() {
         coach: {
           id: 2,
           name: "李教练",
-          avatar: "/static/images/coach2.jpg",
+          avatar: "/static/images/avatars/coach2.jpg",
           level: "ITF认证教练",
           phone: "13800138002",
         },

@@ -35,7 +35,7 @@
       <view class="venue-address">
         <image
           class="address-icon"
-          src="/static/icon-location.png"
+          src="/static/icons/status/icon-location.png"
           mode="aspectFit"
         ></image>
         <text class="address-text">{{ venue.address }}</text>
@@ -367,10 +367,10 @@ function loadVenueDetail(id: number) {
       reviewCount: 256,
       tags: ["室内场地", "有顶棚", "停车方便", "设施完善"],
       images: [
-        "/static/venue1.jpg",
-        "/static/venue2.jpg",
-        "/static/venue3.jpg",
-        "/static/venue4.jpg",
+        "/static/images/venues/venue1.jpg",
+        "/static/images/venues/venue2.jpg",
+        "/static/images/venues/venue3.jpg",
+        "/static/images/venues/venue4.jpg",
       ],
       courts: [
         {
@@ -399,20 +399,20 @@ function loadVenueDetail(id: number) {
         },
       ],
       facilities: [
-        { name: "停车场", icon: "/static/facility-parking.png" },
-        { name: "更衣室", icon: "/static/facility-locker.png" },
-        { name: "淋浴间", icon: "/static/facility-shower.png" },
-        { name: "休息区", icon: "/static/facility-rest.png" },
-        { name: "WiFi", icon: "/static/facility-wifi.png" },
-        { name: "饮水机", icon: "/static/facility-water.png" },
-        { name: "商店", icon: "/static/facility-shop.png" },
-        { name: "教练服务", icon: "/static/facility-coach.png" },
+        { name: "停车场", icon: "/static/icons/status/facility-parking.png" },
+        { name: "更衣室", icon: "/static/icons/status/facility-locker.png" },
+        { name: "淋浴间", icon: "/static/icons/status/facility-shower.png" },
+        { name: "休息区", icon: "/static/icons/status/facility-rest.png" },
+        { name: "WiFi", icon: "/static/icons/status/facility-wifi.png" },
+        { name: "饮水机", icon: "/static/icons/status/facility-water.png" },
+        { name: "商店", icon: "/static/icons/status/facility-shop.png" },
+        { name: "教练服务", icon: "/static/images/venues/facility-coach.png" },
       ],
       reviews: [
         {
           id: 1,
           name: "张三",
-          avatar: "/static/avatar1.png",
+          avatar: "/static/images/avatars/avatar1.png",
           rating: 5,
           date: "2024-06-20",
           content: "场地很不错，设施齐全，停车也方便。教练很专业，下次还会来。",
@@ -420,7 +420,7 @@ function loadVenueDetail(id: number) {
         {
           id: 2,
           name: "李四",
-          avatar: "/static/avatar2.png",
+          avatar: "/static/images/avatars/avatar2.png",
           rating: 4,
           date: "2024-06-18",
           content: "环境很好，场地维护得很好，就是价格稍微贵了一点。",
@@ -428,7 +428,7 @@ function loadVenueDetail(id: number) {
         {
           id: 3,
           name: "王五",
-          avatar: "/static/avatar3.png",
+          avatar: "/static/images/avatars/avatar3.png",
           rating: 5,
           date: "2024-06-15",
           content: "非常满意！场地质量高，服务态度好，强烈推荐！",

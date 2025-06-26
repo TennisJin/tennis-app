@@ -1,0 +1,7 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="200" fill="#fff3e0"/>
+<rect x="50" y="50" width="200" height="100" rx="10" fill="#ff9800" opacity="0.3"/>
+<circle cx="150" cy="100" r="30" fill="#ff9800" opacity="0.7"/>
+<path d="M120 85h60v30h-60z" fill="#ffffff" opacity="0.8"/>
+<text x="150" y="170" text-anchor="middle" fill="#ff9800" font-family="Arial, sans-serif" font-size="14">俱乐部照片3</text>
+</svg>

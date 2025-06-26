@@ -89,7 +89,10 @@
                 mode="aspectFill"
               ></image>
               <view class="play-icon">
-                <image src="/static/icon-play.png" mode="aspectFit"></image>
+                <image
+                  src="/static/icons/action/icon-play.png"
+                  mode="aspectFit"
+                ></image>
               </view>
             </view>
             <text class="video-title">{{ video.title }}</text>

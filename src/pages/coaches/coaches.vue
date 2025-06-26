@@ -123,7 +123,7 @@
     <view class="empty-state" v-else-if="!loading">
       <image
         class="empty-icon"
-        src="/static/empty-coach.png"
+        src="/static/placeholders/empty-coach.png"
         mode="aspectFit"
       ></image>
       <text class="empty-text">暂无教练信息</text>
@@ -232,7 +232,7 @@ function loadCoachList() {
       {
         id: 1,
         name: "白影",
-        avatar: "/static/coach1.png",
+        avatar: "/static/images/coaches/coach1.png",
         gender: "male",
         level: "专业教练",
         experience: 8,
@@ -245,13 +245,13 @@ function loadCoachList() {
             id: 1,
             title: "正手击球技巧",
             url: "/static/video1.mp4",
-            thumbnail: "/static/video1-thumb.jpg",
+            thumbnail: "/static/images/videos/video1-thumb.jpg",
           },
           {
             id: 2,
             title: "发球动作要领",
             url: "/static/video2.mp4",
-            thumbnail: "/static/video2-thumb.jpg",
+            thumbnail: "/static/images/videos/video2-thumb.jpg",
           },
         ],
         rating: 4.8,
@@ -262,7 +262,7 @@ function loadCoachList() {
       {
         id: 2,
         name: "小罗",
-        avatar: "/static/coach2.png",
+        avatar: "/static/images/coaches/coach2.png",
         gender: "male",
         level: "高级教练",
         experience: 6,
@@ -275,7 +275,7 @@ function loadCoachList() {
             id: 3,
             title: "底线对拉技巧",
             url: "/static/video3.mp4",
-            thumbnail: "/static/video3-thumb.jpg",
+            thumbnail: "/static/images/videos/video3-thumb.jpg",
           },
         ],
         rating: 4.6,
@@ -286,7 +286,7 @@ function loadCoachList() {
       {
         id: 3,
         name: "陈小明",
-        avatar: "/static/coach3.png",
+        avatar: "/static/images/coaches/coach3.png",
         gender: "male",
         level: "陪练",
         experience: 3,
@@ -302,7 +302,7 @@ function loadCoachList() {
       {
         id: 4,
         name: "李美娜",
-        avatar: "/static/coach4.png",
+        avatar: "/static/images/coaches/coach4.jpg",
         gender: "female",
         level: "专业教练",
         experience: 5,
@@ -315,7 +315,7 @@ function loadCoachList() {
             id: 4,
             title: "女子网球技巧",
             url: "/static/video4.mp4",
-            thumbnail: "/static/video4-thumb.jpg",
+            thumbnail: "/static/images/videos/video4-thumb.jpg",
           },
         ],
         rating: 4.7,
@@ -326,7 +326,7 @@ function loadCoachList() {
       {
         id: 5,
         name: "王强",
-        avatar: "/static/coach5.png",
+        avatar: "/static/images/coaches/coach5.jpg",
         gender: "male",
         level: "高级陪练",
         experience: 4,

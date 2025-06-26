@@ -83,7 +83,7 @@
     <view class="empty-state" v-else-if="!loading">
       <image
         class="empty-icon"
-        src="/static/empty-venue.png"
+        src="/static/placeholders/empty-venue.png"
         mode="aspectFit"
       ></image>
       <text class="empty-text">暂无场馆信息</text>
@@ -174,7 +174,7 @@ function loadVenueList() {
       {
         id: 1,
         name: "黄龙体育中心",
-        image: "/static/venue1.jpg",
+        image: "/static/images/venues/venue1.jpg",
         address: "西湖区 黄龙 室内 硬地",
         courtType: "室内硬地",
         priceRange: "120-200/小时",
@@ -186,7 +186,7 @@ function loadVenueList() {
       {
         id: 2,
         name: "GS网球俱乐部（浙报店）",
-        image: "/static/venue2.jpg",
+        image: "/static/images/venues/venue2.jpg",
         address: "拱墅区 浙报印务 室内 硬地",
         courtType: "室内硬地",
         priceRange: "100-150/小时",
@@ -198,7 +198,7 @@ function loadVenueList() {
       {
         id: 3,
         name: "城北体育公园-网球中心",
-        image: "/static/venue3.jpg",
+        image: "/static/images/venues/venue3.jpg",
         address: "拱墅区 室内 硬地",
         courtType: "室内硬地",
         priceRange: "80-120/小时",
@@ -210,7 +210,7 @@ function loadVenueList() {
       {
         id: 4,
         name: "西湖网球俱乐部",
-        image: "/static/venue4.jpg",
+        image: "/static/images/venues/venue4.jpg",
         address: "余杭区 西湖 室外 硬地",
         courtType: "室外硬地",
         priceRange: "60-100/小时",
@@ -222,7 +222,7 @@ function loadVenueList() {
       {
         id: 5,
         name: "平击网球俱乐部",
-        image: "/static/venue5.jpg",
+        image: "/static/images/venues/venue5.jpg",
         address: "余杭区 五常 室内 硬地",
         courtType: "室内硬地",
         priceRange: "90-140/小时",

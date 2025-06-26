@@ -39,7 +39,7 @@
         <view class="club-location">
           <image
             class="location-icon"
-            src="/static/icon-location.png"
+            src="/static/icons/status/icon-location.png"
             mode="aspectFit"
           ></image>
           <text class="location-text">{{ club.address }}</text>
@@ -93,7 +93,7 @@
           <view class="contact-item">
             <image
               class="contact-icon"
-              src="/static/icon-phone.png"
+              src="/static/icons/action/icon-phone.png"
               mode="aspectFit"
             ></image>
             <text class="contact-text">{{ club.phone }}</text>
@@ -101,7 +101,7 @@
           <view class="contact-item" v-if="club.email">
             <image
               class="contact-icon"
-              src="/static/icon-email.png"
+              src="/static/icons/action/icon-email.png"
               mode="aspectFit"
             ></image>
             <text class="contact-text">{{ club.email }}</text>
@@ -129,7 +129,7 @@
               <view class="info-item">
                 <image
                   class="info-icon"
-                  src="/static/icon-time.png"
+                  src="/static/icons/status/icon-time.png"
                   mode="aspectFit"
                 ></image>
                 <text class="info-text">{{ activity.time }}</text>
@@ -145,7 +145,7 @@
               <view class="info-item">
                 <image
                   class="info-icon"
-                  src="/static/icon-utr.png"
+                  src="/static/icons/status/icon-utr.png"
                   mode="aspectFit"
                 ></image>
                 <text class="info-text">UTR {{ activity.utrRange }}</text>
@@ -166,7 +166,7 @@
         <view class="empty-state" v-if="club.activities.length === 0">
           <image
             class="empty-icon"
-            src="/static/empty-activity.png"
+            src="/static/placeholders/empty-activity.png"
             mode="aspectFit"
           ></image>
           <text class="empty-text">暂无活动</text>
@@ -214,7 +214,7 @@
         <view class="empty-state" v-if="club.photos.length === 0">
           <image
             class="empty-icon"
-            src="/static/empty-photo.png"
+            src="/static/placeholders/empty-photo.png"
             mode="aspectFit"
           ></image>
           <text class="empty-text">暂无照片</text>
@@ -340,8 +340,8 @@ function loadClubDetail(id: number) {
     club.value = {
       id: id,
       name: "杭州网球俱乐部",
-      logo: "/static/club-logo1.png",
-      coverImage: "/static/club-cover1.jpg",
+      logo: "/static/images/clubs/club-logo1.png",
+      coverImage: "/static/images/clubs/club-cover1.jpg",
       address: "杭州市西湖区文三路123号",
       memberCount: 156,
       activityCount: 28,
@@ -350,14 +350,20 @@ function loadClubDetail(id: number) {
       introduction:
         "杭州网球俱乐部成立于2015年，是杭州地区最具影响力的网球俱乐部之一。俱乐部拥有8片标准网球场地，包括4片硬地场和4片红土场，配备专业的灯光系统和完善的配套设施。我们致力于为网球爱好者提供专业的训练指导、丰富的比赛活动和良好的社交平台。",
       facilities: [
-        { name: "硬地场", icon: "/static/facility-hardcourt.png" },
-        { name: "红土场", icon: "/static/facility-claycourt.png" },
-        { name: "更衣室", icon: "/static/facility-locker.png" },
-        { name: "淋浴间", icon: "/static/facility-shower.png" },
-        { name: "休息区", icon: "/static/facility-rest.png" },
-        { name: "停车场", icon: "/static/facility-parking.png" },
-        { name: "商店", icon: "/static/facility-shop.png" },
-        { name: "餐厅", icon: "/static/facility-restaurant.png" },
+        {
+          name: "硬地场",
+          icon: "/static/images/venues/facility-hardcourt.png",
+        },
+        {
+          name: "红土场",
+          icon: "/static/images/venues/facility-claycourt.png",
+        },
+        { name: "更衣室", icon: "/static/icons/status/facility-locker.png" },
+        { name: "淋浴间", icon: "/static/icons/status/facility-shower.png" },
+        { name: "休息区", icon: "/static/icons/status/facility-rest.png" },
+        { name: "停车场", icon: "/static/icons/status/facility-parking.png" },
+        { name: "商店", icon: "/static/icons/status/facility-shop.png" },
+        { name: "餐厅", icon: "/static/icons/status/facility-restaurant.png" },
       ],
       phone: "0571-88888888",
       email: "info@hztennisclub.com",
@@ -400,7 +406,7 @@ function loadClubDetail(id: number) {
         {
           id: 1,
           name: "张会长",
-          avatar: "/static/member-avatar1.png",
+          avatar: "/static/images/avatars/member-avatar1.png",
           role: "俱乐部会长",
           utr: 7.2,
           level: "advanced",
@@ -408,7 +414,7 @@ function loadClubDetail(id: number) {
         {
           id: 2,
           name: "李教练",
-          avatar: "/static/member-avatar2.png",
+          avatar: "/static/images/avatars/member-avatar2.png",
           role: "主教练",
           utr: 8.5,
           level: "advanced",
@@ -416,7 +422,7 @@ function loadClubDetail(id: number) {
         {
           id: 3,
           name: "王秘书",
-          avatar: "/static/member-avatar3.png",
+          avatar: "/static/images/avatars/member-avatar3.png",
           role: "秘书长",
           utr: 5.8,
           level: "intermediate",
@@ -424,7 +430,7 @@ function loadClubDetail(id: number) {
         {
           id: 4,
           name: "刘同学",
-          avatar: "/static/member-avatar4.png",
+          avatar: "/static/images/avatars/member-avatar4.png",
           role: "普通会员",
           utr: 3.2,
           level: "intermediate",
@@ -432,21 +438,21 @@ function loadClubDetail(id: number) {
         {
           id: 5,
           name: "陈同学",
-          avatar: "/static/member-avatar5.png",
+          avatar: "/static/images/avatars/member-avatar5.png",
           role: "普通会员",
           utr: 2.5,
           level: "beginner",
         },
       ],
       photos: [
-        "/static/club-photo1.jpg",
-        "/static/club-photo2.jpg",
-        "/static/club-photo3.jpg",
-        "/static/club-photo4.jpg",
-        "/static/club-photo5.jpg",
-        "/static/club-photo6.jpg",
-        "/static/club-photo7.jpg",
-        "/static/club-photo8.jpg",
+        "/static/images/clubs/club-photo1.jpg",
+        "/static/images/clubs/club-photo2.jpg",
+        "/static/images/clubs/club-photo3.jpg",
+        "/static/images/clubs/club-photo4.jpg",
+        "/static/images/clubs/club-photo5.jpg",
+        "/static/images/clubs/club-photo6.jpg",
+        "/static/images/clubs/club-photo7.jpg",
+        "/static/images/clubs/club-photo8.jpg",
       ],
       latitude: 30.2741,
       longitude: 120.1551,

@@ -105,20 +105,20 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/tab-home.png",
-        "selectedIconPath": "static/tab-home-current.png",
+        "iconPath": "static/icons/tab/tab-home.svg",
+        "selectedIconPath": "static/icons/tab/tab-home-current.svg",
         "text": "首页"
       },
       {
         "pagePath": "pages/clubs/clubs",
-        "iconPath": "static/tab-clubs.png",
-        "selectedIconPath": "static/tab-clubs-current.png",
+        "iconPath": "static/icons/tab/tab-clubs.svg",
+        "selectedIconPath": "static/icons/tab/tab-clubs-current.svg",
         "text": "俱乐部"
       },
       {
         "pagePath": "pages/profile/profile",
-        "iconPath": "static/tab-profile.png",
-        "selectedIconPath": "static/tab-profile-current.png",
+        "iconPath": "static/icons/tab/tab-profile.svg",
+        "selectedIconPath": "static/icons/tab/tab-profile-current.svg",
         "text": "我的"
       }
     ]

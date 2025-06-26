@@ -18,7 +18,7 @@
       <view class="action-item" @click="goToBooking">
         <image
           class="action-icon"
-          src="/static/icon-booking.png"
+          src="/static/icons/action/icon-booking.svg"
           mode="aspectFit"
         ></image>
         <text class="action-text">订场</text>
@@ -26,7 +26,7 @@
       <view class="action-item" @click="goToCoaches">
         <image
           class="action-icon"
-          src="/static/icon-coach.png"
+          src="/static/icons/action/icon-coach.svg"
           mode="aspectFit"
         ></image>
         <text class="action-text">找教练</text>
@@ -34,7 +34,7 @@
       <view class="action-item" @click="goToActivities">
         <image
           class="action-icon"
-          src="/static/icon-activity.png"
+          src="/static/icons/action/icon-activity.svg"
           mode="aspectFit"
         ></image>
         <text class="action-text">UTR活动</text>
@@ -42,7 +42,7 @@
       <view class="action-item" @click="goToClubs">
         <image
           class="action-icon"
-          src="/static/icon-club.png"
+          src="/static/icons/action/icon-club.svg"
           mode="aspectFit"
         ></image>
         <text class="action-text">俱乐部</text>
@@ -168,7 +168,7 @@ function loadCoachList() {
     {
       id: 1,
       name: "白影",
-      avatar: "/static/coach1.png",
+      avatar: "/static/images/coaches/coach1.png",
       level: "教练",
       specialty: "陪练",
       utr: "4.5",
@@ -176,7 +176,7 @@ function loadCoachList() {
     {
       id: 2,
       name: "小罗",
-      avatar: "/static/coach2.png",
+      avatar: "/static/images/coaches/coach2.png",
       level: "教练",
       specialty: "陪练",
       utr: "5.2",
@@ -184,7 +184,7 @@ function loadCoachList() {
     {
       id: 3,
       name: "陈小明",
-      avatar: "/static/coach3.png",
+      avatar: "/static/images/coaches/coach3.png",
       level: "陪练",
       specialty: "基础",
       utr: "3.8",

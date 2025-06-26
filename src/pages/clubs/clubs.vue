@@ -75,8 +75,6 @@
         </view>
       </view>
     </view>
-
-
   </view>
 </template>
 
@@ -136,7 +134,7 @@ function loadMyClubs() {
     {
       id: 1,
       name: "律动网球俱乐部",
-      logo: "/static/club1.png",
+      logo: "/static/images/venues/club1.png",
       location: "余杭区 良渚 室外 硬地",
       tags: ["室外", "硬地"],
       memberCount: 127,
@@ -145,7 +143,7 @@ function loadMyClubs() {
     {
       id: 2,
       name: "阿蓝网球俱乐部",
-      logo: "/static/club2.png",
+      logo: "/static/images/venues/club2.png",
       location: "拱墅区 良渚 室内 硬地",
       tags: ["室内", "硬地"],
       memberCount: 128,
@@ -161,7 +159,7 @@ function loadRecommendClubs() {
     {
       id: 3,
       name: "溪上网球",
-      logo: "/static/club3.png",
+      logo: "/static/images/venues/club3.png",
       location: "拱墅区 拱墅 室外 硬地",
       tags: ["室外", "硬地"],
       memberCount: 127,
@@ -170,7 +168,7 @@ function loadRecommendClubs() {
     {
       id: 4,
       name: "黄龙体育中心",
-      logo: "/static/club4.png",
+      logo: "/static/images/venues/club4.png",
       location: "西湖区 黄龙 室内 硬地",
       tags: ["室内", "硬地"],
       memberCount: 100,
@@ -179,7 +177,7 @@ function loadRecommendClubs() {
     {
       id: 5,
       name: "GS网球俱乐部（浙报店）",
-      logo: "/static/club5.png",
+      logo: "/static/images/venues/club5.png",
       location: "拱墅区 浙报印务 室内 硬地",
       tags: ["室内", "硬地"],
       memberCount: 41,
@@ -188,7 +186,7 @@ function loadRecommendClubs() {
     {
       id: 6,
       name: "城北体育公园-网球中心",
-      logo: "/static/club6.png",
+      logo: "/static/images/venues/club6.png",
       location: "拱墅区 室内 硬地",
       tags: ["室内", "硬地"],
       memberCount: 194,
@@ -394,8 +392,6 @@ function goToClubDetail(id: number) {
   font-size: 28rpx;
   color: #666666;
 }
-
-
 
 .city-option {
   display: flex;

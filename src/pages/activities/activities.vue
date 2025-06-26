@@ -56,7 +56,7 @@
             <view class="info-item">
               <image
                 class="info-icon"
-                src="/static/icon-time.png"
+                src="/static/icons/status/icon-time.png"
                 mode="aspectFit"
               ></image>
               <text class="info-text">{{ activity.time }}</text>
@@ -67,7 +67,7 @@
             <view class="info-item">
               <image
                 class="info-icon"
-                src="/static/icon-location.png"
+                src="/static/icons/status/icon-location.png"
                 mode="aspectFit"
               ></image>
               <text class="info-text">{{ activity.location }}</text>
@@ -78,7 +78,7 @@
             <view class="info-item">
               <image
                 class="info-icon"
-                src="/static/icon-utr.png"
+                src="/static/icons/status/icon-utr.png"
                 mode="aspectFit"
               ></image>
               <text class="info-text">UTR {{ activity.utrRange }}</text>
@@ -89,7 +89,7 @@
             <view class="info-item">
               <image
                 class="info-icon"
-                src="/static/icon-age.png"
+                src="/static/icons/status/icon-age.png"
                 mode="aspectFit"
               ></image>
               <text class="info-text">{{ activity.ageRange }}</text>
@@ -100,7 +100,7 @@
             <view class="info-item">
               <image
                 class="info-icon"
-                src="/static/icon-gender.png"
+                src="/static/icons/status/icon-gender.png"
                 mode="aspectFit"
               ></image>
               <text class="info-text">{{ activity.gender }}</text>
@@ -145,7 +145,7 @@
     <view class="empty-state" v-else-if="!loading">
       <image
         class="empty-icon"
-        src="/static/empty-activity.png"
+        src="/static/placeholders/empty-activity.png"
         mode="aspectFit"
       ></image>
       <text class="empty-text">暂无活动信息</text>

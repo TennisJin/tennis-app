@@ -1,0 +1,7 @@
+<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="200" height="120" fill="#f0f8e8"/>
+<rect x="20" y="20" width="160" height="80" rx="8" fill="#e8f0e0" stroke="#7ed321" stroke-width="2"/>
+<circle cx="100" cy="60" r="20" fill="#7ed321"/>
+<polygon points="90,50 90,70 110,60" fill="#ffffff"/>
+<text x="100" y="95" text-anchor="middle" fill="#666666" font-family="Arial, sans-serif" font-size="12">视频缩略图3</text>
+</svg>

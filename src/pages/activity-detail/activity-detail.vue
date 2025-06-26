@@ -29,7 +29,7 @@
         <view class="detail-item">
           <image
             class="detail-icon"
-            src="/static/icon-time.png"
+            src="/static/icons/status/icon-time.png"
             mode="aspectFit"
           ></image>
           <view class="detail-content">
@@ -41,7 +41,7 @@
         <view class="detail-item">
           <image
             class="detail-icon"
-            src="/static/icon-location.png"
+            src="/static/icons/status/icon-location.png"
             mode="aspectFit"
           ></image>
           <view class="detail-content">
@@ -54,7 +54,7 @@
         <view class="detail-item">
           <image
             class="detail-icon"
-            src="/static/icon-utr.png"
+            src="/static/icons/status/icon-utr.png"
             mode="aspectFit"
           ></image>
           <view class="detail-content">
@@ -66,7 +66,7 @@
         <view class="detail-item" v-if="activity.ageRange">
           <image
             class="detail-icon"
-            src="/static/icon-age.png"
+            src="/static/icons/status/icon-age.png"
             mode="aspectFit"
           ></image>
           <view class="detail-content">
@@ -78,7 +78,7 @@
         <view class="detail-item" v-if="activity.gender">
           <image
             class="detail-icon"
-            src="/static/icon-gender.png"
+            src="/static/icons/status/icon-gender.png"
             mode="aspectFit"
           ></image>
           <view class="detail-content">
@@ -276,7 +276,7 @@ function loadActivityDetail(id: number) {
       organizer: {
         name: "蒙马体育",
         phone: "400-123-4567",
-        avatar: "/static/organizer-avatar.png",
+        avatar: "/static/images/avatars/organizer-avatar.png",
       },
       venue: {
         name: "城东体育网球训练中心",
@@ -290,35 +290,35 @@ function loadActivityDetail(id: number) {
       {
         id: 1,
         name: "张三",
-        avatar: "/static/avatar1.png",
+        avatar: "/static/images/avatars/avatar1.png",
         utr: 3.2,
         level: "intermediate",
       },
       {
         id: 2,
         name: "李四",
-        avatar: "/static/avatar2.png",
+        avatar: "/static/images/avatars/avatar2.png",
         utr: 2.8,
         level: "intermediate",
       },
       {
         id: 3,
         name: "王五",
-        avatar: "/static/avatar3.png",
+        avatar: "/static/images/avatars/avatar3.png",
         utr: 3.5,
         level: "intermediate",
       },
       {
         id: 4,
         name: "赵六",
-        avatar: "/static/avatar4.png",
+        avatar: "/static/images/avatars/avatar4.png",
         utr: 2.5,
         level: "beginner",
       },
       {
         id: 5,
         name: "钱七",
-        avatar: "/static/avatar5.png",
+        avatar: "/static/images/avatars/avatar5.png",
         utr: 3.8,
         level: "advanced",
       },
@@ -381,7 +381,7 @@ function joinActivity() {
         participantsList.value.push({
           id: Date.now(),
           name: "我",
-          avatar: "/static/my-avatar.png",
+          avatar: "/static/images/avatars/my-avatar.png",
           utr: 3.0,
           level: "intermediate",
         });
