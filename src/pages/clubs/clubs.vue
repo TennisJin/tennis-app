@@ -2,9 +2,21 @@
   <view class="page-container">
     <!-- 城市筛选 -->
     <view class="city-filter">
-      <view class="current-city" @click="showCityPicker">
+      <view class="current-city" @click="toggleCityPicker">
         <text class="city-name">{{ currentCity }}</text>
-        <text class="city-arrow">▼</text>
+        <text class="city-arrow" :class="{ rotated: showCityList }">▼</text>
+      </view>
+      <!-- 城市选择下拉列表 -->
+      <view class="city-dropdown" v-if="showCityList">
+        <view
+          class="city-option"
+          v-for="city in cityList"
+          :key="city.code"
+          @click="selectCity(city)"
+        >
+          <text class="city-text">{{ city.name }}</text>
+          <text class="city-check" v-if="city.name === currentCity">✓</text>
+        </view>
       </view>
     </view>
 
@@ -64,26 +76,7 @@
       </view>
     </view>
 
-    <!-- 城市选择弹窗 -->
-    <uni-popup ref="cityPopup" type="bottom">
-      <view class="city-picker">
-        <view class="picker-header">
-          <text class="picker-title">选择城市</text>
-          <text class="picker-close" @click="closeCityPicker">×</text>
-        </view>
-        <view class="city-list">
-          <view
-            class="city-option"
-            v-for="city in cityList"
-            :key="city.code"
-            @click="selectCity(city)"
-          >
-            <text class="city-text">{{ city.name }}</text>
-            <text class="city-check" v-if="city.name === currentCity">✓</text>
-          </view>
-        </view>
-      </view>
-    </uni-popup>
+
   </view>
 </template>
 
@@ -110,7 +103,7 @@ const currentCity = ref("杭州");
 const myClubs = ref<Club[]>([]);
 const recommendClubs = ref<Club[]>([]);
 const cityList = ref<City[]>([]);
-const cityPopup = ref();
+const showCityList = ref(false);
 
 // 页面加载时获取数据
 onMounted(() => {
@@ -263,20 +256,15 @@ function loadCityList() {
   ];
 }
 
-// 显示城市选择器
-function showCityPicker() {
-  cityPopup.value.open();
-}
-
-// 关闭城市选择器
-function closeCityPicker() {
-  cityPopup.value.close();
+// 切换城市选择器显示状态
+function toggleCityPicker() {
+  showCityList.value = !showCityList.value;
 }
 
 // 选择城市
 function selectCity(city: City) {
   currentCity.value = city.name;
-  closeCityPicker();
+  showCityList.value = false;
   // 重新加载俱乐部数据
   loadRecommendClubs();
   uni.showToast({
@@ -298,26 +286,46 @@ function goToClubDetail(id: number) {
   background-color: #ffffff;
   padding: 20rpx;
   margin-bottom: 20rpx;
+  position: relative;
 }
 
 .current-city {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  padding: 16rpx;
-  background-color: #f5f5f5;
-  border-radius: 32rpx;
+  padding: 20rpx;
+  background-color: #f8f8f8;
+  border-radius: 16rpx;
+  cursor: pointer;
 }
 
 .city-name {
   font-size: 32rpx;
   color: #333333;
-  margin-right: 8rpx;
+  font-weight: 500;
 }
 
 .city-arrow {
   font-size: 24rpx;
   color: #666666;
+  transition: transform 0.3s ease;
+}
+
+.city-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.city-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 20rpx;
+  right: 20rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 400rpx;
+  overflow-y: auto;
 }
 
 .section {
@@ -387,46 +395,32 @@ function goToClubDetail(id: number) {
   color: #666666;
 }
 
-/* 城市选择弹窗样式 */
-.city-picker {
-  background-color: #ffffff;
-  border-radius: 32rpx 32rpx 0 0;
-  max-height: 80vh;
-}
 
-.picker-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.picker-title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333333;
-}
-
-.picker-close {
-  font-size: 48rpx;
-  color: #999999;
-}
-
-.city-list {
-  max-height: 60vh;
-  overflow-y: auto;
-}
 
 .city-option {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 32rpx;
+  padding: 24rpx 32rpx;
   border-bottom: 1rpx solid #f0f0f0;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.city-option:hover {
+  background-color: #f8f8f8;
 }
 
 .city-option:last-child {
+  border-bottom: none;
+}
+
+.city-option:first-child {
+  border-radius: 16rpx 16rpx 0 0;
+}
+
+.city-option:last-child {
+  border-radius: 0 0 16rpx 16rpx;
   border-bottom: none;
 }
 
