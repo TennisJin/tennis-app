@@ -1,0 +1,161 @@
+
+.page-container[data-v-60610dea] {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+.status-tabs[data-v-60610dea] {
+  display: flex;
+  background-color: #ffffff;
+  padding: 0 0.625rem;
+  border-bottom: 0.03125rem solid #e5e5e5;
+}
+.tab-item[data-v-60610dea] {
+  flex: 1;
+  text-align: center;
+  padding: 0.9375rem 0;
+  font-size: 0.875rem;
+  color: #666666;
+  position: relative;
+}
+.tab-item.active[data-v-60610dea] {
+  color: #07c160;
+  font-weight: bold;
+}
+.tab-item.active[data-v-60610dea]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.875rem;
+  height: 0.125rem;
+  background-color: #07c160;
+  border-radius: 0.0625rem;
+}
+.booking-list[data-v-60610dea] {
+  padding: 0.625rem;
+}
+.booking-item[data-v-60610dea] {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
+}
+.booking-header[data-v-60610dea] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.coach-info[data-v-60610dea] {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.coach-avatar[data-v-60610dea] {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  margin-right: 0.625rem;
+}
+.coach-details[data-v-60610dea] {
+  flex: 1;
+}
+.coach-name[data-v-60610dea] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.coach-level[data-v-60610dea] {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.booking-status[data-v-60610dea] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.625rem;
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+.booking-status.pending[data-v-60610dea] {
+  background-color: #ff9500;
+}
+.booking-status.confirmed[data-v-60610dea] {
+  background-color: #07c160;
+}
+.booking-status.completed[data-v-60610dea] {
+  background-color: #576b95;
+}
+.booking-status.cancelled[data-v-60610dea] {
+  background-color: #fa5151;
+}
+.booking-info[data-v-60610dea] {
+  margin-bottom: 0.625rem;
+}
+.info-row[data-v-60610dea] {
+  display: flex;
+  margin-bottom: 0.375rem;
+}
+.info-label[data-v-60610dea] {
+  font-size: 0.875rem;
+  color: #666666;
+  width: 3.125rem;
+}
+.info-value[data-v-60610dea] {
+  font-size: 0.875rem;
+  color: #333333;
+  flex: 1;
+}
+.info-value.price[data-v-60610dea] {
+  color: #ff6b35;
+  font-weight: bold;
+}
+.booking-actions[data-v-60610dea] {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+.action-btn[data-v-60610dea] {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  border: 0.03125rem solid #e5e5e5;
+  background-color: #ffffff;
+  color: #333333;
+}
+.action-btn.primary[data-v-60610dea] {
+  background-color: #07c160;
+  color: #ffffff;
+  border-color: #07c160;
+}
+.empty-state[data-v-60610dea] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6.25rem 1.25rem;
+  text-align: center;
+}
+.empty-text[data-v-60610dea] {
+  font-size: 1rem;
+  color: #999999;
+  margin-bottom: 0.5rem;
+}
+.empty-tip[data-v-60610dea] {
+  font-size: 0.875rem;
+  color: #cccccc;
+  margin-bottom: 1.25rem;
+}
+.go-coaches-btn[data-v-60610dea] {
+  padding: 0.625rem 1.25rem;
+  background-color: #07c160;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  border: none;
+}
+.card[data-v-60610dea] {
+  box-shadow: 0 0.0625rem 0.375rem rgba(0, 0, 0, 0.1);
+}

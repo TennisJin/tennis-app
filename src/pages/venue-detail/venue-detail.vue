@@ -1,7 +1,13 @@
 <template>
   <view class="page-container">
     <!-- 场馆图片轮播 -->
-    <swiper class="venue-swiper" indicator-dots="true" autoplay="true" interval="3000" duration="500">
+    <swiper
+      class="venue-swiper"
+      indicator-dots="true"
+      autoplay="true"
+      interval="3000"
+      duration="500"
+    >
       <swiper-item v-for="(image, index) in venue.images" :key="index">
         <image class="swiper-image" :src="image" mode="aspectFill"></image>
       </swiper-item>
@@ -14,18 +20,28 @@
         <view class="venue-rating">
           <text class="rating-score">{{ venue.rating }}</text>
           <view class="rating-stars">
-            <text class="star" v-for="n in 5" :key="n" :class="{ filled: n <= Math.floor(venue.rating) }">★</text>
+            <text
+              class="star"
+              v-for="n in 5"
+              :key="n"
+              :class="{ filled: n <= Math.floor(venue.rating) }"
+              >★</text
+            >
           </view>
           <text class="rating-count">({{ venue.reviewCount }}条评价)</text>
         </view>
       </view>
-      
+
       <view class="venue-address">
-        <image class="address-icon" src="/static/icon-location.png" mode="aspectFit"></image>
+        <image
+          class="address-icon"
+          src="/static/icon-location.png"
+          mode="aspectFit"
+        ></image>
         <text class="address-text">{{ venue.address }}</text>
         <text class="distance-text">{{ venue.distance }}</text>
       </view>
-      
+
       <view class="venue-tags">
         <text class="tag" v-for="tag in venue.tags" :key="tag">{{ tag }}</text>
       </view>
@@ -34,11 +50,11 @@
     <!-- 场地类型和价格 -->
     <view class="courts-section card">
       <view class="section-title">场地信息</view>
-      
+
       <view class="court-list">
-        <view 
-          class="court-item" 
-          v-for="court in venue.courts" 
+        <view
+          class="court-item"
+          v-for="court in venue.courts"
           :key="court.id"
           @click="selectCourt(court)"
           :class="{ selected: selectedCourt?.id === court.id }"
@@ -47,10 +63,15 @@
             <text class="court-name">{{ court.name }}</text>
             <text class="court-type">{{ court.type }}</text>
             <view class="court-features">
-              <text class="feature" v-for="feature in court.features" :key="feature">{{ feature }}</text>
+              <text
+                class="feature"
+                v-for="feature in court.features"
+                :key="feature"
+                >{{ feature }}</text
+              >
             </view>
           </view>
-          
+
           <view class="court-pricing">
             <view class="price-item">
               <text class="price-label">白天</text>
@@ -68,14 +89,14 @@
     <!-- 时间选择 -->
     <view class="time-section card" v-if="selectedCourt">
       <view class="section-title">选择时间</view>
-      
+
       <!-- 日期选择 -->
       <view class="date-selector">
         <scroll-view class="date-scroll" scroll-x="true">
           <view class="date-list">
-            <view 
-              class="date-item" 
-              v-for="date in availableDates" 
+            <view
+              class="date-item"
+              v-for="date in availableDates"
               :key="date.value"
               @click="selectDate(date.value)"
               :class="{ selected: selectedDate === date.value }"
@@ -86,43 +107,49 @@
           </view>
         </scroll-view>
       </view>
-      
+
       <!-- 时间段选择 -->
       <view class="time-slots" v-if="selectedDate">
         <view class="time-period">
           <text class="period-title">白天时段 (06:00-18:00)</text>
           <view class="slots-grid">
-            <view 
-              class="time-slot" 
-              v-for="slot in dayTimeSlots" 
+            <view
+              class="time-slot"
+              v-for="slot in dayTimeSlots"
               :key="slot.time"
               @click="toggleTimeSlot(slot)"
-              :class="{ 
+              :class="{
                 selected: selectedTimeSlots.includes(slot.time),
-                disabled: slot.status === 'booked' || slot.status === 'unavailable'
+                disabled:
+                  slot.status === 'booked' || slot.status === 'unavailable',
               }"
             >
               <text class="slot-time">{{ slot.time }}</text>
-              <text class="slot-status">{{ getSlotStatusText(slot.status) }}</text>
+              <text class="slot-status">{{
+                getSlotStatusText(slot.status)
+              }}</text>
             </view>
           </view>
         </view>
-        
+
         <view class="time-period">
           <text class="period-title">夜间时段 (18:00-23:00)</text>
           <view class="slots-grid">
-            <view 
-              class="time-slot" 
-              v-for="slot in nightTimeSlots" 
+            <view
+              class="time-slot"
+              v-for="slot in nightTimeSlots"
               :key="slot.time"
               @click="toggleTimeSlot(slot)"
-              :class="{ 
+              :class="{
                 selected: selectedTimeSlots.includes(slot.time),
-                disabled: slot.status === 'booked' || slot.status === 'unavailable'
+                disabled:
+                  slot.status === 'booked' || slot.status === 'unavailable',
               }"
             >
               <text class="slot-time">{{ slot.time }}</text>
-              <text class="slot-status">{{ getSlotStatusText(slot.status) }}</text>
+              <text class="slot-status">{{
+                getSlotStatusText(slot.status)
+              }}</text>
             </view>
           </view>
         </view>
@@ -132,10 +159,18 @@
     <!-- 场馆设施 -->
     <view class="facilities-section card">
       <view class="section-title">场馆设施</view>
-      
+
       <view class="facilities-grid">
-        <view class="facility-item" v-for="facility in venue.facilities" :key="facility.name">
-          <image class="facility-icon" :src="facility.icon" mode="aspectFit"></image>
+        <view
+          class="facility-item"
+          v-for="facility in venue.facilities"
+          :key="facility.name"
+        >
+          <image
+            class="facility-icon"
+            :src="facility.icon"
+            mode="aspectFit"
+          ></image>
           <text class="facility-name">{{ facility.name }}</text>
         </view>
       </view>
@@ -147,15 +182,29 @@
         <text class="section-title">用户评价</text>
         <text class="more-reviews" @click="viewAllReviews">查看全部</text>
       </view>
-      
+
       <view class="review-list">
-        <view class="review-item" v-for="review in venue.reviews.slice(0, 3)" :key="review.id">
+        <view
+          class="review-item"
+          v-for="review in venue.reviews.slice(0, 3)"
+          :key="review.id"
+        >
           <view class="review-header">
-            <image class="reviewer-avatar" :src="review.avatar" mode="aspectFill"></image>
+            <image
+              class="reviewer-avatar"
+              :src="review.avatar"
+              mode="aspectFill"
+            ></image>
             <view class="reviewer-info">
               <text class="reviewer-name">{{ review.name }}</text>
               <view class="review-rating">
-                <text class="star" v-for="n in 5" :key="n" :class="{ filled: n <= review.rating }">★</text>
+                <text
+                  class="star"
+                  v-for="n in 5"
+                  :key="n"
+                  :class="{ filled: n <= review.rating }"
+                  >★</text
+                >
               </view>
             </view>
             <text class="review-date">{{ review.date }}</text>
@@ -167,18 +216,25 @@
 
     <!-- 底部操作栏 -->
     <view class="bottom-actions">
-      <view class="booking-summary" v-if="selectedCourt && selectedTimeSlots.length > 0">
+      <view
+        class="booking-summary"
+        v-if="selectedCourt && selectedTimeSlots.length > 0"
+      >
         <text class="summary-text">
-          {{ selectedCourt.name }} · {{ selectedTimeSlots.length }}小时 · ¥{{ totalPrice }}
+          {{ selectedCourt.name }} · {{ selectedTimeSlots.length }}小时 · ¥{{
+            totalPrice
+          }}
         </text>
       </view>
       <view class="action-buttons">
         <button class="contact-btn" @click="contactVenue">联系场馆</button>
-        <button 
-          class="book-btn" 
+        <button
+          class="book-btn"
           @click="bookCourt"
           :disabled="!selectedCourt || selectedTimeSlots.length === 0"
-          :class="{ disabled: !selectedCourt || selectedTimeSlots.length === 0 }"
+          :class="{
+            disabled: !selectedCourt || selectedTimeSlots.length === 0,
+          }"
         >
           立即预订
         </button>
@@ -188,64 +244,64 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from "vue";
 
 interface Venue {
-  id: number
-  name: string
-  address: string
-  distance: string
-  rating: number
-  reviewCount: number
-  tags: string[]
-  images: string[]
-  courts: Court[]
-  facilities: Facility[]
-  reviews: Review[]
-  phone: string
+  id: number;
+  name: string;
+  address: string;
+  distance: string;
+  rating: number;
+  reviewCount: number;
+  tags: string[];
+  images: string[];
+  courts: Court[];
+  facilities: Facility[];
+  reviews: Review[];
+  phone: string;
 }
 
 interface Court {
-  id: number
-  name: string
-  type: string
-  features: string[]
-  dayPrice: number
-  nightPrice: number
+  id: number;
+  name: string;
+  type: string;
+  features: string[];
+  dayPrice: number;
+  nightPrice: number;
 }
 
 interface Facility {
-  name: string
-  icon: string
+  name: string;
+  icon: string;
 }
 
 interface Review {
-  id: number
-  name: string
-  avatar: string
-  rating: number
-  date: string
-  content: string
+  id: number;
+  name: string;
+  avatar: string;
+  rating: number;
+  date: string;
+  content: string;
 }
 
 interface TimeSlot {
-  time: string
-  status: 'available' | 'booked' | 'unavailable'
-  price: number
+  time: string;
+  status: "available" | "booked" | "unavailable";
+  price: number;
 }
 
 interface DateOption {
-  value: string
-  day: string
-  date: string
+  value: string;
+  day: string;
+  date: string;
 }
 
 // 响应式数据
 const venue = ref<Venue>({
   id: 0,
-  name: '',
-  address: '',
-  distance: '',
+  name: "",
+  address: "",
+  distance: "",
   rating: 0,
   reviewCount: 0,
   tags: [],
@@ -253,283 +309,285 @@ const venue = ref<Venue>({
   courts: [],
   facilities: [],
   reviews: [],
-  phone: ''
-})
+  phone: "",
+});
 
-const selectedCourt = ref<Court | null>(null)
-const selectedDate = ref('')
-const selectedTimeSlots = ref<string[]>([])
-const availableDates = ref<DateOption[]>([])
-const dayTimeSlots = ref<TimeSlot[]>([])
-const nightTimeSlots = ref<TimeSlot[]>([])
-const loading = ref(false)
+const selectedCourt = ref<Court | null>(null);
+const selectedDate = ref("");
+const selectedTimeSlots = ref<string[]>([]);
+const availableDates = ref<DateOption[]>([]);
+const dayTimeSlots = ref<TimeSlot[]>([]);
+const nightTimeSlots = ref<TimeSlot[]>([]);
+const loading = ref(false);
 
 // 计算总价格
 const totalPrice = computed(() => {
   if (!selectedCourt.value || selectedTimeSlots.value.length === 0) {
-    return 0
+    return 0;
   }
-  
-  let total = 0
-  selectedTimeSlots.value.forEach(time => {
-    const hour = parseInt(time.split(':')[0])
+
+  let total = 0;
+  selectedTimeSlots.value.forEach((time) => {
+    const hour = parseInt(time.split(":")[0]);
     if (hour >= 6 && hour < 18) {
-      total += selectedCourt.value!.dayPrice
+      total += selectedCourt.value!.dayPrice;
     } else {
-      total += selectedCourt.value!.nightPrice
+      total += selectedCourt.value!.nightPrice;
     }
-  })
-  
-  return total
-})
+  });
+
+  return total;
+});
 
 // 页面加载
 onMounted(() => {
-  const pages = getCurrentPages()
-  const currentPage = pages[pages.length - 1]
-  const options = currentPage.options
-  
+  const pages = getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  const options = currentPage.options;
+
   if (options.id) {
-    loadVenueDetail(parseInt(options.id))
+    loadVenueDetail(parseInt(options.id));
   }
-  
-  generateAvailableDates()
-})
+
+  generateAvailableDates();
+});
 
 // 加载场馆详情
 function loadVenueDetail(id: number) {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     venue.value = {
       id: id,
-      name: '城东体育网球训练中心',
-      address: '杭州市江干区城东路123号',
-      distance: '17.0km',
+      name: "城东体育网球训练中心",
+      address: "杭州市江干区城东路123号",
+      distance: "17.0km",
       rating: 4.8,
       reviewCount: 256,
-      tags: ['室内场地', '有顶棚', '停车方便', '设施完善'],
+      tags: ["室内场地", "有顶棚", "停车方便", "设施完善"],
       images: [
-        '/static/venue1.jpg',
-        '/static/venue2.jpg',
-        '/static/venue3.jpg',
-        '/static/venue4.jpg'
+        "/static/venue1.jpg",
+        "/static/venue2.jpg",
+        "/static/venue3.jpg",
+        "/static/venue4.jpg",
       ],
       courts: [
         {
           id: 1,
-          name: '1号场地',
-          type: '硬地场',
-          features: ['有顶棚', '灯光充足', '场地平整'],
+          name: "1号场地",
+          type: "硬地场",
+          features: ["有顶棚", "灯光充足", "场地平整"],
           dayPrice: 80,
-          nightPrice: 120
+          nightPrice: 120,
         },
         {
           id: 2,
-          name: '2号场地',
-          type: '硬地场',
-          features: ['有顶棚', '灯光充足', '场地平整'],
+          name: "2号场地",
+          type: "硬地场",
+          features: ["有顶棚", "灯光充足", "场地平整"],
           dayPrice: 80,
-          nightPrice: 120
+          nightPrice: 120,
         },
         {
           id: 3,
-          name: '3号场地',
-          type: '红土场',
-          features: ['室外', '天然红土', '专业级'],
+          name: "3号场地",
+          type: "红土场",
+          features: ["室外", "天然红土", "专业级"],
           dayPrice: 100,
-          nightPrice: 150
-        }
+          nightPrice: 150,
+        },
       ],
       facilities: [
-        { name: '停车场', icon: '/static/facility-parking.png' },
-        { name: '更衣室', icon: '/static/facility-locker.png' },
-        { name: '淋浴间', icon: '/static/facility-shower.png' },
-        { name: '休息区', icon: '/static/facility-rest.png' },
-        { name: 'WiFi', icon: '/static/facility-wifi.png' },
-        { name: '饮水机', icon: '/static/facility-water.png' },
-        { name: '商店', icon: '/static/facility-shop.png' },
-        { name: '教练服务', icon: '/static/facility-coach.png' }
+        { name: "停车场", icon: "/static/facility-parking.png" },
+        { name: "更衣室", icon: "/static/facility-locker.png" },
+        { name: "淋浴间", icon: "/static/facility-shower.png" },
+        { name: "休息区", icon: "/static/facility-rest.png" },
+        { name: "WiFi", icon: "/static/facility-wifi.png" },
+        { name: "饮水机", icon: "/static/facility-water.png" },
+        { name: "商店", icon: "/static/facility-shop.png" },
+        { name: "教练服务", icon: "/static/facility-coach.png" },
       ],
       reviews: [
         {
           id: 1,
-          name: '张三',
-          avatar: '/static/avatar1.png',
+          name: "张三",
+          avatar: "/static/avatar1.png",
           rating: 5,
-          date: '2024-06-20',
-          content: '场地很不错，设施齐全，停车也方便。教练很专业，下次还会来。'
+          date: "2024-06-20",
+          content: "场地很不错，设施齐全，停车也方便。教练很专业，下次还会来。",
         },
         {
           id: 2,
-          name: '李四',
-          avatar: '/static/avatar2.png',
+          name: "李四",
+          avatar: "/static/avatar2.png",
           rating: 4,
-          date: '2024-06-18',
-          content: '环境很好，场地维护得很好，就是价格稍微贵了一点。'
+          date: "2024-06-18",
+          content: "环境很好，场地维护得很好，就是价格稍微贵了一点。",
         },
         {
           id: 3,
-          name: '王五',
-          avatar: '/static/avatar3.png',
+          name: "王五",
+          avatar: "/static/avatar3.png",
           rating: 5,
-          date: '2024-06-15',
-          content: '非常满意！场地质量高，服务态度好，强烈推荐！'
-        }
+          date: "2024-06-15",
+          content: "非常满意！场地质量高，服务态度好，强烈推荐！",
+        },
       ],
-      phone: '0571-12345678'
-    }
-    
-    loading.value = false
-  }, 1000)
+      phone: "0571-12345678",
+    };
+
+    loading.value = false;
+  }, 1000);
 }
 
 // 生成可选日期
 function generateAvailableDates() {
-  const dates: DateOption[] = []
-  const today = new Date()
-  
+  const dates: DateOption[] = [];
+  const today = new Date();
+
   for (let i = 0; i < 7; i++) {
-    const date = new Date(today)
-    date.setDate(today.getDate() + i)
-    
-    const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-    const day = i === 0 ? '今天' : i === 1 ? '明天' : dayNames[date.getDay()]
-    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`
-    const value = date.toISOString().split('T')[0]
-    
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const day = i === 0 ? "今天" : i === 1 ? "明天" : dayNames[date.getDay()];
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
+    const value = date.toISOString().split("T")[0];
+
     dates.push({
       value,
       day,
-      date: dateStr
-    })
+      date: dateStr,
+    });
   }
-  
-  availableDates.value = dates
+
+  availableDates.value = dates;
 }
 
 // 生成时间段
 function generateTimeSlots(date: string) {
   // 白天时段 6:00-18:00
-  const daySlots: TimeSlot[] = []
+  const daySlots: TimeSlot[] = [];
   for (let hour = 6; hour < 18; hour++) {
-    const time = `${hour.toString().padStart(2, '0')}:00`
+    const time = `${hour.toString().padStart(2, "0")}:00`;
     daySlots.push({
       time,
-      status: Math.random() > 0.3 ? 'available' : 'booked',
-      price: selectedCourt.value?.dayPrice || 80
-    })
+      status: Math.random() > 0.3 ? "available" : "booked",
+      price: selectedCourt.value?.dayPrice || 80,
+    });
   }
-  
+
   // 夜间时段 18:00-23:00
-  const nightSlots: TimeSlot[] = []
+  const nightSlots: TimeSlot[] = [];
   for (let hour = 18; hour < 23; hour++) {
-    const time = `${hour.toString().padStart(2, '0')}:00`
+    const time = `${hour.toString().padStart(2, "0")}:00`;
     nightSlots.push({
       time,
-      status: Math.random() > 0.4 ? 'available' : 'booked',
-      price: selectedCourt.value?.nightPrice || 120
-    })
+      status: Math.random() > 0.4 ? "available" : "booked",
+      price: selectedCourt.value?.nightPrice || 120,
+    });
   }
-  
-  dayTimeSlots.value = daySlots
-  nightTimeSlots.value = nightSlots
+
+  dayTimeSlots.value = daySlots;
+  nightTimeSlots.value = nightSlots;
 }
 
 // 选择场地
 function selectCourt(court: Court) {
-  selectedCourt.value = court
-  selectedTimeSlots.value = []
-  
+  selectedCourt.value = court;
+  selectedTimeSlots.value = [];
+
   if (selectedDate.value) {
-    generateTimeSlots(selectedDate.value)
+    generateTimeSlots(selectedDate.value);
   }
 }
 
 // 选择日期
 function selectDate(date: string) {
-  selectedDate.value = date
-  selectedTimeSlots.value = []
-  
+  selectedDate.value = date;
+  selectedTimeSlots.value = [];
+
   if (selectedCourt.value) {
-    generateTimeSlots(date)
+    generateTimeSlots(date);
   }
 }
 
 // 切换时间段选择
 function toggleTimeSlot(slot: TimeSlot) {
-  if (slot.status !== 'available') {
-    return
+  if (slot.status !== "available") {
+    return;
   }
-  
-  const index = selectedTimeSlots.value.indexOf(slot.time)
+
+  const index = selectedTimeSlots.value.indexOf(slot.time);
   if (index > -1) {
-    selectedTimeSlots.value.splice(index, 1)
+    selectedTimeSlots.value.splice(index, 1);
   } else {
-    selectedTimeSlots.value.push(slot.time)
+    selectedTimeSlots.value.push(slot.time);
   }
-  
+
   // 排序时间段
-  selectedTimeSlots.value.sort()
+  selectedTimeSlots.value.sort();
 }
 
 // 获取时间段状态文本
 function getSlotStatusText(status: string) {
   const statusMap = {
-    'available': '可预订',
-    'booked': '已预订',
-    'unavailable': '不可用'
-  }
-  return statusMap[status] || ''
+    available: "可预订",
+    booked: "已预订",
+    unavailable: "不可用",
+  };
+  return statusMap[status] || "";
 }
 
 // 预订场地
 function bookCourt() {
   if (!selectedCourt.value || selectedTimeSlots.value.length === 0) {
     uni.showToast({
-      title: '请选择场地和时间',
-      icon: 'none'
-    })
-    return
+      title: "请选择场地和时间",
+      icon: "none",
+    });
+    return;
   }
-  
+
   const bookingInfo = {
     venue: venue.value.name,
     court: selectedCourt.value.name,
     date: selectedDate.value,
     timeSlots: selectedTimeSlots.value,
-    totalPrice: totalPrice.value
-  }
-  
+    totalPrice: totalPrice.value,
+  };
+
   uni.navigateTo({
-    url: `/pages/booking-confirm/booking-confirm?data=${encodeURIComponent(JSON.stringify(bookingInfo))}`
-  })
+    url: `/pages/booking-confirm/booking-confirm?data=${encodeURIComponent(
+      JSON.stringify(bookingInfo)
+    )}`,
+  });
 }
 
 // 联系场馆
 function contactVenue() {
   uni.showActionSheet({
-    itemList: ['拨打电话', '发送消息'],
+    itemList: ["拨打电话", "发送消息"],
     success: (res) => {
       if (res.tapIndex === 0) {
         uni.makePhoneCall({
-          phoneNumber: venue.value.phone
-        })
+          phoneNumber: venue.value.phone,
+        });
       } else if (res.tapIndex === 1) {
         uni.navigateTo({
-          url: '/pages/customer-service/customer-service'
-        })
+          url: "/pages/customer-service/customer-service",
+        });
       }
-    }
-  })
+    },
+  });
 }
 
 // 查看所有评价
 function viewAllReviews() {
   uni.navigateTo({
-    url: `/pages/venue-reviews/venue-reviews?id=${venue.value.id}`
-  })
+    url: `/pages/venue-reviews/venue-reviews?id=${venue.value.id}`,
+  });
 }
 </script>
 

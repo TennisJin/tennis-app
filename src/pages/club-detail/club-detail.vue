@@ -3,8 +3,12 @@
     <!-- 俱乐部头部信息 -->
     <view class="club-header">
       <!-- 俱乐部封面图 -->
-      <image class="club-cover" :src="club.coverImage" mode="aspectFill"></image>
-      
+      <image
+        class="club-cover"
+        :src="club.coverImage"
+        mode="aspectFill"
+      ></image>
+
       <!-- 俱乐部基本信息 -->
       <view class="club-info card">
         <view class="club-basic">
@@ -27,13 +31,17 @@
             </view>
           </view>
         </view>
-        
+
         <view class="club-tags">
           <text class="tag" v-for="tag in club.tags" :key="tag">{{ tag }}</text>
         </view>
-        
+
         <view class="club-location">
-          <image class="location-icon" src="/static/icon-location.png" mode="aspectFit"></image>
+          <image
+            class="location-icon"
+            src="/static/icon-location.png"
+            mode="aspectFit"
+          ></image>
           <text class="location-text">{{ club.address }}</text>
           <button class="map-btn" @click="openMap">地图</button>
         </view>
@@ -43,9 +51,9 @@
     <!-- 功能导航 -->
     <view class="nav-section card">
       <view class="nav-list">
-        <view 
-          class="nav-item" 
-          v-for="nav in navItems" 
+        <view
+          class="nav-item"
+          v-for="nav in navItems"
           :key="nav.key"
           @click="switchTab(nav.key)"
           :class="{ active: activeTab === nav.key }"
@@ -61,25 +69,41 @@
       <view class="intro-section card" v-if="activeTab === 'intro'">
         <view class="section-title">俱乐部介绍</view>
         <text class="intro-text">{{ club.introduction }}</text>
-        
+
         <view class="facilities" v-if="club.facilities.length > 0">
           <text class="facilities-title">俱乐部设施</text>
           <view class="facilities-grid">
-            <view class="facility-item" v-for="facility in club.facilities" :key="facility.name">
-              <image class="facility-icon" :src="facility.icon" mode="aspectFit"></image>
+            <view
+              class="facility-item"
+              v-for="facility in club.facilities"
+              :key="facility.name"
+            >
+              <image
+                class="facility-icon"
+                :src="facility.icon"
+                mode="aspectFit"
+              ></image>
               <text class="facility-name">{{ facility.name }}</text>
             </view>
           </view>
         </view>
-        
+
         <view class="contact-info">
           <text class="contact-title">联系方式</text>
           <view class="contact-item">
-            <image class="contact-icon" src="/static/icon-phone.png" mode="aspectFit"></image>
+            <image
+              class="contact-icon"
+              src="/static/icon-phone.png"
+              mode="aspectFit"
+            ></image>
             <text class="contact-text">{{ club.phone }}</text>
           </view>
           <view class="contact-item" v-if="club.email">
-            <image class="contact-icon" src="/static/icon-email.png" mode="aspectFit"></image>
+            <image
+              class="contact-icon"
+              src="/static/icon-email.png"
+              mode="aspectFit"
+            ></image>
             <text class="contact-text">{{ club.email }}</text>
           </view>
         </view>
@@ -88,9 +112,9 @@
       <!-- 俱乐部活动 -->
       <view class="activities-section" v-if="activeTab === 'activities'">
         <view class="activity-list">
-          <view 
-            class="activity-item card" 
-            v-for="activity in club.activities" 
+          <view
+            class="activity-item card"
+            v-for="activity in club.activities"
             :key="activity.id"
             @click="goToActivityDetail(activity.id)"
           >
@@ -100,31 +124,51 @@
                 {{ getActivityStatusText(activity.status) }}
               </view>
             </view>
-            
+
             <view class="activity-info">
               <view class="info-item">
-                <image class="info-icon" src="/static/icon-time.png" mode="aspectFit"></image>
+                <image
+                  class="info-icon"
+                  src="/static/icon-time.png"
+                  mode="aspectFit"
+                ></image>
                 <text class="info-text">{{ activity.time }}</text>
               </view>
               <view class="info-item">
-                <image class="info-icon" src="/static/icon-location.png" mode="aspectFit"></image>
+                <image
+                  class="info-icon"
+                  src="/static/icon-location.png"
+                  mode="aspectFit"
+                ></image>
                 <text class="info-text">{{ activity.location }}</text>
               </view>
               <view class="info-item">
-                <image class="info-icon" src="/static/icon-utr.png" mode="aspectFit"></image>
+                <image
+                  class="info-icon"
+                  src="/static/icon-utr.png"
+                  mode="aspectFit"
+                ></image>
                 <text class="info-text">UTR {{ activity.utrRange }}</text>
               </view>
             </view>
-            
+
             <view class="activity-footer">
-              <text class="participants-text">{{ activity.participants }}/{{ activity.maxParticipants }}人</text>
+              <text class="participants-text"
+                >{{ activity.participants }}/{{
+                  activity.maxParticipants
+                }}人</text
+              >
               <text class="price-text">¥{{ activity.price }}</text>
             </view>
           </view>
         </view>
-        
+
         <view class="empty-state" v-if="club.activities.length === 0">
-          <image class="empty-icon" src="/static/empty-activity.png" mode="aspectFit"></image>
+          <image
+            class="empty-icon"
+            src="/static/empty-activity.png"
+            mode="aspectFit"
+          ></image>
           <text class="empty-text">暂无活动</text>
         </view>
       </view>
@@ -132,8 +176,16 @@
       <!-- 俱乐部成员 -->
       <view class="members-section" v-if="activeTab === 'members'">
         <view class="member-list">
-          <view class="member-item" v-for="member in club.members" :key="member.id">
-            <image class="member-avatar" :src="member.avatar" mode="aspectFill"></image>
+          <view
+            class="member-item"
+            v-for="member in club.members"
+            :key="member.id"
+          >
+            <image
+              class="member-avatar"
+              :src="member.avatar"
+              mode="aspectFill"
+            ></image>
             <view class="member-info">
               <text class="member-name">{{ member.name }}</text>
               <text class="member-role">{{ member.role }}</text>
@@ -149,18 +201,22 @@
       <!-- 俱乐部相册 -->
       <view class="photos-section" v-if="activeTab === 'photos'">
         <view class="photos-grid">
-          <view 
-            class="photo-item" 
-            v-for="(photo, index) in club.photos" 
+          <view
+            class="photo-item"
+            v-for="(photo, index) in club.photos"
             :key="index"
             @click="previewPhoto(index)"
           >
             <image class="photo-image" :src="photo" mode="aspectFill"></image>
           </view>
         </view>
-        
+
         <view class="empty-state" v-if="club.photos.length === 0">
-          <image class="empty-icon" src="/static/empty-photo.png" mode="aspectFit"></image>
+          <image
+            class="empty-icon"
+            src="/static/empty-photo.png"
+            mode="aspectFit"
+          ></image>
           <text class="empty-text">暂无照片</text>
         </view>
       </view>
@@ -169,281 +225,278 @@
     <!-- 底部操作栏 -->
     <view class="bottom-actions">
       <button class="contact-btn" @click="contactClub">联系俱乐部</button>
-      <button 
-        class="join-btn" 
-        @click="joinClub"
-        :class="{ joined: isJoined }"
-      >
-        {{ isJoined ? '已加入' : '加入俱乐部' }}
+      <button class="join-btn" @click="joinClub" :class="{ joined: isJoined }">
+        {{ isJoined ? "已加入" : "加入俱乐部" }}
       </button>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 interface Club {
-  id: number
-  name: string
-  logo: string
-  coverImage: string
-  address: string
-  memberCount: number
-  activityCount: number
-  rating: number
-  tags: string[]
-  introduction: string
-  facilities: Facility[]
-  phone: string
-  email?: string
-  activities: Activity[]
-  members: Member[]
-  photos: string[]
-  latitude: number
-  longitude: number
+  id: number;
+  name: string;
+  logo: string;
+  coverImage: string;
+  address: string;
+  memberCount: number;
+  activityCount: number;
+  rating: number;
+  tags: string[];
+  introduction: string;
+  facilities: Facility[];
+  phone: string;
+  email?: string;
+  activities: Activity[];
+  members: Member[];
+  photos: string[];
+  latitude: number;
+  longitude: number;
 }
 
 interface Facility {
-  name: string
-  icon: string
+  name: string;
+  icon: string;
 }
 
 interface Activity {
-  id: number
-  title: string
-  time: string
-  location: string
-  utrRange: string
-  participants: number
-  maxParticipants: number
-  price: number
-  status: 'open' | 'full' | 'closed'
+  id: number;
+  title: string;
+  time: string;
+  location: string;
+  utrRange: string;
+  participants: number;
+  maxParticipants: number;
+  price: number;
+  status: "open" | "full" | "closed";
 }
 
 interface Member {
-  id: number
-  name: string
-  avatar: string
-  role: string
-  utr: number
-  level: 'beginner' | 'intermediate' | 'advanced'
+  id: number;
+  name: string;
+  avatar: string;
+  role: string;
+  utr: number;
+  level: "beginner" | "intermediate" | "advanced";
 }
 
 interface NavItem {
-  key: string
-  label: string
+  key: string;
+  label: string;
 }
 
 // 响应式数据
 const club = ref<Club>({
   id: 0,
-  name: '',
-  logo: '',
-  coverImage: '',
-  address: '',
+  name: "",
+  logo: "",
+  coverImage: "",
+  address: "",
   memberCount: 0,
   activityCount: 0,
   rating: 0,
   tags: [],
-  introduction: '',
+  introduction: "",
   facilities: [],
-  phone: '',
+  phone: "",
   activities: [],
   members: [],
   photos: [],
   latitude: 0,
-  longitude: 0
-})
+  longitude: 0,
+});
 
-const activeTab = ref('intro')
-const isJoined = ref(false)
-const loading = ref(false)
+const activeTab = ref("intro");
+const isJoined = ref(false);
+const loading = ref(false);
 
 // 导航项
 const navItems = ref<NavItem[]>([
-  { key: 'intro', label: '介绍' },
-  { key: 'activities', label: '活动' },
-  { key: 'members', label: '成员' },
-  { key: 'photos', label: '相册' }
-])
+  { key: "intro", label: "介绍" },
+  { key: "activities", label: "活动" },
+  { key: "members", label: "成员" },
+  { key: "photos", label: "相册" },
+]);
 
 // 页面加载
 onMounted(() => {
-  const pages = getCurrentPages()
-  const currentPage = pages[pages.length - 1]
-  const options = currentPage.options
-  
+  const pages = getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  const options = currentPage.options;
+
   if (options.id) {
-    loadClubDetail(parseInt(options.id))
+    loadClubDetail(parseInt(options.id));
   }
-})
+});
 
 // 加载俱乐部详情
 function loadClubDetail(id: number) {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     club.value = {
       id: id,
-      name: '杭州网球俱乐部',
-      logo: '/static/club-logo1.png',
-      coverImage: '/static/club-cover1.jpg',
-      address: '杭州市西湖区文三路123号',
+      name: "杭州网球俱乐部",
+      logo: "/static/club-logo1.png",
+      coverImage: "/static/club-cover1.jpg",
+      address: "杭州市西湖区文三路123号",
       memberCount: 156,
       activityCount: 28,
       rating: 4.8,
-      tags: ['专业训练', '比赛组织', '社交活动', '设施完善'],
-      introduction: '杭州网球俱乐部成立于2015年，是杭州地区最具影响力的网球俱乐部之一。俱乐部拥有8片标准网球场地，包括4片硬地场和4片红土场，配备专业的灯光系统和完善的配套设施。我们致力于为网球爱好者提供专业的训练指导、丰富的比赛活动和良好的社交平台。',
+      tags: ["专业训练", "比赛组织", "社交活动", "设施完善"],
+      introduction:
+        "杭州网球俱乐部成立于2015年，是杭州地区最具影响力的网球俱乐部之一。俱乐部拥有8片标准网球场地，包括4片硬地场和4片红土场，配备专业的灯光系统和完善的配套设施。我们致力于为网球爱好者提供专业的训练指导、丰富的比赛活动和良好的社交平台。",
       facilities: [
-        { name: '硬地场', icon: '/static/facility-hardcourt.png' },
-        { name: '红土场', icon: '/static/facility-claycourt.png' },
-        { name: '更衣室', icon: '/static/facility-locker.png' },
-        { name: '淋浴间', icon: '/static/facility-shower.png' },
-        { name: '休息区', icon: '/static/facility-rest.png' },
-        { name: '停车场', icon: '/static/facility-parking.png' },
-        { name: '商店', icon: '/static/facility-shop.png' },
-        { name: '餐厅', icon: '/static/facility-restaurant.png' }
+        { name: "硬地场", icon: "/static/facility-hardcourt.png" },
+        { name: "红土场", icon: "/static/facility-claycourt.png" },
+        { name: "更衣室", icon: "/static/facility-locker.png" },
+        { name: "淋浴间", icon: "/static/facility-shower.png" },
+        { name: "休息区", icon: "/static/facility-rest.png" },
+        { name: "停车场", icon: "/static/facility-parking.png" },
+        { name: "商店", icon: "/static/facility-shop.png" },
+        { name: "餐厅", icon: "/static/facility-restaurant.png" },
       ],
-      phone: '0571-88888888',
-      email: 'info@hztennisclub.com',
+      phone: "0571-88888888",
+      email: "info@hztennisclub.com",
       activities: [
         {
           id: 1,
-          title: 'UTR网球积分赛3.0',
-          time: '06月26日 周四 09:30',
-          location: '俱乐部1号场地',
-          utrRange: '2-4',
+          title: "UTR网球积分赛3.0",
+          time: "06月26日 周四 09:30",
+          location: "俱乐部1号场地",
+          utrRange: "2-4",
           participants: 5,
           maxParticipants: 8,
           price: 120,
-          status: 'open'
+          status: "open",
         },
         {
           id: 2,
-          title: '周末双打友谊赛',
-          time: '06月29日 周日 14:00',
-          location: '俱乐部2-3号场地',
-          utrRange: '3-6',
+          title: "周末双打友谊赛",
+          time: "06月29日 周日 14:00",
+          location: "俱乐部2-3号场地",
+          utrRange: "3-6",
           participants: 12,
           maxParticipants: 16,
           price: 80,
-          status: 'open'
+          status: "open",
         },
         {
           id: 3,
-          title: '青少年网球训练营',
-          time: '07月01日 周二 16:00',
-          location: '俱乐部4号场地',
-          utrRange: '1-3',
+          title: "青少年网球训练营",
+          time: "07月01日 周二 16:00",
+          location: "俱乐部4号场地",
+          utrRange: "1-3",
           participants: 8,
           maxParticipants: 8,
           price: 150,
-          status: 'full'
-        }
+          status: "full",
+        },
       ],
       members: [
         {
           id: 1,
-          name: '张会长',
-          avatar: '/static/member-avatar1.png',
-          role: '俱乐部会长',
+          name: "张会长",
+          avatar: "/static/member-avatar1.png",
+          role: "俱乐部会长",
           utr: 7.2,
-          level: 'advanced'
+          level: "advanced",
         },
         {
           id: 2,
-          name: '李教练',
-          avatar: '/static/member-avatar2.png',
-          role: '主教练',
+          name: "李教练",
+          avatar: "/static/member-avatar2.png",
+          role: "主教练",
           utr: 8.5,
-          level: 'advanced'
+          level: "advanced",
         },
         {
           id: 3,
-          name: '王秘书',
-          avatar: '/static/member-avatar3.png',
-          role: '秘书长',
+          name: "王秘书",
+          avatar: "/static/member-avatar3.png",
+          role: "秘书长",
           utr: 5.8,
-          level: 'intermediate'
+          level: "intermediate",
         },
         {
           id: 4,
-          name: '刘同学',
-          avatar: '/static/member-avatar4.png',
-          role: '普通会员',
+          name: "刘同学",
+          avatar: "/static/member-avatar4.png",
+          role: "普通会员",
           utr: 3.2,
-          level: 'intermediate'
+          level: "intermediate",
         },
         {
           id: 5,
-          name: '陈同学',
-          avatar: '/static/member-avatar5.png',
-          role: '普通会员',
+          name: "陈同学",
+          avatar: "/static/member-avatar5.png",
+          role: "普通会员",
           utr: 2.5,
-          level: 'beginner'
-        }
+          level: "beginner",
+        },
       ],
       photos: [
-        '/static/club-photo1.jpg',
-        '/static/club-photo2.jpg',
-        '/static/club-photo3.jpg',
-        '/static/club-photo4.jpg',
-        '/static/club-photo5.jpg',
-        '/static/club-photo6.jpg',
-        '/static/club-photo7.jpg',
-        '/static/club-photo8.jpg'
+        "/static/club-photo1.jpg",
+        "/static/club-photo2.jpg",
+        "/static/club-photo3.jpg",
+        "/static/club-photo4.jpg",
+        "/static/club-photo5.jpg",
+        "/static/club-photo6.jpg",
+        "/static/club-photo7.jpg",
+        "/static/club-photo8.jpg",
       ],
       latitude: 30.2741,
-      longitude: 120.1551
-    }
-    
+      longitude: 120.1551,
+    };
+
     // 检查用户是否已加入俱乐部
-    isJoined.value = Math.random() > 0.5
-    
-    loading.value = false
-  }, 1000)
+    isJoined.value = Math.random() > 0.5;
+
+    loading.value = false;
+  }, 1000);
 }
 
 // 切换标签页
 function switchTab(tab: string) {
-  activeTab.value = tab
+  activeTab.value = tab;
 }
 
 // 获取活动状态文本
 function getActivityStatusText(status: string) {
   const statusMap = {
-    'open': '报名中',
-    'full': '已满员',
-    'closed': '已结束'
-  }
-  return statusMap[status] || '未知状态'
+    open: "报名中",
+    full: "已满员",
+    closed: "已结束",
+  };
+  return statusMap[status] || "未知状态";
 }
 
 // 获取水平等级文本
 function getLevelText(level: string) {
   const levelMap = {
-    'beginner': '初级',
-    'intermediate': '中级',
-    'advanced': '高级'
-  }
-  return levelMap[level] || '未知'
+    beginner: "初级",
+    intermediate: "中级",
+    advanced: "高级",
+  };
+  return levelMap[level] || "未知";
 }
 
 // 跳转到活动详情
 function goToActivityDetail(id: number) {
   uni.navigateTo({
-    url: `/pages/activity-detail/activity-detail?id=${id}`
-  })
+    url: `/pages/activity-detail/activity-detail?id=${id}`,
+  });
 }
 
 // 预览照片
 function previewPhoto(index: number) {
   uni.previewImage({
     urls: club.value.photos,
-    current: index
-  })
+    current: index,
+  });
 }
 
 // 打开地图
@@ -452,68 +505,68 @@ function openMap() {
     latitude: club.value.latitude,
     longitude: club.value.longitude,
     name: club.value.name,
-    address: club.value.address
-  })
+    address: club.value.address,
+  });
 }
 
 // 加入俱乐部
 function joinClub() {
   if (isJoined.value) {
     uni.showModal({
-      title: '确认退出',
+      title: "确认退出",
       content: `确认退出「${club.value.name}」？`,
       success: (res) => {
         if (res.confirm) {
-          isJoined.value = false
-          club.value.memberCount--
+          isJoined.value = false;
+          club.value.memberCount--;
           uni.showToast({
-            title: '已退出俱乐部',
-            icon: 'success'
-          })
+            title: "已退出俱乐部",
+            icon: "success",
+          });
         }
-      }
-    })
+      },
+    });
   } else {
     uni.showModal({
-      title: '确认加入',
+      title: "确认加入",
       content: `确认加入「${club.value.name}」？`,
       success: (res) => {
         if (res.confirm) {
-          isJoined.value = true
-          club.value.memberCount++
+          isJoined.value = true;
+          club.value.memberCount++;
           uni.showToast({
-            title: '加入成功',
-            icon: 'success'
-          })
+            title: "加入成功",
+            icon: "success",
+          });
         }
-      }
-    })
+      },
+    });
   }
 }
 
 // 联系俱乐部
 function contactClub() {
   uni.showActionSheet({
-    itemList: ['拨打电话', '发送邮件', '发送消息'],
+    itemList: ["拨打电话", "发送邮件", "发送消息"],
     success: (res) => {
       if (res.tapIndex === 0) {
         uni.makePhoneCall({
-          phoneNumber: club.value.phone
-        })
+          phoneNumber: club.value.phone,
+        });
       } else if (res.tapIndex === 1 && club.value.email) {
         // 发送邮件（实际应用中可能需要调用邮件应用）
         uni.showToast({
           title: `邮箱: ${club.value.email}`,
-          icon: 'none',
-          duration: 3000
-        })
+          icon: "none",
+          duration: 3000,
+        });
       } else if (res.tapIndex === 2) {
         uni.navigateTo({
-          url: '/pages/customer-service/customer-service'
-        })
+          url: "/pages/customer-service/customer-service",
+        });
       }
-    }
-  })
+    },
+  });
 }
 </script>
 
@@ -632,7 +685,7 @@ function contactClub() {
 }
 
 .nav-item.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;

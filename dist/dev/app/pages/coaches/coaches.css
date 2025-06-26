@@ -1,0 +1,226 @@
+
+.search-section[data-v-e75ca479] {
+  background-color: #ffffff;
+  padding: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+.filter-section[data-v-e75ca479] {
+  margin-top: 0.625rem;
+}
+.filter-scroll[data-v-e75ca479] {
+  white-space: nowrap;
+}
+.filter-list[data-v-e75ca479] {
+  display: flex;
+  padding: 0.3125rem 0;
+}
+.filter-item[data-v-e75ca479] {
+  padding: 0.375rem 0.75rem;
+  background-color: #f5f5f5;
+  color: #666666;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}
+.filter-item.active[data-v-e75ca479] {
+  background-color: #07c160;
+  color: #ffffff;
+}
+.coach-list[data-v-e75ca479] {
+  padding: 0 0.625rem;
+}
+.coach-item[data-v-e75ca479] {
+  margin-bottom: 0.625rem;
+  padding: 0.75rem;
+}
+.coach-header[data-v-e75ca479] {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+.coach-avatar[data-v-e75ca479] {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}
+.coach-basic[data-v-e75ca479] {
+  flex: 1;
+}
+.coach-name-row[data-v-e75ca479] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.coach-name[data-v-e75ca479] {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #333333;
+  margin-right: 0.375rem;
+}
+.coach-gender[data-v-e75ca479] {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  color: #ffffff;
+}
+.coach-gender.male[data-v-e75ca479] {
+  background-color: #4a90e2;
+}
+.coach-gender.female[data-v-e75ca479] {
+  background-color: #f5a623;
+}
+.coach-level[data-v-e75ca479] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.level-text[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #07c160;
+  margin-right: 0.5rem;
+}
+.experience-text[data-v-e75ca479] {
+  font-size: 0.75rem;
+  color: #999999;
+}
+.coach-price[data-v-e75ca479] {
+  text-align: right;
+}
+.price-text[data-v-e75ca479] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+.coach-specialties[data-v-e75ca479] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.specialty-label[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-right: 0.375rem;
+}
+.specialty-tags[data-v-e75ca479] {
+  display: flex;
+  flex-wrap: wrap;
+}
+.coach-intro[data-v-e75ca479] {
+  margin-bottom: 0.5rem;
+}
+.intro-text[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #666666;
+  line-height: 1.5;
+}
+.coach-videos[data-v-e75ca479] {
+  margin-bottom: 0.5rem;
+}
+.video-label[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-bottom: 0.375rem;
+  display: block;
+}
+.video-scroll[data-v-e75ca479] {
+  white-space: nowrap;
+}
+.video-list[data-v-e75ca479] {
+  display: flex;
+}
+.video-item[data-v-e75ca479] {
+  position: relative;
+  margin-right: 0.5rem;
+  text-align: center;
+}
+.video-thumb[data-v-e75ca479] {
+  width: 5rem;
+  height: 3.75rem;
+  border-radius: 0.25rem;
+  display: block;
+}
+.play-icon[data-v-e75ca479] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.75rem;
+}
+.video-title[data-v-e75ca479] {
+  font-size: 0.75rem;
+  color: #666666;
+  margin-top: 0.25rem;
+  display: block;
+  width: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.coach-footer[data-v-e75ca479] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.coach-rating[data-v-e75ca479] {
+  display: flex;
+  align-items: center;
+}
+.rating-text[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #ff6b6b;
+  margin-right: 0.25rem;
+}
+.review-count[data-v-e75ca479] {
+  font-size: 0.75rem;
+  color: #999999;
+}
+.location-text[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #999999;
+}
+.empty-state[data-v-e75ca479] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.75rem 1.25rem;
+}
+.empty-icon[data-v-e75ca479] {
+  width: 6.25rem;
+  height: 6.25rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+.empty-text[data-v-e75ca479] {
+  font-size: 1rem;
+  color: #666666;
+  margin-bottom: 0.5rem;
+}
+.empty-tip[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #999999;
+}
+.loading-state[data-v-e75ca479] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem;
+}
+.loading-text[data-v-e75ca479] {
+  font-size: 0.875rem;
+  color: #999999;
+}

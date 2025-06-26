@@ -3,23 +3,23 @@
     <!-- 搜索和筛选 -->
     <view class="search-section">
       <view class="search-box">
-        <input 
-          class="search-input" 
-          placeholder="搜索活动名称" 
+        <input
+          class="search-input"
+          placeholder="搜索活动名称"
           v-model="searchKeyword"
           @confirm="searchActivities"
         />
         <button class="search-btn" @click="searchActivities">搜索</button>
       </view>
-      
+
       <!-- 筛选条件 -->
       <view class="filter-section">
         <scroll-view class="filter-scroll" scroll-x="true">
           <view class="filter-list">
-            <view 
-              class="filter-item" 
+            <view
+              class="filter-item"
               :class="{ active: selectedFilters.includes(filter.key) }"
-              v-for="filter in filterOptions" 
+              v-for="filter in filterOptions"
               :key="filter.key"
               @click="toggleFilter(filter.key)"
             >
@@ -32,9 +32,9 @@
 
     <!-- 活动列表 -->
     <view class="activity-list" v-if="activityList.length > 0">
-      <view 
-        class="activity-item card" 
-        v-for="activity in filteredActivities" 
+      <view
+        class="activity-item card"
+        v-for="activity in filteredActivities"
         :key="activity.id"
         @click="goToActivityDetail(activity.id)"
       >
@@ -44,62 +44,92 @@
             {{ getActivityStatusText(activity.status) }}
           </view>
         </view>
-        
+
         <view class="activity-tags">
-          <text class="tag" v-for="tag in activity.tags" :key="tag">{{ tag }}</text>
+          <text class="tag" v-for="tag in activity.tags" :key="tag">{{
+            tag
+          }}</text>
         </view>
-        
+
         <view class="activity-info">
           <view class="info-row">
             <view class="info-item">
-              <image class="info-icon" src="/static/icon-time.png" mode="aspectFit"></image>
+              <image
+                class="info-icon"
+                src="/static/icon-time.png"
+                mode="aspectFit"
+              ></image>
               <text class="info-text">{{ activity.time }}</text>
             </view>
           </view>
-          
+
           <view class="info-row">
             <view class="info-item">
-              <image class="info-icon" src="/static/icon-location.png" mode="aspectFit"></image>
+              <image
+                class="info-icon"
+                src="/static/icon-location.png"
+                mode="aspectFit"
+              ></image>
               <text class="info-text">{{ activity.location }}</text>
             </view>
           </view>
-          
+
           <view class="info-row">
             <view class="info-item">
-              <image class="info-icon" src="/static/icon-utr.png" mode="aspectFit"></image>
+              <image
+                class="info-icon"
+                src="/static/icon-utr.png"
+                mode="aspectFit"
+              ></image>
               <text class="info-text">UTR {{ activity.utrRange }}</text>
             </view>
           </view>
-          
+
           <view class="info-row" v-if="activity.ageRange">
             <view class="info-item">
-              <image class="info-icon" src="/static/icon-age.png" mode="aspectFit"></image>
+              <image
+                class="info-icon"
+                src="/static/icon-age.png"
+                mode="aspectFit"
+              ></image>
               <text class="info-text">{{ activity.ageRange }}</text>
             </view>
           </view>
-          
+
           <view class="info-row" v-if="activity.gender">
             <view class="info-item">
-              <image class="info-icon" src="/static/icon-gender.png" mode="aspectFit"></image>
+              <image
+                class="info-icon"
+                src="/static/icon-gender.png"
+                mode="aspectFit"
+              ></image>
               <text class="info-text">{{ activity.gender }}</text>
             </view>
           </view>
         </view>
-        
+
         <view class="activity-footer">
           <view class="participants-info">
-            <text class="participants-text">已报名 {{ activity.participants }}/{{ activity.maxParticipants }}</text>
+            <text class="participants-text"
+              >已报名 {{ activity.participants }}/{{
+                activity.maxParticipants
+              }}</text
+            >
             <view class="progress-bar">
-              <view 
-                class="progress-fill" 
-                :style="{ width: (activity.participants / activity.maxParticipants * 100) + '%' }"
+              <view
+                class="progress-fill"
+                :style="{
+                  width:
+                    (activity.participants / activity.maxParticipants) * 100 +
+                    '%',
+                }"
               ></view>
             </view>
           </view>
           <view class="price-info">
             <text class="price-text">¥{{ activity.price }}</text>
-            <button 
-              class="join-btn" 
+            <button
+              class="join-btn"
               :class="{ disabled: activity.status !== 'open' }"
               @click.stop="joinActivity(activity.id)"
               :disabled="activity.status !== 'open'"
@@ -113,7 +143,11 @@
 
     <!-- 空状态 -->
     <view class="empty-state" v-else-if="!loading">
-      <image class="empty-icon" src="/static/empty-activity.png" mode="aspectFit"></image>
+      <image
+        class="empty-icon"
+        src="/static/empty-activity.png"
+        mode="aspectFit"
+      ></image>
       <text class="empty-text">暂无活动信息</text>
       <text class="empty-tip">试试调整筛选条件</text>
     </view>
@@ -126,289 +160,291 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from "vue";
 
 interface Activity {
-  id: number
-  title: string
-  time: string
-  location: string
-  utrRange: string
-  ageRange?: string
-  gender?: string
-  participants: number
-  maxParticipants: number
-  price: number
-  status: 'open' | 'full' | 'closed' | 'cancelled'
-  tags: string[]
-  category: string[]
-  level: string
-  type: string
+  id: number;
+  title: string;
+  time: string;
+  location: string;
+  utrRange: string;
+  ageRange?: string;
+  gender?: string;
+  participants: number;
+  maxParticipants: number;
+  price: number;
+  status: "open" | "full" | "closed" | "cancelled";
+  tags: string[];
+  category: string[];
+  level: string;
+  type: string;
 }
 
 interface FilterOption {
-  key: string
-  label: string
+  key: string;
+  label: string;
 }
 
 // 响应式数据
-const searchKeyword = ref('')
-const activityList = ref<Activity[]>([])
-const selectedFilters = ref<string[]>([])
-const loading = ref(false)
+const searchKeyword = ref("");
+const activityList = ref<Activity[]>([]);
+const selectedFilters = ref<string[]>([]);
+const loading = ref(false);
 
 // 筛选选项
 const filterOptions = ref<FilterOption[]>([
-  { key: 'open', label: '报名中' },
-  { key: 'beginner', label: '初级' },
-  { key: 'intermediate', label: '中级' },
-  { key: 'advanced', label: '高级' },
-  { key: 'singles', label: '单打' },
-  { key: 'doubles', label: '双打' },
-  { key: 'mixed', label: '混双' },
-  { key: 'male', label: '男子' },
-  { key: 'female', label: '女子' },
-  { key: 'youth', label: '青少年' },
-  { key: 'adult', label: '成人' },
-  { key: 'weekend', label: '周末' },
-  { key: 'affordable', label: '价格优惠' }
-])
+  { key: "open", label: "报名中" },
+  { key: "beginner", label: "初级" },
+  { key: "intermediate", label: "中级" },
+  { key: "advanced", label: "高级" },
+  { key: "singles", label: "单打" },
+  { key: "doubles", label: "双打" },
+  { key: "mixed", label: "混双" },
+  { key: "male", label: "男子" },
+  { key: "female", label: "女子" },
+  { key: "youth", label: "青少年" },
+  { key: "adult", label: "成人" },
+  { key: "weekend", label: "周末" },
+  { key: "affordable", label: "价格优惠" },
+]);
 
 // 计算过滤后的活动列表
 const filteredActivities = computed(() => {
-  let result = activityList.value
-  
+  let result = activityList.value;
+
   // 关键词搜索
   if (searchKeyword.value.trim()) {
-    result = result.filter(activity => 
-      activity.title.includes(searchKeyword.value) ||
-      activity.location.includes(searchKeyword.value)
-    )
+    result = result.filter(
+      (activity) =>
+        activity.title.includes(searchKeyword.value) ||
+        activity.location.includes(searchKeyword.value)
+    );
   }
-  
+
   // 筛选条件
   if (selectedFilters.value.length > 0) {
-    result = result.filter(activity => 
-      selectedFilters.value.some(filter => 
-        activity.category.includes(filter) ||
-        activity.status === filter ||
-        activity.tags.some(tag => tag.includes(filter))
+    result = result.filter((activity) =>
+      selectedFilters.value.some(
+        (filter) =>
+          activity.category.includes(filter) ||
+          activity.status === filter ||
+          activity.tags.some((tag) => tag.includes(filter))
       )
-    )
+    );
   }
-  
-  return result
-})
+
+  return result;
+});
 
 // 页面加载
 onMounted(() => {
-  loadActivityList()
-})
+  loadActivityList();
+});
 
 // 加载活动列表
 function loadActivityList() {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     activityList.value = [
       {
         id: 1,
-        title: 'UTR网球积分赛3.0（蒙马体育）',
-        time: '06月26日 周四 09:30',
-        location: '城东体育网球训练中心 | 17.0km',
-        utrRange: '2-4',
+        title: "UTR网球积分赛3.0（蒙马体育）",
+        time: "06月26日 周四 09:30",
+        location: "城东体育网球训练中心 | 17.0km",
+        utrRange: "2-4",
         participants: 5,
         maxParticipants: 8,
         price: 120,
-        status: 'open',
-        tags: ['有顶棚', '4人打', 'UTR2-4', '冠军300'],
-        category: ['open', 'intermediate', 'singles'],
-        level: 'intermediate',
-        type: 'singles'
+        status: "open",
+        tags: ["有顶棚", "4人打", "UTR2-4", "冠军300"],
+        category: ["open", "intermediate", "singles"],
+        level: "intermediate",
+        type: "singles",
       },
       {
         id: 2,
-        title: 'UTR网球积分赛2.5『功量网球中心』',
-        time: '06月26日 周四 09:30',
-        location: '功量网球中心',
-        utrRange: '1.5-3',
+        title: "UTR网球积分赛2.5『功量网球中心』",
+        time: "06月26日 周四 09:30",
+        location: "功量网球中心",
+        utrRange: "1.5-3",
         participants: 3,
         maxParticipants: 6,
         price: 100,
-        status: 'open',
-        tags: ['单打比赛', 'UTR1-3', '2.5水平', '不限性别'],
-        category: ['open', 'beginner', 'singles', 'affordable'],
-        level: 'beginner',
-        type: 'singles'
+        status: "open",
+        tags: ["单打比赛", "UTR1-3", "2.5水平", "不限性别"],
+        category: ["open", "beginner", "singles", "affordable"],
+        level: "beginner",
+        type: "singles",
       },
       {
         id: 3,
-        title: 'UTR网球积分赛2.0初学者场（溪上）',
-        time: '04月19日 周六 18:00',
-        location: '溪上网球（红土球场）',
-        utrRange: '1.5-3',
-        ageRange: '纯初学者，不会发球',
+        title: "UTR网球积分赛2.0初学者场（溪上）",
+        time: "04月19日 周六 18:00",
+        location: "溪上网球（红土球场）",
+        utrRange: "1.5-3",
+        ageRange: "纯初学者，不会发球",
         participants: 8,
         maxParticipants: 8,
         price: 80,
-        status: 'full',
-        tags: ['溪上网球', '红土', '有顶棚', '单打', 'UTR 1.5-3'],
-        category: ['full', 'beginner', 'singles'],
-        level: 'beginner',
-        type: 'singles'
+        status: "full",
+        tags: ["溪上网球", "红土", "有顶棚", "单打", "UTR 1.5-3"],
+        category: ["full", "beginner", "singles"],
+        level: "beginner",
+        type: "singles",
       },
       {
         id: 4,
-        title: 'UTR网球积分赛2.5（溪上）',
-        time: '04月18日 周五 19:00',
-        location: '溪上网球（红土球场）',
-        utrRange: '1.5-3',
+        title: "UTR网球积分赛2.5（溪上）",
+        time: "04月18日 周五 19:00",
+        location: "溪上网球（红土球场）",
+        utrRange: "1.5-3",
         participants: 6,
         maxParticipants: 6,
         price: 90,
-        status: 'closed',
-        tags: ['溪上网球', '红土', '有顶棚', '单打', 'UTR 1.5-3'],
-        category: ['closed', 'beginner', 'singles'],
-        level: 'beginner',
-        type: 'singles'
+        status: "closed",
+        tags: ["溪上网球", "红土", "有顶棚", "单打", "UTR 1.5-3"],
+        category: ["closed", "beginner", "singles"],
+        level: "beginner",
+        type: "singles",
       },
       {
         id: 5,
-        title: '女子网球专场活动',
-        time: '06月28日 周六 14:00',
-        location: '黄龙体育中心',
-        utrRange: '2-5',
-        gender: '仅限女性',
+        title: "女子网球专场活动",
+        time: "06月28日 周六 14:00",
+        location: "黄龙体育中心",
+        utrRange: "2-5",
+        gender: "仅限女性",
         participants: 4,
         maxParticipants: 12,
         price: 150,
-        status: 'open',
-        tags: ['女子专场', '双打', '周末'],
-        category: ['open', 'female', 'doubles', 'weekend'],
-        level: 'intermediate',
-        type: 'doubles'
+        status: "open",
+        tags: ["女子专场", "双打", "周末"],
+        category: ["open", "female", "doubles", "weekend"],
+        level: "intermediate",
+        type: "doubles",
       },
       {
         id: 6,
-        title: '亲子网球体验课',
-        time: '06月29日 周日 10:00',
-        location: '西湖网球俱乐部',
-        utrRange: '不限',
-        ageRange: '6-12岁儿童+家长',
+        title: "亲子网球体验课",
+        time: "06月29日 周日 10:00",
+        location: "西湖网球俱乐部",
+        utrRange: "不限",
+        ageRange: "6-12岁儿童+家长",
         participants: 6,
         maxParticipants: 10,
         price: 80,
-        status: 'open',
-        tags: ['亲子', '体验课', '周末', '儿童'],
-        category: ['open', 'youth', 'weekend', 'affordable'],
-        level: 'beginner',
-        type: 'lesson'
+        status: "open",
+        tags: ["亲子", "体验课", "周末", "儿童"],
+        category: ["open", "youth", "weekend", "affordable"],
+        level: "beginner",
+        type: "lesson",
       },
       {
         id: 7,
-        title: '高级双打训练营',
-        time: '06月30日 周一 19:00',
-        location: 'GS网球俱乐部',
-        utrRange: '4-7',
+        title: "高级双打训练营",
+        time: "06月30日 周一 19:00",
+        location: "GS网球俱乐部",
+        utrRange: "4-7",
         participants: 2,
         maxParticipants: 8,
         price: 200,
-        status: 'open',
-        tags: ['高级', '双打', '训练营'],
-        category: ['open', 'advanced', 'doubles'],
-        level: 'advanced',
-        type: 'training'
+        status: "open",
+        tags: ["高级", "双打", "训练营"],
+        category: ["open", "advanced", "doubles"],
+        level: "advanced",
+        type: "training",
       },
       {
         id: 8,
-        title: '混双友谊赛',
-        time: '07月01日 周二 18:30',
-        location: '城北体育公园',
-        utrRange: '3-6',
+        title: "混双友谊赛",
+        time: "07月01日 周二 18:30",
+        location: "城北体育公园",
+        utrRange: "3-6",
         participants: 8,
         maxParticipants: 16,
         price: 120,
-        status: 'open',
-        tags: ['混双', '友谊赛', '不限性别'],
-        category: ['open', 'mixed', 'intermediate'],
-        level: 'intermediate',
-        type: 'match'
-      }
-    ]
-    loading.value = false
-  }, 1000)
+        status: "open",
+        tags: ["混双", "友谊赛", "不限性别"],
+        category: ["open", "mixed", "intermediate"],
+        level: "intermediate",
+        type: "match",
+      },
+    ];
+    loading.value = false;
+  }, 1000);
 }
 
 // 搜索活动
 function searchActivities() {
-  console.log('搜索活动:', searchKeyword.value)
+  console.log("搜索活动:", searchKeyword.value);
 }
 
 // 切换筛选条件
 function toggleFilter(filterKey: string) {
-  const index = selectedFilters.value.indexOf(filterKey)
+  const index = selectedFilters.value.indexOf(filterKey);
   if (index > -1) {
-    selectedFilters.value.splice(index, 1)
+    selectedFilters.value.splice(index, 1);
   } else {
-    selectedFilters.value.push(filterKey)
+    selectedFilters.value.push(filterKey);
   }
 }
 
 // 获取活动状态文本
 function getActivityStatusText(status: string) {
   const statusMap = {
-    'open': '报名中',
-    'full': '已满员',
-    'closed': '已结束',
-    'cancelled': '已取消'
-  }
-  return statusMap[status] || '未知状态'
+    open: "报名中",
+    full: "已满员",
+    closed: "已结束",
+    cancelled: "已取消",
+  };
+  return statusMap[status] || "未知状态";
 }
 
 // 获取报名按钮文本
 function getJoinButtonText(status: string) {
   const buttonMap = {
-    'open': '报名',
-    'full': '已满',
-    'closed': '已结束',
-    'cancelled': '已取消'
-  }
-  return buttonMap[status] || '报名'
+    open: "报名",
+    full: "已满",
+    closed: "已结束",
+    cancelled: "已取消",
+  };
+  return buttonMap[status] || "报名";
 }
 
 // 跳转到活动详情
 function goToActivityDetail(id: number) {
   uni.navigateTo({
-    url: `/pages/activity-detail/activity-detail?id=${id}`
-  })
+    url: `/pages/activity-detail/activity-detail?id=${id}`,
+  });
 }
 
 // 报名活动
 function joinActivity(id: number) {
-  const activity = activityList.value.find(a => a.id === id)
-  if (!activity || activity.status !== 'open') {
-    return
+  const activity = activityList.value.find((a) => a.id === id);
+  if (!activity || activity.status !== "open") {
+    return;
   }
-  
+
   uni.showModal({
-    title: '确认报名',
+    title: "确认报名",
     content: `确认报名参加「${activity.title}」？\n费用：¥${activity.price}`,
     success: (res) => {
       if (res.confirm) {
         // 模拟报名成功
-        activity.participants++
+        activity.participants++;
         if (activity.participants >= activity.maxParticipants) {
-          activity.status = 'full'
+          activity.status = "full";
         }
-        
+
         uni.showToast({
-          title: '报名成功',
-          icon: 'success'
-        })
+          title: "报名成功",
+          icon: "success",
+        });
       }
-    }
-  })
+    },
+  });
 }
 </script>
 

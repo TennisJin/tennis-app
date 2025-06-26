@@ -1,0 +1,393 @@
+
+.coach-header[data-v-47f95605] {
+  margin-bottom: 0.625rem;
+  padding: 1rem;
+}
+.coach-basic[data-v-47f95605] {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+.coach-avatar[data-v-47f95605] {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 1.875rem;
+  margin-right: 0.75rem;
+}
+.coach-info[data-v-47f95605] {
+  flex: 1;
+}
+.name-section[data-v-47f95605] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.coach-name[data-v-47f95605] {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #333333;
+  margin-right: 0.375rem;
+}
+.gender-badge[data-v-47f95605] {
+  padding: 0.1875rem 0.375rem;
+  border-radius: 0.375rem;
+  font-size: 0.6875rem;
+  color: #ffffff;
+}
+.gender-badge.male[data-v-47f95605] {
+  background-color: #1890ff;
+}
+.gender-badge.female[data-v-47f95605] {
+  background-color: #ff6b6b;
+}
+.coach-stats[data-v-47f95605] {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.stat-item[data-v-47f95605] {
+  margin-right: 1rem;
+}
+.stat-label[data-v-47f95605] {
+  font-size: 0.75rem;
+  color: #666666;
+  display: block;
+}
+.stat-value[data-v-47f95605] {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+}
+.stat-value.utr[data-v-47f95605] {
+  color: #07c160;
+}
+.stat-value.rating[data-v-47f95605] {
+  color: #ffd700;
+}
+.coach-level[data-v-47f95605] {
+  margin-bottom: 0.5rem;
+}
+.level-badge[data-v-47f95605] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+.level-badge.beginner[data-v-47f95605] {
+  background-color: #52c41a;
+}
+.level-badge.intermediate[data-v-47f95605] {
+  background-color: #1890ff;
+}
+.level-badge.advanced[data-v-47f95605] {
+  background-color: #fa8c16;
+}
+.level-badge.professional[data-v-47f95605] {
+  background-color: #f5222d;
+}
+.price-section[data-v-47f95605] {
+  display: flex;
+  align-items: baseline;
+  margin-top: 0.625rem;
+}
+.price-label[data-v-47f95605] {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-right: 0.5rem;
+}
+.price-value[data-v-47f95605] {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+.coach-intro[data-v-47f95605] {
+  margin-bottom: 0.625rem;
+  padding: 1rem;
+}
+.intro-text[data-v-47f95605] {
+  font-size: 0.875rem;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.achievements[data-v-47f95605] {
+  border-top: 0.03125rem solid #f0f0f0;
+  padding-top: 0.75rem;
+}
+.achievements-title[data-v-47f95605] {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.achievement-list[data-v-47f95605] {
+  margin-top: 0.375rem;
+}
+.achievement-item[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+.videos-section[data-v-47f95605] {
+  margin-bottom: 0.625rem;
+  padding: 1rem;
+}
+.videos-scroll[data-v-47f95605] {
+  white-space: nowrap;
+  margin-top: 0.625rem;
+}
+.videos-list[data-v-47f95605] {
+  display: flex;
+  padding: 0.3125rem 0;
+}
+.video-item[data-v-47f95605] {
+  margin-right: 0.625rem;
+  width: 6.25rem;
+}
+.video-cover[data-v-47f95605] {
+  position: relative;
+  width: 6.25rem;
+  height: 3.75rem;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  margin-bottom: 0.375rem;
+}
+.cover-image[data-v-47f95605] {
+  width: 100%;
+  height: 100%;
+}
+.play-icon[data-v-47f95605] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.play-icon uni-image[data-v-47f95605] {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.video-title[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #333333;
+  display: block;
+  margin-bottom: 0.125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.video-duration[data-v-47f95605] {
+  font-size: 0.6875rem;
+  color: #999999;
+}
+.schedule-section[data-v-47f95605] {
+  margin-bottom: 0.625rem;
+  padding: 1rem;
+}
+.date-selector[data-v-47f95605] {
+  margin-bottom: 1rem;
+}
+.date-scroll[data-v-47f95605] {
+  white-space: nowrap;
+}
+.date-list[data-v-47f95605] {
+  display: flex;
+  padding: 0.3125rem 0;
+}
+.date-item[data-v-47f95605] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #f0f0f0;
+  white-space: nowrap;
+}
+.date-item.selected[data-v-47f95605] {
+  border-color: #07c160;
+  background-color: #f0fff4;
+}
+.date-day[data-v-47f95605] {
+  font-size: 0.75rem;
+  color: #666666;
+  margin-bottom: 0.125rem;
+}
+.date-date[data-v-47f95605] {
+  font-size: 0.875rem;
+  color: #333333;
+  font-weight: bold;
+}
+.slots-grid[data-v-47f95605] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.time-slot[data-v-47f95605] {
+  border: 0.0625rem solid #f0f0f0;
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.5rem;
+  text-align: center;
+}
+.time-slot.selected[data-v-47f95605] {
+  border-color: #07c160;
+  background-color: #f0fff4;
+}
+.time-slot.disabled[data-v-47f95605] {
+  background-color: #f5f5f5;
+  color: #ccc;
+}
+.slot-time[data-v-47f95605] {
+  font-size: 0.875rem;
+  color: #333333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.1875rem;
+}
+.slot-status[data-v-47f95605] {
+  font-size: 0.6875rem;
+  color: #666666;
+}
+.reviews-section[data-v-47f95605] {
+  margin-bottom: 4.375rem;
+  padding: 1rem;
+}
+.section-header[data-v-47f95605] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.more-reviews[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #07c160;
+}
+.review-summary[data-v-47f95605] {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f8f8f8;
+  border-radius: 0.375rem;
+}
+.rating-overview[data-v-47f95605] {
+  display: flex;
+  align-items: center;
+}
+.overall-rating[data-v-47f95605] {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin-right: 0.5rem;
+}
+.rating-stars[data-v-47f95605] {
+  margin-right: 0.5rem;
+}
+.star[data-v-47f95605] {
+  color: #ddd;
+  font-size: 0.75rem;
+}
+.star.filled[data-v-47f95605] {
+  color: #ffd700;
+}
+.review-count[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #666666;
+}
+.review-list[data-v-47f95605] {
+  margin-top: 0.625rem;
+}
+.review-item[data-v-47f95605] {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 0.03125rem solid #f0f0f0;
+}
+.review-item[data-v-47f95605]:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.review-header[data-v-47f95605] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.375rem;
+}
+.reviewer-avatar[data-v-47f95605] {
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 0.9375rem;
+  margin-right: 0.5rem;
+}
+.reviewer-info[data-v-47f95605] {
+  flex: 1;
+}
+.reviewer-name[data-v-47f95605] {
+  font-size: 0.875rem;
+  color: #333333;
+  display: block;
+  margin-bottom: 0.125rem;
+}
+.review-rating[data-v-47f95605] {
+  display: flex;
+}
+.review-date[data-v-47f95605] {
+  font-size: 0.75rem;
+  color: #999999;
+}
+.review-content[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #666666;
+  line-height: 1.5;
+}
+.bottom-actions[data-v-47f95605] {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-top: 0.03125rem solid #f0f0f0;
+  z-index: 100;
+}
+.booking-summary[data-v-47f95605] {
+  padding: 0.5rem 0.625rem;
+  background-color: #f8f8f8;
+  border-bottom: 0.03125rem solid #f0f0f0;
+}
+.summary-text[data-v-47f95605] {
+  font-size: 0.8125rem;
+  color: #333333;
+}
+.action-buttons[data-v-47f95605] {
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.625rem;
+}
+.contact-btn[data-v-47f95605] {
+  flex: 1;
+  background-color: #f8f8f8;
+  color: #333333;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  font-size: 0.9375rem;
+  border: none;
+}
+.book-btn[data-v-47f95605] {
+  flex: 2;
+  background-color: #07c160;
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: bold;
+  border: none;
+}
+.book-btn.disabled[data-v-47f95605] {
+  background-color: #cccccc;
+  color: #999999;
+}

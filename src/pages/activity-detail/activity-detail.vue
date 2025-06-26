@@ -8,11 +8,13 @@
           {{ getActivityStatusText(activity.status) }}
         </view>
       </view>
-      
+
       <view class="activity-tags">
-        <text class="tag" v-for="tag in activity.tags" :key="tag">{{ tag }}</text>
+        <text class="tag" v-for="tag in activity.tags" :key="tag">{{
+          tag
+        }}</text>
       </view>
-      
+
       <view class="price-section">
         <text class="price-label">活动费用</text>
         <text class="price-value">¥{{ activity.price }}</text>
@@ -23,42 +25,62 @@
     <view class="activity-details card">
       <view class="detail-section">
         <view class="section-title">活动信息</view>
-        
+
         <view class="detail-item">
-          <image class="detail-icon" src="/static/icon-time.png" mode="aspectFit"></image>
+          <image
+            class="detail-icon"
+            src="/static/icon-time.png"
+            mode="aspectFit"
+          ></image>
           <view class="detail-content">
             <text class="detail-label">活动时间</text>
             <text class="detail-value">{{ activity.time }}</text>
           </view>
         </view>
-        
+
         <view class="detail-item">
-          <image class="detail-icon" src="/static/icon-location.png" mode="aspectFit"></image>
+          <image
+            class="detail-icon"
+            src="/static/icon-location.png"
+            mode="aspectFit"
+          ></image>
           <view class="detail-content">
             <text class="detail-label">活动地点</text>
             <text class="detail-value">{{ activity.location }}</text>
             <button class="location-btn" @click="openMap">查看地图</button>
           </view>
         </view>
-        
+
         <view class="detail-item">
-          <image class="detail-icon" src="/static/icon-utr.png" mode="aspectFit"></image>
+          <image
+            class="detail-icon"
+            src="/static/icon-utr.png"
+            mode="aspectFit"
+          ></image>
           <view class="detail-content">
             <text class="detail-label">UTR要求</text>
             <text class="detail-value">{{ activity.utrRange }}</text>
           </view>
         </view>
-        
+
         <view class="detail-item" v-if="activity.ageRange">
-          <image class="detail-icon" src="/static/icon-age.png" mode="aspectFit"></image>
+          <image
+            class="detail-icon"
+            src="/static/icon-age.png"
+            mode="aspectFit"
+          ></image>
           <view class="detail-content">
             <text class="detail-label">年龄要求</text>
             <text class="detail-value">{{ activity.ageRange }}</text>
           </view>
         </view>
-        
+
         <view class="detail-item" v-if="activity.gender">
-          <image class="detail-icon" src="/static/icon-gender.png" mode="aspectFit"></image>
+          <image
+            class="detail-icon"
+            src="/static/icon-gender.png"
+            mode="aspectFit"
+          ></image>
           <view class="detail-content">
             <text class="detail-label">性别要求</text>
             <text class="detail-value">{{ activity.gender }}</text>
@@ -70,7 +92,7 @@
     <!-- 报名情况 -->
     <view class="participants-section card">
       <view class="section-title">报名情况</view>
-      
+
       <view class="participants-stats">
         <view class="stat-item">
           <text class="stat-number">{{ activity.participants }}</text>
@@ -82,24 +104,35 @@
           <text class="stat-label">总名额</text>
         </view>
       </view>
-      
+
       <view class="progress-section">
         <view class="progress-bar">
-          <view 
-            class="progress-fill" 
-            :style="{ width: (activity.participants / activity.maxParticipants * 100) + '%' }"
+          <view
+            class="progress-fill"
+            :style="{
+              width:
+                (activity.participants / activity.maxParticipants) * 100 + '%',
+            }"
           ></view>
         </view>
         <text class="progress-text">
           还剩 {{ activity.maxParticipants - activity.participants }} 个名额
         </text>
       </view>
-      
+
       <!-- 已报名用户列表 -->
       <view class="participants-list" v-if="participantsList.length > 0">
         <text class="list-title">已报名用户</text>
-        <view class="participant-item" v-for="participant in participantsList" :key="participant.id">
-          <image class="participant-avatar" :src="participant.avatar" mode="aspectFill"></image>
+        <view
+          class="participant-item"
+          v-for="participant in participantsList"
+          :key="participant.id"
+        >
+          <image
+            class="participant-avatar"
+            :src="participant.avatar"
+            mode="aspectFill"
+          ></image>
           <view class="participant-info">
             <text class="participant-name">{{ participant.name }}</text>
             <text class="participant-utr">UTR {{ participant.utr }}</text>
@@ -132,8 +165,8 @@
     <!-- 底部操作栏 -->
     <view class="bottom-actions">
       <button class="contact-btn" @click="contactOrganizer">联系主办方</button>
-      <button 
-        class="join-btn" 
+      <button
+        class="join-btn"
         :class="{ disabled: activity.status !== 'open' }"
         @click="joinActivity"
         :disabled="activity.status !== 'open'"
@@ -145,240 +178,241 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 interface Activity {
-  id: number
-  title: string
-  time: string
-  location: string
-  utrRange: string
-  ageRange?: string
-  gender?: string
-  participants: number
-  maxParticipants: number
-  price: number
-  status: 'open' | 'full' | 'closed' | 'cancelled'
-  tags: string[]
-  description?: string
+  id: number;
+  title: string;
+  time: string;
+  location: string;
+  utrRange: string;
+  ageRange?: string;
+  gender?: string;
+  participants: number;
+  maxParticipants: number;
+  price: number;
+  status: "open" | "full" | "closed" | "cancelled";
+  tags: string[];
+  description?: string;
   organizer: {
-    name: string
-    phone: string
-    avatar: string
-  }
+    name: string;
+    phone: string;
+    avatar: string;
+  };
   venue: {
-    name: string
-    address: string
-    latitude: number
-    longitude: number
-  }
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+  };
 }
 
 interface Participant {
-  id: number
-  name: string
-  avatar: string
-  utr: number
-  level: 'beginner' | 'intermediate' | 'advanced'
+  id: number;
+  name: string;
+  avatar: string;
+  utr: number;
+  level: "beginner" | "intermediate" | "advanced";
 }
 
 // 响应式数据
 const activity = ref<Activity>({
   id: 0,
-  title: '',
-  time: '',
-  location: '',
-  utrRange: '',
+  title: "",
+  time: "",
+  location: "",
+  utrRange: "",
   participants: 0,
   maxParticipants: 0,
   price: 0,
-  status: 'open',
+  status: "open",
   tags: [],
   organizer: {
-    name: '',
-    phone: '',
-    avatar: ''
+    name: "",
+    phone: "",
+    avatar: "",
   },
   venue: {
-    name: '',
-    address: '',
+    name: "",
+    address: "",
     latitude: 0,
-    longitude: 0
-  }
-})
+    longitude: 0,
+  },
+});
 
-const participantsList = ref<Participant[]>([])
-const loading = ref(false)
+const participantsList = ref<Participant[]>([]);
+const loading = ref(false);
 
 // 页面加载
 onMounted(() => {
-  const pages = getCurrentPages()
-  const currentPage = pages[pages.length - 1]
-  const options = currentPage.options
-  
+  const pages = getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  const options = currentPage.options;
+
   if (options.id) {
-    loadActivityDetail(parseInt(options.id))
+    loadActivityDetail(parseInt(options.id));
   }
-})
+});
 
 // 加载活动详情
 function loadActivityDetail(id: number) {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     activity.value = {
       id: id,
-      title: 'UTR网球积分赛3.0（蒙马体育）',
-      time: '06月26日 周四 09:30-12:00',
-      location: '城东体育网球训练中心',
-      utrRange: '2.0-4.0',
+      title: "UTR网球积分赛3.0（蒙马体育）",
+      time: "06月26日 周四 09:30-12:00",
+      location: "城东体育网球训练中心",
+      utrRange: "2.0-4.0",
       participants: 5,
       maxParticipants: 8,
       price: 120,
-      status: 'open',
-      tags: ['有顶棚', '4人打', 'UTR2-4', '冠军300'],
-      description: '本次活动是专为UTR 2.0-4.0水平的球友举办的积分赛，采用单打形式，每场比赛为抢七局制。比赛将严格按照UTR积分规则进行，获胜者将获得相应的UTR积分提升。活动提供专业裁判和计分服务，确保比赛的公平公正。',
+      status: "open",
+      tags: ["有顶棚", "4人打", "UTR2-4", "冠军300"],
+      description:
+        "本次活动是专为UTR 2.0-4.0水平的球友举办的积分赛，采用单打形式，每场比赛为抢七局制。比赛将严格按照UTR积分规则进行，获胜者将获得相应的UTR积分提升。活动提供专业裁判和计分服务，确保比赛的公平公正。",
       organizer: {
-        name: '蒙马体育',
-        phone: '400-123-4567',
-        avatar: '/static/organizer-avatar.png'
+        name: "蒙马体育",
+        phone: "400-123-4567",
+        avatar: "/static/organizer-avatar.png",
       },
       venue: {
-        name: '城东体育网球训练中心',
-        address: '杭州市江干区城东路123号',
+        name: "城东体育网球训练中心",
+        address: "杭州市江干区城东路123号",
         latitude: 30.2741,
-        longitude: 120.1551
-      }
-    }
-    
+        longitude: 120.1551,
+      },
+    };
+
     participantsList.value = [
       {
         id: 1,
-        name: '张三',
-        avatar: '/static/avatar1.png',
+        name: "张三",
+        avatar: "/static/avatar1.png",
         utr: 3.2,
-        level: 'intermediate'
+        level: "intermediate",
       },
       {
         id: 2,
-        name: '李四',
-        avatar: '/static/avatar2.png',
+        name: "李四",
+        avatar: "/static/avatar2.png",
         utr: 2.8,
-        level: 'intermediate'
+        level: "intermediate",
       },
       {
         id: 3,
-        name: '王五',
-        avatar: '/static/avatar3.png',
+        name: "王五",
+        avatar: "/static/avatar3.png",
         utr: 3.5,
-        level: 'intermediate'
+        level: "intermediate",
       },
       {
         id: 4,
-        name: '赵六',
-        avatar: '/static/avatar4.png',
+        name: "赵六",
+        avatar: "/static/avatar4.png",
         utr: 2.5,
-        level: 'beginner'
+        level: "beginner",
       },
       {
         id: 5,
-        name: '钱七',
-        avatar: '/static/avatar5.png',
+        name: "钱七",
+        avatar: "/static/avatar5.png",
         utr: 3.8,
-        level: 'advanced'
-      }
-    ]
-    
-    loading.value = false
-  }, 1000)
+        level: "advanced",
+      },
+    ];
+
+    loading.value = false;
+  }, 1000);
 }
 
 // 获取活动状态文本
 function getActivityStatusText(status: string) {
   const statusMap = {
-    'open': '报名中',
-    'full': '已满员',
-    'closed': '已结束',
-    'cancelled': '已取消'
-  }
-  return statusMap[status] || '未知状态'
+    open: "报名中",
+    full: "已满员",
+    closed: "已结束",
+    cancelled: "已取消",
+  };
+  return statusMap[status] || "未知状态";
 }
 
 // 获取报名按钮文本
 function getJoinButtonText(status: string) {
   const buttonMap = {
-    'open': '立即报名',
-    'full': '已满员',
-    'closed': '已结束',
-    'cancelled': '已取消'
-  }
-  return buttonMap[status] || '立即报名'
+    open: "立即报名",
+    full: "已满员",
+    closed: "已结束",
+    cancelled: "已取消",
+  };
+  return buttonMap[status] || "立即报名";
 }
 
 // 获取水平等级文本
 function getLevelText(level: string) {
   const levelMap = {
-    'beginner': '初级',
-    'intermediate': '中级',
-    'advanced': '高级'
-  }
-  return levelMap[level] || '未知'
+    beginner: "初级",
+    intermediate: "中级",
+    advanced: "高级",
+  };
+  return levelMap[level] || "未知";
 }
 
 // 报名活动
 function joinActivity() {
-  if (activity.value.status !== 'open') {
-    return
+  if (activity.value.status !== "open") {
+    return;
   }
-  
+
   uni.showModal({
-    title: '确认报名',
+    title: "确认报名",
     content: `确认报名参加「${activity.value.title}」？\n\n活动时间：${activity.value.time}\n活动地点：${activity.value.location}\n费用：¥${activity.value.price}`,
     success: (res) => {
       if (res.confirm) {
         // 模拟报名成功
-        activity.value.participants++
+        activity.value.participants++;
         if (activity.value.participants >= activity.value.maxParticipants) {
-          activity.value.status = 'full'
+          activity.value.status = "full";
         }
-        
+
         // 添加当前用户到参与者列表
         participantsList.value.push({
           id: Date.now(),
-          name: '我',
-          avatar: '/static/my-avatar.png',
+          name: "我",
+          avatar: "/static/my-avatar.png",
           utr: 3.0,
-          level: 'intermediate'
-        })
-        
+          level: "intermediate",
+        });
+
         uni.showToast({
-          title: '报名成功',
-          icon: 'success'
-        })
+          title: "报名成功",
+          icon: "success",
+        });
       }
-    }
-  })
+    },
+  });
 }
 
 // 联系主办方
 function contactOrganizer() {
   uni.showActionSheet({
-    itemList: ['拨打电话', '发送消息'],
+    itemList: ["拨打电话", "发送消息"],
     success: (res) => {
       if (res.tapIndex === 0) {
         // 拨打电话
         uni.makePhoneCall({
-          phoneNumber: activity.value.organizer.phone
-        })
+          phoneNumber: activity.value.organizer.phone,
+        });
       } else if (res.tapIndex === 1) {
         // 发送消息（跳转到客服页面）
         uni.navigateTo({
-          url: '/pages/customer-service/customer-service'
-        })
+          url: "/pages/customer-service/customer-service",
+        });
       }
-    }
-  })
+    },
+  });
 }
 
 // 打开地图
@@ -387,8 +421,8 @@ function openMap() {
     latitude: activity.value.venue.latitude,
     longitude: activity.value.venue.longitude,
     name: activity.value.venue.name,
-    address: activity.value.venue.address
-  })
+    address: activity.value.venue.address,
+  });
 }
 </script>
 

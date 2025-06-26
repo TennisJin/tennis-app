@@ -11,57 +11,57 @@
       <!-- 个人基本信息 -->
       <view class="form-section">
         <text class="section-title">个人基本信息</text>
-        
+
         <view class="form-item">
           <text class="form-label">真实姓名 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.realName" 
+          <input
+            class="form-input"
+            v-model="formData.realName"
             placeholder="请输入真实姓名"
             maxlength="20"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">性别 *</text>
-          <picker 
-            class="form-picker" 
-            :value="genderIndex" 
-            :range="genders" 
+          <picker
+            class="form-picker"
+            :value="genderIndex"
+            :range="genders"
             @change="onGenderChange"
           >
             <view class="picker-text">
-              {{ genders[genderIndex] || '请选择性别' }}
+              {{ genders[genderIndex] || "请选择性别" }}
             </view>
           </picker>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">年龄 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.age" 
+          <input
+            class="form-input"
+            v-model="formData.age"
             placeholder="请输入年龄"
             type="number"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">联系电话 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.phone" 
+          <input
+            class="form-input"
+            v-model="formData.phone"
             placeholder="请输入联系电话"
             type="number"
             maxlength="11"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">所在城市 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.city" 
+          <input
+            class="form-input"
+            v-model="formData.city"
             placeholder="请输入所在城市"
             maxlength="20"
           />
@@ -71,43 +71,48 @@
       <!-- 教学经验 -->
       <view class="form-section">
         <text class="section-title">教学经验</text>
-        
+
         <view class="form-item">
           <text class="form-label">教学年限 *</text>
-          <picker 
-            class="form-picker" 
-            :value="experienceIndex" 
-            :range="experienceOptions" 
+          <picker
+            class="form-picker"
+            :value="experienceIndex"
+            :range="experienceOptions"
             @change="onExperienceChange"
           >
             <view class="picker-text">
-              {{ experienceOptions[experienceIndex] || '请选择教学年限' }}
+              {{ experienceOptions[experienceIndex] || "请选择教学年限" }}
             </view>
           </picker>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">擅长领域 *</text>
           <view class="checkbox-group">
-            <view 
-              class="checkbox-item" 
-              v-for="(skill, index) in skillOptions" 
+            <view
+              class="checkbox-item"
+              v-for="(skill, index) in skillOptions"
               :key="index"
               @click="toggleSkill(skill)"
             >
-              <view class="checkbox" :class="{ checked: formData.skills.includes(skill) }">
-                <text v-if="formData.skills.includes(skill)" class="check-icon">✓</text>
+              <view
+                class="checkbox"
+                :class="{ checked: formData.skills.includes(skill) }"
+              >
+                <text v-if="formData.skills.includes(skill)" class="check-icon"
+                  >✓</text
+                >
               </view>
               <text class="checkbox-label">{{ skill }}</text>
             </view>
           </view>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">个人简介 *</text>
-          <textarea 
-            class="form-textarea" 
-            v-model="formData.introduction" 
+          <textarea
+            class="form-textarea"
+            v-model="formData.introduction"
             placeholder="请介绍您的教学理念、特色和成就"
             maxlength="500"
           />
@@ -117,36 +122,38 @@
       <!-- 资质证书 -->
       <view class="form-section">
         <text class="section-title">资质证书</text>
-        
+
         <view class="form-item">
           <text class="form-label">教练等级 *</text>
-          <picker 
-            class="form-picker" 
-            :value="levelIndex" 
-            :range="levelOptions" 
+          <picker
+            class="form-picker"
+            :value="levelIndex"
+            :range="levelOptions"
             @change="onLevelChange"
           >
             <view class="picker-text">
-              {{ levelOptions[levelIndex] || '请选择教练等级' }}
+              {{ levelOptions[levelIndex] || "请选择教练等级" }}
             </view>
           </picker>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">证书照片 *</text>
           <view class="upload-grid">
-            <view 
-              class="upload-item" 
-              v-for="(image, index) in formData.certificates" 
+            <view
+              class="upload-item"
+              v-for="(image, index) in formData.certificates"
               :key="index"
               @click="previewImage(image)"
             >
               <image class="upload-image" :src="image" mode="aspectFill" />
-              <view class="delete-btn" @click.stop="deleteCertificate(index)">×</view>
+              <view class="delete-btn" @click.stop="deleteCertificate(index)"
+                >×</view
+              >
             </view>
-            <view 
-              v-if="formData.certificates.length < 3" 
-              class="upload-item upload-placeholder" 
+            <view
+              v-if="formData.certificates.length < 3"
+              class="upload-item upload-placeholder"
               @click="uploadCertificate"
             >
               <text class="upload-icon">+</text>
@@ -155,17 +162,17 @@
           </view>
           <text class="upload-tip">最多上传3张证书照片</text>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">身份证照片 *</text>
           <view class="id-upload">
             <view class="id-item">
               <text class="id-label">身份证正面</text>
               <view class="upload-area" @click="uploadIdFront">
-                <image 
-                  v-if="formData.idCardFront" 
-                  class="upload-image" 
-                  :src="formData.idCardFront" 
+                <image
+                  v-if="formData.idCardFront"
+                  class="upload-image"
+                  :src="formData.idCardFront"
                   mode="aspectFill"
                 />
                 <view v-else class="upload-placeholder">
@@ -177,10 +184,10 @@
             <view class="id-item">
               <text class="id-label">身份证反面</text>
               <view class="upload-area" @click="uploadIdBack">
-                <image 
-                  v-if="formData.idCardBack" 
-                  class="upload-image" 
-                  :src="formData.idCardBack" 
+                <image
+                  v-if="formData.idCardBack"
+                  class="upload-image"
+                  :src="formData.idCardBack"
                   mode="aspectFill"
                 />
                 <view v-else class="upload-placeholder">
@@ -196,39 +203,39 @@
       <!-- 收费标准 -->
       <view class="form-section">
         <text class="section-title">收费标准</text>
-        
+
         <view class="form-item">
           <text class="form-label">一对一私教课 *</text>
           <view class="price-input">
-            <input 
-              class="form-input price-field" 
-              v-model="formData.privatePrice" 
+            <input
+              class="form-input price-field"
+              v-model="formData.privatePrice"
               placeholder="请输入价格"
               type="number"
             />
             <text class="price-unit">元/小时</text>
           </view>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">小组课程</text>
           <view class="price-input">
-            <input 
-              class="form-input price-field" 
-              v-model="formData.groupPrice" 
+            <input
+              class="form-input price-field"
+              v-model="formData.groupPrice"
               placeholder="请输入价格"
               type="number"
             />
             <text class="price-unit">元/小时</text>
           </view>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">陪练服务</text>
           <view class="price-input">
-            <input 
-              class="form-input price-field" 
-              v-model="formData.sparringPrice" 
+            <input
+              class="form-input price-field"
+              v-model="formData.sparringPrice"
               placeholder="请输入价格"
               type="number"
             />
@@ -240,22 +247,22 @@
       <!-- 可授课时间 -->
       <view class="form-section">
         <text class="section-title">可授课时间</text>
-        
+
         <view class="form-item">
           <text class="form-label">工作日时间</text>
-          <input 
-            class="form-input" 
-            v-model="formData.weekdayTime" 
+          <input
+            class="form-input"
+            v-model="formData.weekdayTime"
             placeholder="例如：18:00-21:00"
             maxlength="20"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">周末时间</text>
-          <input 
-            class="form-input" 
-            v-model="formData.weekendTime" 
+          <input
+            class="form-input"
+            v-model="formData.weekendTime"
             placeholder="例如：09:00-18:00"
             maxlength="20"
           />
@@ -265,7 +272,11 @@
 
     <!-- 提交按钮 -->
     <view class="submit-container">
-      <button class="submit-btn" @click="submitApplication" :disabled="!isFormValid">
+      <button
+        class="submit-btn"
+        @click="submitApplication"
+        :disabled="!isFormValid"
+      >
         提交申请
       </button>
       <text class="submit-tip">提交后我们将在3个工作日内审核并回复</text>
@@ -274,201 +285,222 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref, computed, onMounted } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
 interface FormData {
-  realName: string
-  gender: string
-  age: string
-  phone: string
-  city: string
-  experience: string
-  skills: string[]
-  introduction: string
-  level: string
-  certificates: string[]
-  idCardFront: string
-  idCardBack: string
-  privatePrice: string
-  groupPrice: string
-  sparringPrice: string
-  weekdayTime: string
-  weekendTime: string
+  realName: string;
+  gender: string;
+  age: string;
+  phone: string;
+  city: string;
+  experience: string;
+  skills: string[];
+  introduction: string;
+  level: string;
+  certificates: string[];
+  idCardFront: string;
+  idCardBack: string;
+  privatePrice: string;
+  groupPrice: string;
+  sparringPrice: string;
+  weekdayTime: string;
+  weekendTime: string;
 }
 
 // 响应式数据
 const formData = ref<FormData>({
-  realName: '',
-  gender: '',
-  age: '',
-  phone: '',
-  city: '',
-  experience: '',
+  realName: "",
+  gender: "",
+  age: "",
+  phone: "",
+  city: "",
+  experience: "",
   skills: [],
-  introduction: '',
-  level: '',
+  introduction: "",
+  level: "",
   certificates: [],
-  idCardFront: '',
-  idCardBack: '',
-  privatePrice: '',
-  groupPrice: '',
-  sparringPrice: '',
-  weekdayTime: '',
-  weekendTime: ''
-})
+  idCardFront: "",
+  idCardBack: "",
+  privatePrice: "",
+  groupPrice: "",
+  sparringPrice: "",
+  weekdayTime: "",
+  weekendTime: "",
+});
 
-const genders = ref(['男', '女'])
-const genderIndex = ref(0)
+const genders = ref(["男", "女"]);
+const genderIndex = ref(0);
 
-const experienceOptions = ref(['1年以下', '1-3年', '3-5年', '5-10年', '10年以上'])
-const experienceIndex = ref(0)
+const experienceOptions = ref([
+  "1年以下",
+  "1-3年",
+  "3-5年",
+  "5-10年",
+  "10年以上",
+]);
+const experienceIndex = ref(0);
 
-const skillOptions = ref(['基础教学', '技术提升', '战术指导', '体能训练', '青少年培训', '成人培训'])
+const skillOptions = ref([
+  "基础教学",
+  "技术提升",
+  "战术指导",
+  "体能训练",
+  "青少年培训",
+  "成人培训",
+]);
 
-const levelOptions = ref(['初级教练', 'PTR认证', 'ITF认证', 'USPTA认证', '国家级教练'])
-const levelIndex = ref(0)
+const levelOptions = ref([
+  "初级教练",
+  "PTR认证",
+  "ITF认证",
+  "USPTA认证",
+  "国家级教练",
+]);
+const levelIndex = ref(0);
 
 // 计算属性
 const isFormValid = computed(() => {
-  return formData.value.realName && 
-         formData.value.gender && 
-         formData.value.age && 
-         formData.value.phone && 
-         formData.value.city && 
-         formData.value.experience && 
-         formData.value.skills.length > 0 && 
-         formData.value.introduction && 
-         formData.value.level && 
-         formData.value.certificates.length > 0 && 
-         formData.value.idCardFront && 
-         formData.value.idCardBack && 
-         formData.value.privatePrice
-})
+  return (
+    formData.value.realName &&
+    formData.value.gender &&
+    formData.value.age &&
+    formData.value.phone &&
+    formData.value.city &&
+    formData.value.experience &&
+    formData.value.skills.length > 0 &&
+    formData.value.introduction &&
+    formData.value.level &&
+    formData.value.certificates.length > 0 &&
+    formData.value.idCardFront &&
+    formData.value.idCardBack &&
+    formData.value.privatePrice
+  );
+});
 
 // 页面加载
 onMounted(() => {
   // 初始化页面
-})
+});
 
 // 页面参数处理
 onLoad((options: any) => {
   // 处理页面参数
-})
+});
 
 // 性别选择
 function onGenderChange(e: any) {
-  genderIndex.value = e.detail.value
-  formData.value.gender = genders.value[e.detail.value]
+  genderIndex.value = e.detail.value;
+  formData.value.gender = genders.value[e.detail.value];
 }
 
 // 教学年限选择
 function onExperienceChange(e: any) {
-  experienceIndex.value = e.detail.value
-  formData.value.experience = experienceOptions.value[e.detail.value]
+  experienceIndex.value = e.detail.value;
+  formData.value.experience = experienceOptions.value[e.detail.value];
 }
 
 // 教练等级选择
 function onLevelChange(e: any) {
-  levelIndex.value = e.detail.value
-  formData.value.level = levelOptions.value[e.detail.value]
+  levelIndex.value = e.detail.value;
+  formData.value.level = levelOptions.value[e.detail.value];
 }
 
 // 切换技能选择
 function toggleSkill(skill: string) {
-  const index = formData.value.skills.indexOf(skill)
+  const index = formData.value.skills.indexOf(skill);
   if (index > -1) {
-    formData.value.skills.splice(index, 1)
+    formData.value.skills.splice(index, 1);
   } else {
-    formData.value.skills.push(skill)
+    formData.value.skills.push(skill);
   }
 }
 
 // 上传证书
 function uploadCertificate() {
-  const remainCount = 3 - formData.value.certificates.length
+  const remainCount = 3 - formData.value.certificates.length;
   uni.chooseImage({
     count: remainCount,
-    sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sizeType: ["compressed"],
+    sourceType: ["album", "camera"],
     success: (res) => {
-      formData.value.certificates.push(...res.tempFilePaths)
+      formData.value.certificates.push(...res.tempFilePaths);
     },
     fail: (err) => {
-      console.log('上传失败:', err)
-    }
-  })
+      console.log("上传失败:", err);
+    },
+  });
 }
 
 // 删除证书
 function deleteCertificate(index: number) {
-  formData.value.certificates.splice(index, 1)
+  formData.value.certificates.splice(index, 1);
 }
 
 // 上传身份证正面
 function uploadIdFront() {
   uni.chooseImage({
     count: 1,
-    sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sizeType: ["compressed"],
+    sourceType: ["album", "camera"],
     success: (res) => {
-      formData.value.idCardFront = res.tempFilePaths[0]
+      formData.value.idCardFront = res.tempFilePaths[0];
     },
     fail: (err) => {
-      console.log('上传失败:', err)
-    }
-  })
+      console.log("上传失败:", err);
+    },
+  });
 }
 
 // 上传身份证反面
 function uploadIdBack() {
   uni.chooseImage({
     count: 1,
-    sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sizeType: ["compressed"],
+    sourceType: ["album", "camera"],
     success: (res) => {
-      formData.value.idCardBack = res.tempFilePaths[0]
+      formData.value.idCardBack = res.tempFilePaths[0];
     },
     fail: (err) => {
-      console.log('上传失败:', err)
-    }
-  })
+      console.log("上传失败:", err);
+    },
+  });
 }
 
 // 预览图片
 function previewImage(image: string) {
   uni.previewImage({
     urls: [image],
-    current: image
-  })
+    current: image,
+  });
 }
 
 // 提交申请
 function submitApplication() {
   if (!isFormValid.value) {
     uni.showToast({
-      title: '请填写完整信息',
-      icon: 'none'
-    })
-    return
+      title: "请填写完整信息",
+      icon: "none",
+    });
+    return;
   }
-  
+
   uni.showLoading({
-    title: '提交中...'
-  })
-  
+    title: "提交中...",
+  });
+
   // 模拟提交
   setTimeout(() => {
-    uni.hideLoading()
+    uni.hideLoading();
     uni.showModal({
-      title: '申请提交成功',
-      content: '我们将在3个工作日内审核您的申请，请耐心等待',
+      title: "申请提交成功",
+      content: "我们将在3个工作日内审核您的申请，请耐心等待",
       showCancel: false,
       success: () => {
-        uni.navigateBack()
-      }
-    })
-  }, 2000)
+        uni.navigateBack();
+      },
+    });
+  }, 2000);
 }
 </script>
 

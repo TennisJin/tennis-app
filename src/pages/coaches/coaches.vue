@@ -3,23 +3,23 @@
     <!-- 搜索和筛选 -->
     <view class="search-section">
       <view class="search-box">
-        <input 
-          class="search-input" 
-          placeholder="搜索教练姓名" 
+        <input
+          class="search-input"
+          placeholder="搜索教练姓名"
           v-model="searchKeyword"
           @confirm="searchCoaches"
         />
         <button class="search-btn" @click="searchCoaches">搜索</button>
       </view>
-      
+
       <!-- 筛选条件 -->
       <view class="filter-section">
         <scroll-view class="filter-scroll" scroll-x="true">
           <view class="filter-list">
-            <view 
-              class="filter-item" 
+            <view
+              class="filter-item"
               :class="{ active: selectedFilters.includes(filter.key) }"
-              v-for="filter in filterOptions" 
+              v-for="filter in filterOptions"
               :key="filter.key"
               @click="toggleFilter(filter.key)"
             >
@@ -32,19 +32,23 @@
 
     <!-- 教练列表 -->
     <view class="coach-list" v-if="coachList.length > 0">
-      <view 
-        class="coach-item card" 
-        v-for="coach in filteredCoaches" 
+      <view
+        class="coach-item card"
+        v-for="coach in filteredCoaches"
         :key="coach.id"
         @click="goToCoachDetail(coach.id)"
       >
         <view class="coach-header">
-          <image class="coach-avatar" :src="coach.avatar" mode="aspectFill"></image>
+          <image
+            class="coach-avatar"
+            :src="coach.avatar"
+            mode="aspectFill"
+          ></image>
           <view class="coach-basic">
             <view class="coach-name-row">
               <text class="coach-name">{{ coach.name }}</text>
               <view class="coach-gender" :class="coach.gender">
-                {{ coach.gender === 'male' ? '♂' : '♀' }}
+                {{ coach.gender === "male" ? "♂" : "♀" }}
               </view>
             </view>
             <view class="coach-level">
@@ -59,39 +63,50 @@
             <text class="price-text">¥{{ coach.price }}/小时</text>
           </view>
         </view>
-        
+
         <view class="coach-specialties">
           <text class="specialty-label">擅长:</text>
           <view class="specialty-tags">
-            <text class="tag" v-for="specialty in coach.specialties" :key="specialty">
+            <text
+              class="tag"
+              v-for="specialty in coach.specialties"
+              :key="specialty"
+            >
               {{ specialty }}
             </text>
           </view>
         </view>
-        
+
         <view class="coach-intro" v-if="coach.introduction">
           <text class="intro-text">{{ coach.introduction }}</text>
         </view>
-        
+
         <!-- 教学视频 -->
-        <view class="coach-videos" v-if="coach.videos && coach.videos.length > 0">
+        <view
+          class="coach-videos"
+          v-if="coach.videos && coach.videos.length > 0"
+        >
           <text class="video-label">教学视频:</text>
           <scroll-view class="video-scroll" scroll-x="true">
             <view class="video-list">
-              <view 
-                class="video-item" 
-                v-for="video in coach.videos" 
+              <view
+                class="video-item"
+                v-for="video in coach.videos"
                 :key="video.id"
                 @click.stop="playVideo(video.url)"
               >
-                <image class="video-thumb" :src="video.thumbnail" mode="aspectFill"></image>
+                <image
+                  class="video-thumb"
+                  :src="video.thumbnail"
+                  mode="aspectFill"
+                ></image>
                 <view class="play-icon">▶</view>
                 <text class="video-title">{{ video.title }}</text>
               </view>
             </view>
           </scroll-view>
         </view>
-        
+
         <view class="coach-footer">
           <view class="coach-rating">
             <text class="rating-text">评分: {{ coach.rating }}</text>
@@ -106,7 +121,11 @@
 
     <!-- 空状态 -->
     <view class="empty-state" v-else-if="!loading">
-      <image class="empty-icon" src="/static/empty-coach.png" mode="aspectFit"></image>
+      <image
+        class="empty-icon"
+        src="/static/empty-coach.png"
+        mode="aspectFit"
+      ></image>
       <text class="empty-text">暂无教练信息</text>
       <text class="empty-tip">试试调整筛选条件</text>
     </view>
@@ -119,239 +138,241 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from "vue";
 
 interface Video {
-  id: number
-  title: string
-  url: string
-  thumbnail: string
+  id: number;
+  title: string;
+  url: string;
+  thumbnail: string;
 }
 
 interface Coach {
-  id: number
-  name: string
-  avatar: string
-  gender: 'male' | 'female'
-  level: string
-  experience: number
-  utr: string
-  price: number
-  specialties: string[]
-  introduction: string
-  videos?: Video[]
-  rating: number
-  reviewCount: number
-  location: string
-  category: string[]
+  id: number;
+  name: string;
+  avatar: string;
+  gender: "male" | "female";
+  level: string;
+  experience: number;
+  utr: string;
+  price: number;
+  specialties: string[];
+  introduction: string;
+  videos?: Video[];
+  rating: number;
+  reviewCount: number;
+  location: string;
+  category: string[];
 }
 
 interface FilterOption {
-  key: string
-  label: string
+  key: string;
+  label: string;
 }
 
 // 响应式数据
-const searchKeyword = ref('')
-const coachList = ref<Coach[]>([])
-const selectedFilters = ref<string[]>([])
-const loading = ref(false)
+const searchKeyword = ref("");
+const coachList = ref<Coach[]>([]);
+const selectedFilters = ref<string[]>([]);
+const loading = ref(false);
 
 // 筛选选项
 const filterOptions = ref<FilterOption[]>([
-  { key: 'coach', label: '教练' },
-  { key: 'sparring', label: '陪练' },
-  { key: 'beginner', label: '初学者' },
-  { key: 'intermediate', label: '中级' },
-  { key: 'advanced', label: '高级' },
-  { key: 'male', label: '男教练' },
-  { key: 'female', label: '女教练' },
-  { key: 'nearby', label: '附近' },
-  { key: 'affordable', label: '价格优惠' }
-])
+  { key: "coach", label: "教练" },
+  { key: "sparring", label: "陪练" },
+  { key: "beginner", label: "初学者" },
+  { key: "intermediate", label: "中级" },
+  { key: "advanced", label: "高级" },
+  { key: "male", label: "男教练" },
+  { key: "female", label: "女教练" },
+  { key: "nearby", label: "附近" },
+  { key: "affordable", label: "价格优惠" },
+]);
 
 // 计算过滤后的教练列表
 const filteredCoaches = computed(() => {
-  let result = coachList.value
-  
+  let result = coachList.value;
+
   // 关键词搜索
   if (searchKeyword.value.trim()) {
-    result = result.filter(coach => 
-      coach.name.includes(searchKeyword.value) ||
-      coach.specialties.some(s => s.includes(searchKeyword.value))
-    )
+    result = result.filter(
+      (coach) =>
+        coach.name.includes(searchKeyword.value) ||
+        coach.specialties.some((s) => s.includes(searchKeyword.value))
+    );
   }
-  
+
   // 筛选条件
   if (selectedFilters.value.length > 0) {
-    result = result.filter(coach => 
-      selectedFilters.value.some(filter => 
-        coach.category.includes(filter) ||
-        (filter === coach.gender) ||
-        coach.specialties.some(s => s.includes(filter))
+    result = result.filter((coach) =>
+      selectedFilters.value.some(
+        (filter) =>
+          coach.category.includes(filter) ||
+          filter === coach.gender ||
+          coach.specialties.some((s) => s.includes(filter))
       )
-    )
+    );
   }
-  
-  return result
-})
+
+  return result;
+});
 
 // 页面加载
 onMounted(() => {
-  loadCoachList()
-})
+  loadCoachList();
+});
 
 // 加载教练列表
 function loadCoachList() {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     coachList.value = [
       {
         id: 1,
-        name: '白影',
-        avatar: '/static/coach1.jpg',
-        gender: 'male',
-        level: '专业教练',
+        name: "白影",
+        avatar: "/static/coach1.png",
+        gender: "male",
+        level: "专业教练",
         experience: 8,
-        utr: '4.5',
+        utr: "4.5",
         price: 200,
-        specialties: ['正手技术', '反手技术', '发球技术'],
-        introduction: '前职业球员，擅长技术指导和战术分析，有丰富的教学经验。',
+        specialties: ["正手技术", "反手技术", "发球技术"],
+        introduction: "前职业球员，擅长技术指导和战术分析，有丰富的教学经验。",
         videos: [
           {
             id: 1,
-            title: '正手击球技巧',
-            url: '/static/video1.mp4',
-            thumbnail: '/static/video1-thumb.jpg'
+            title: "正手击球技巧",
+            url: "/static/video1.mp4",
+            thumbnail: "/static/video1-thumb.jpg",
           },
           {
             id: 2,
-            title: '发球动作要领',
-            url: '/static/video2.mp4',
-            thumbnail: '/static/video2-thumb.jpg'
-          }
+            title: "发球动作要领",
+            url: "/static/video2.mp4",
+            thumbnail: "/static/video2-thumb.jpg",
+          },
         ],
         rating: 4.8,
         reviewCount: 156,
-        location: '西湖区',
-        category: ['coach', 'advanced', 'male']
+        location: "西湖区",
+        category: ["coach", "advanced", "male"],
       },
       {
         id: 2,
-        name: '罗学云',
-        avatar: '/static/coach2.jpg',
-        gender: 'male',
-        level: '高级教练',
+        name: "小罗",
+        avatar: "/static/coach2.png",
+        gender: "male",
+        level: "高级教练",
         experience: 6,
-        utr: '5.2',
+        utr: "5.2",
         price: 180,
-        specialties: ['底线技术', '网前技术', '体能训练'],
-        introduction: '注重基础技术训练，善于因材施教，帮助学员快速提升。',
+        specialties: ["底线技术", "网前技术", "体能训练"],
+        introduction: "注重基础技术训练，善于因材施教，帮助学员快速提升。",
         videos: [
           {
             id: 3,
-            title: '底线对拉技巧',
-            url: '/static/video3.mp4',
-            thumbnail: '/static/video3-thumb.jpg'
-          }
+            title: "底线对拉技巧",
+            url: "/static/video3.mp4",
+            thumbnail: "/static/video3-thumb.jpg",
+          },
         ],
         rating: 4.6,
         reviewCount: 89,
-        location: '拱墅区',
-        category: ['coach', 'intermediate', 'male']
+        location: "拱墅区",
+        category: ["coach", "intermediate", "male"],
       },
       {
         id: 3,
-        name: '陈小明',
-        avatar: '/static/coach3.jpg',
-        gender: 'male',
-        level: '陪练',
+        name: "陈小明",
+        avatar: "/static/coach3.png",
+        gender: "male",
+        level: "陪练",
         experience: 3,
-        utr: '3.8',
+        utr: "3.8",
         price: 120,
-        specialties: ['基础陪练', '多球训练'],
-        introduction: '耐心细致，适合初学者和中级球员的陪练训练。',
+        specialties: ["基础陪练", "多球训练"],
+        introduction: "耐心细致，适合初学者和中级球员的陪练训练。",
         rating: 4.3,
         reviewCount: 45,
-        location: '余杭区',
-        category: ['sparring', 'beginner', 'male', 'affordable']
+        location: "余杭区",
+        category: ["sparring", "beginner", "male", "affordable"],
       },
       {
         id: 4,
-        name: '李美娜',
-        avatar: '/static/coach4.jpg',
-        gender: 'female',
-        level: '专业教练',
+        name: "李美娜",
+        avatar: "/static/coach4.png",
+        gender: "female",
+        level: "专业教练",
         experience: 5,
-        utr: '4.2',
+        utr: "4.2",
         price: 160,
-        specialties: ['女子网球', '青少年训练', '技术纠错'],
-        introduction: '专注女子网球教学，擅长青少年技术培养和心理辅导。',
+        specialties: ["女子网球", "青少年训练", "技术纠错"],
+        introduction: "专注女子网球教学，擅长青少年技术培养和心理辅导。",
         videos: [
           {
             id: 4,
-            title: '女子网球技巧',
-            url: '/static/video4.mp4',
-            thumbnail: '/static/video4-thumb.jpg'
-          }
+            title: "女子网球技巧",
+            url: "/static/video4.mp4",
+            thumbnail: "/static/video4-thumb.jpg",
+          },
         ],
         rating: 4.7,
         reviewCount: 78,
-        location: '西湖区',
-        category: ['coach', 'intermediate', 'female']
+        location: "西湖区",
+        category: ["coach", "intermediate", "female"],
       },
       {
         id: 5,
-        name: '王强',
-        avatar: '/static/coach5.jpg',
-        gender: 'male',
-        level: '高级陪练',
+        name: "王强",
+        avatar: "/static/coach5.png",
+        gender: "male",
+        level: "高级陪练",
         experience: 4,
-        utr: '4.0',
+        utr: "4.0",
         price: 140,
-        specialties: ['实战陪练', '比赛模拟'],
-        introduction: '实战经验丰富，能够模拟各种比赛场景，提升实战能力。',
+        specialties: ["实战陪练", "比赛模拟"],
+        introduction: "实战经验丰富，能够模拟各种比赛场景，提升实战能力。",
         rating: 4.4,
         reviewCount: 62,
-        location: '江干区',
-        category: ['sparring', 'intermediate', 'male']
-      }
-    ]
-    loading.value = false
-  }, 1000)
+        location: "江干区",
+        category: ["sparring", "intermediate", "male"],
+      },
+    ];
+    loading.value = false;
+  }, 1000);
 }
 
 // 搜索教练
 function searchCoaches() {
   // 搜索逻辑已在computed中处理
-  console.log('搜索教练:', searchKeyword.value)
+  console.log("搜索教练:", searchKeyword.value);
 }
 
 // 切换筛选条件
 function toggleFilter(filterKey: string) {
-  const index = selectedFilters.value.indexOf(filterKey)
+  const index = selectedFilters.value.indexOf(filterKey);
   if (index > -1) {
-    selectedFilters.value.splice(index, 1)
+    selectedFilters.value.splice(index, 1);
   } else {
-    selectedFilters.value.push(filterKey)
+    selectedFilters.value.push(filterKey);
   }
 }
 
 // 跳转到教练详情
 function goToCoachDetail(id: number) {
   uni.navigateTo({
-    url: `/pages/coach-detail/coach-detail?id=${id}`
-  })
+    url: `/pages/coach-detail/coach-detail?id=${id}`,
+  });
 }
 
 // 播放视频
 function playVideo(url: string) {
   uni.showToast({
-    title: '播放视频功能开发中',
-    icon: 'none'
-  })
+    title: "播放视频功能开发中",
+    icon: "none",
+  });
 }
 </script>
 

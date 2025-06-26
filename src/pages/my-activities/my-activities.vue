@@ -2,10 +2,10 @@
   <view class="page-container">
     <!-- 活动状态筛选 -->
     <view class="status-tabs">
-      <view 
-        class="tab-item" 
+      <view
+        class="tab-item"
         :class="{ active: currentStatus === status.key }"
-        v-for="status in statusOptions" 
+        v-for="status in statusOptions"
         :key="status.key"
         @click="switchStatus(status.key)"
       >
@@ -15,9 +15,9 @@
 
     <!-- 活动列表 -->
     <view class="activity-list" v-if="activityList.length > 0">
-      <view 
-        class="activity-item card" 
-        v-for="activity in filteredActivities" 
+      <view
+        class="activity-item card"
+        v-for="activity in filteredActivities"
         :key="activity.id"
         @click="goToActivityDetail(activity.id)"
       >
@@ -27,7 +27,7 @@
             {{ getStatusText(activity.status) }}
           </view>
         </view>
-        
+
         <view class="activity-info">
           <view class="info-row">
             <text class="info-label">时间:</text>
@@ -43,20 +43,22 @@
           </view>
           <view class="info-row">
             <text class="info-label">参与人数:</text>
-            <text class="info-value">{{ activity.participants }}/{{ activity.maxParticipants }}</text>
+            <text class="info-value"
+              >{{ activity.participants }}/{{ activity.maxParticipants }}</text
+            >
           </view>
         </view>
-        
+
         <view class="activity-actions">
-          <button 
-            class="action-btn" 
+          <button
+            class="action-btn"
             v-if="activity.status === 'registered'"
             @click.stop="cancelActivity(activity.id)"
           >
             取消报名
           </button>
-          <button 
-            class="action-btn primary" 
+          <button
+            class="action-btn primary"
             v-if="activity.status === 'completed'"
             @click.stop="rateActivity(activity.id)"
           >
@@ -70,149 +72,153 @@
     <view class="empty-state" v-else>
       <text class="empty-text">暂无活动记录</text>
       <text class="empty-tip">去参加一个UTR活动吧</text>
-      <button class="go-activities-btn" @click="goToActivities">查看活动</button>
+      <button class="go-activities-btn" @click="goToActivities">
+        查看活动
+      </button>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref, computed, onMounted } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
 interface Activity {
-  id: number
-  title: string
-  time: string
-  location: string
-  utrRange: string
-  participants: number
-  maxParticipants: number
-  status: 'registered' | 'completed' | 'cancelled'
-  registerTime: string
-  fee: number
+  id: number;
+  title: string;
+  time: string;
+  location: string;
+  utrRange: string;
+  participants: number;
+  maxParticipants: number;
+  status: "registered" | "completed" | "cancelled";
+  registerTime: string;
+  fee: number;
 }
 
 interface StatusOption {
-  key: string
-  label: string
+  key: string;
+  label: string;
 }
 
 // 响应式数据
-const activityList = ref<Activity[]>([])
-const currentStatus = ref('all')
-const loading = ref(false)
+const activityList = ref<Activity[]>([]);
+const currentStatus = ref("all");
+const loading = ref(false);
 
 // 状态选项
 const statusOptions = ref<StatusOption[]>([
-  { key: 'all', label: '全部' },
-  { key: 'registered', label: '已报名' },
-  { key: 'completed', label: '已完成' },
-  { key: 'cancelled', label: '已取消' }
-])
+  { key: "all", label: "全部" },
+  { key: "registered", label: "已报名" },
+  { key: "completed", label: "已完成" },
+  { key: "cancelled", label: "已取消" },
+]);
 
 // 过滤后的活动列表
 const filteredActivities = computed(() => {
-  if (currentStatus.value === 'all') {
-    return activityList.value
+  if (currentStatus.value === "all") {
+    return activityList.value;
   }
-  return activityList.value.filter(activity => activity.status === currentStatus.value)
-})
+  return activityList.value.filter(
+    (activity) => activity.status === currentStatus.value
+  );
+});
 
 // 页面加载
 onMounted(() => {
-  loadActivityList()
-})
+  loadActivityList();
+});
 
 // 页面参数处理
 onLoad((options: any) => {
   if (options.status) {
-    currentStatus.value = options.status
+    currentStatus.value = options.status;
   }
-})
+});
 
 // 加载活动列表
 function loadActivityList() {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据
   setTimeout(() => {
     activityList.value = [
       {
         id: 1,
-        title: '周末UTR积分赛',
-        time: '2024-01-20 14:00-18:00',
-        location: '星河网球俱乐部',
-        utrRange: '4.0-6.0',
+        title: "周末UTR积分赛",
+        time: "2024-01-20 14:00-18:00",
+        location: "星河网球俱乐部",
+        utrRange: "4.0-6.0",
         participants: 8,
         maxParticipants: 16,
-        status: 'registered',
-        registerTime: '2024-01-15 10:30:00',
-        fee: 100
+        status: "registered",
+        registerTime: "2024-01-15 10:30:00",
+        fee: 100,
       },
       {
         id: 2,
-        title: '新手友谊赛',
-        time: '2024-01-18 16:00-18:00',
-        location: '蓝天网球中心',
-        utrRange: '2.0-4.0',
+        title: "新手友谊赛",
+        time: "2024-01-18 16:00-18:00",
+        location: "蓝天网球中心",
+        utrRange: "2.0-4.0",
         participants: 12,
         maxParticipants: 12,
-        status: 'completed',
-        registerTime: '2024-01-14 15:20:00',
-        fee: 50
-      }
-    ]
-    loading.value = false
-  }, 1000)
+        status: "completed",
+        registerTime: "2024-01-14 15:20:00",
+        fee: 50,
+      },
+    ];
+    loading.value = false;
+  }, 1000);
 }
 
 // 切换状态
 function switchStatus(status: string) {
-  currentStatus.value = status
+  currentStatus.value = status;
 }
 
 // 获取状态文本
 function getStatusText(status: string) {
   const statusMap: Record<string, string> = {
-    'registered': '已报名',
-    'completed': '已完成',
-    'cancelled': '已取消'
-  }
-  return statusMap[status] || '未知状态'
+    registered: "已报名",
+    completed: "已完成",
+    cancelled: "已取消",
+  };
+  return statusMap[status] || "未知状态";
 }
 
 // 取消报名
 function cancelActivity(activityId: number) {
   uni.showModal({
-    title: '确认取消',
-    content: '确定要取消报名吗？',
+    title: "确认取消",
+    content: "确定要取消报名吗？",
     success: (res) => {
       if (res.confirm) {
         // 处理取消逻辑
-        console.log('取消报名:', activityId)
+        console.log("取消报名:", activityId);
       }
-    }
-  })
+    },
+  });
 }
 
 // 评价活动
 function rateActivity(activityId: number) {
-  console.log('评价活动:', activityId)
+  console.log("评价活动:", activityId);
   // 跳转到评价页面
 }
 
 // 查看活动详情
 function goToActivityDetail(activityId: number) {
   uni.navigateTo({
-    url: `/pages/activity-detail/activity-detail?id=${activityId}`
-  })
+    url: `/pages/activity-detail/activity-detail?id=${activityId}`,
+  });
 }
 
 // 去查看活动
 function goToActivities() {
   uni.navigateTo({
-    url: '/pages/activities/activities'
-  })
+    url: "/pages/activities/activities",
+  });
 }
 </script>
 
@@ -244,7 +250,7 @@ function goToActivities() {
 }
 
 .tab-item.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;

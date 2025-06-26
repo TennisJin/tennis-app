@@ -1,0 +1,151 @@
+
+.page-container[data-v-fa8e2822] {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+.status-tabs[data-v-fa8e2822] {
+  display: flex;
+  background-color: #ffffff;
+  padding: 0 0.625rem;
+  border-bottom: 0.03125rem solid #e5e5e5;
+}
+.tab-item[data-v-fa8e2822] {
+  flex: 1;
+  text-align: center;
+  padding: 0.9375rem 0;
+  font-size: 0.875rem;
+  color: #666666;
+  position: relative;
+}
+.tab-item.active[data-v-fa8e2822] {
+  color: #07c160;
+  font-weight: bold;
+}
+.tab-item.active[data-v-fa8e2822]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.875rem;
+  height: 0.125rem;
+  background-color: #07c160;
+  border-radius: 0.0625rem;
+}
+.order-list[data-v-fa8e2822] {
+  padding: 0.625rem;
+}
+.order-item[data-v-fa8e2822] {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
+}
+.order-header[data-v-fa8e2822] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.order-number[data-v-fa8e2822] {
+  font-size: 0.875rem;
+  color: #666666;
+}
+.order-status[data-v-fa8e2822] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.625rem;
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+.order-status.pending[data-v-fa8e2822] {
+  background-color: #ff9500;
+}
+.order-status.paid[data-v-fa8e2822] {
+  background-color: #07c160;
+}
+.order-status.completed[data-v-fa8e2822] {
+  background-color: #576b95;
+}
+.order-status.cancelled[data-v-fa8e2822] {
+  background-color: #fa5151;
+}
+.order-content[data-v-fa8e2822] {
+  display: flex;
+  margin-bottom: 0.625rem;
+}
+.venue-image[data-v-fa8e2822] {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 0.375rem;
+  margin-right: 0.625rem;
+}
+.order-info[data-v-fa8e2822] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.venue-name[data-v-fa8e2822] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 0.25rem;
+}
+.court-info[data-v-fa8e2822],
+.time-info[data-v-fa8e2822] {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-bottom: 0.25rem;
+}
+.price-info[data-v-fa8e2822] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff6b35;
+}
+.order-actions[data-v-fa8e2822] {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.625rem;
+}
+.action-btn[data-v-fa8e2822] {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  border: 0.03125rem solid #e5e5e5;
+  background-color: #ffffff;
+  color: #333333;
+}
+.action-btn.primary[data-v-fa8e2822] {
+  background-color: #07c160;
+  color: #ffffff;
+  border-color: #07c160;
+}
+.empty-state[data-v-fa8e2822] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6.25rem 1.25rem;
+  text-align: center;
+}
+.empty-text[data-v-fa8e2822] {
+  font-size: 1rem;
+  color: #999999;
+  margin-bottom: 0.5rem;
+}
+.empty-tip[data-v-fa8e2822] {
+  font-size: 0.875rem;
+  color: #cccccc;
+  margin-bottom: 1.25rem;
+}
+.go-booking-btn[data-v-fa8e2822] {
+  padding: 0.625rem 1.25rem;
+  background-color: #07c160;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  border: none;
+}
+.card[data-v-fa8e2822] {
+  box-shadow: 0 0.0625rem 0.375rem rgba(0, 0, 0, 0.1);
+}

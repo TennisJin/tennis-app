@@ -62,6 +62,27 @@
   "mp-toutiao": {
     "usingComponents": true
   },
+  "h5": {
+    "title": "网球UTR小程序",
+    "template": "index.html",
+    "router": {
+      "mode": "hash",
+      "base": "./"
+    },
+    "optimization": {
+      "treeShaking": {
+        "enable": false
+      }
+    },
+    "publicPath": "./",
+    "sdkConfigs": {},
+    "async": {
+      "loading": "AsyncLoading",
+      "error": "AsyncError",
+      "delay": 200,
+      "timeout": 60000
+    }
+  },
   "uniStatistics": {
     "enable": false
   },

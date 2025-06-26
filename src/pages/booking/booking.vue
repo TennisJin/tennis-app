@@ -3,23 +3,23 @@
     <!-- 搜索区域 -->
     <view class="search-section">
       <view class="search-box">
-        <input 
-          class="search-input" 
-          placeholder="搜索场馆名称" 
+        <input
+          class="search-input"
+          placeholder="搜索场馆名称"
           v-model="searchKeyword"
           @confirm="searchVenues"
         />
         <button class="search-btn" @click="searchVenues">搜索</button>
       </view>
-      
+
       <!-- 筛选条件 -->
       <view class="filter-section">
         <scroll-view class="filter-scroll" scroll-x="true">
           <view class="filter-list">
-            <view 
-              class="filter-item" 
+            <view
+              class="filter-item"
               :class="{ active: selectedFilters.includes(filter.key) }"
-              v-for="filter in filterOptions" 
+              v-for="filter in filterOptions"
               :key="filter.key"
               @click="toggleFilter(filter.key)"
             >
@@ -32,9 +32,9 @@
 
     <!-- 场馆列表 -->
     <view class="venue-list" v-if="venueList.length > 0">
-      <view 
-        class="venue-item card" 
-        v-for="venue in filteredVenues" 
+      <view
+        class="venue-item card"
+        v-for="venue in filteredVenues"
         :key="venue.id"
         @click="goToVenueDetail(venue.id)"
       >
@@ -47,7 +47,7 @@
               <text class="rating-text">分</text>
             </view>
           </view>
-          
+
           <view class="venue-details">
             <view class="detail-item">
               <text class="detail-label">地址:</text>
@@ -62,14 +62,18 @@
               <text class="detail-value price">¥{{ venue.priceRange }}</text>
             </view>
           </view>
-          
+
           <view class="venue-tags">
-            <text class="tag" v-for="tag in venue.tags" :key="tag">{{ tag }}</text>
+            <text class="tag" v-for="tag in venue.tags" :key="tag">{{
+              tag
+            }}</text>
           </view>
-          
+
           <view class="venue-footer">
             <text class="distance">距离 {{ venue.distance }}</text>
-            <button class="book-btn" @click.stop="quickBook(venue.id)">立即预订</button>
+            <button class="book-btn" @click.stop="quickBook(venue.id)">
+              立即预订
+            </button>
           </view>
         </view>
       </view>
@@ -77,7 +81,11 @@
 
     <!-- 空状态 -->
     <view class="empty-state" v-else-if="!loading">
-      <image class="empty-icon" src="/static/empty-venue.png" mode="aspectFit"></image>
+      <image
+        class="empty-icon"
+        src="/static/empty-venue.png"
+        mode="aspectFit"
+      ></image>
       <text class="empty-text">暂无场馆信息</text>
       <text class="empty-tip">试试搜索其他关键词</text>
     </view>
@@ -90,194 +98,196 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref, computed, onMounted } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
 interface Venue {
-  id: number
-  name: string
-  image: string
-  address: string
-  courtType: string
-  priceRange: string
-  rating: number
-  tags: string[]
-  distance: string
-  category: string[]
+  id: number;
+  name: string;
+  image: string;
+  address: string;
+  courtType: string;
+  priceRange: string;
+  rating: number;
+  tags: string[];
+  distance: string;
+  category: string[];
 }
 
 interface FilterOption {
-  key: string
-  label: string
+  key: string;
+  label: string;
 }
 
 // 响应式数据
-const searchKeyword = ref('')
-const venueList = ref<Venue[]>([])
-const selectedFilters = ref<string[]>([])
-const loading = ref(false)
+const searchKeyword = ref("");
+const venueList = ref<Venue[]>([]);
+const selectedFilters = ref<string[]>([]);
+const loading = ref(false);
 
 // 筛选选项
 const filterOptions = ref<FilterOption[]>([
-  { key: 'indoor', label: '室内' },
-  { key: 'outdoor', label: '室外' },
-  { key: 'hard', label: '硬地' },
-  { key: 'clay', label: '红土' },
-  { key: 'grass', label: '草地' },
-  { key: 'nearby', label: '附近' },
-  { key: 'cheap', label: '价格优惠' }
-])
+  { key: "indoor", label: "室内" },
+  { key: "outdoor", label: "室外" },
+  { key: "hard", label: "硬地" },
+  { key: "clay", label: "红土" },
+  { key: "grass", label: "草地" },
+  { key: "nearby", label: "附近" },
+  { key: "cheap", label: "价格优惠" },
+]);
 
 // 计算过滤后的场馆列表
 const filteredVenues = computed(() => {
   if (selectedFilters.value.length === 0) {
-    return venueList.value
+    return venueList.value;
   }
-  
-  return venueList.value.filter(venue => {
-    return selectedFilters.value.some(filter => 
-      venue.category.includes(filter) || 
-      venue.tags.some(tag => tag.includes(filter))
-    )
-  })
-})
+
+  return venueList.value.filter((venue) => {
+    return selectedFilters.value.some(
+      (filter) =>
+        venue.category.includes(filter) ||
+        venue.tags.some((tag) => tag.includes(filter))
+    );
+  });
+});
 
 // 页面加载
 onMounted(() => {
-  loadVenueList()
-})
+  loadVenueList();
+});
 
 // 页面参数处理
 onLoad((options: any) => {
   if (options.keyword) {
-    searchKeyword.value = decodeURIComponent(options.keyword)
-    searchVenues()
+    searchKeyword.value = decodeURIComponent(options.keyword);
+    searchVenues();
   }
-})
+});
 
 // 加载场馆列表
 function loadVenueList() {
-  loading.value = true
-  
+  loading.value = true;
+
   // 模拟数据，实际应该调用API
   setTimeout(() => {
     venueList.value = [
       {
         id: 1,
-        name: '黄龙体育中心',
-        image: '/static/venue1.jpg',
-        address: '西湖区 黄龙 室内 硬地',
-        courtType: '室内硬地',
-        priceRange: '120-200/小时',
+        name: "黄龙体育中心",
+        image: "/static/venue1.jpg",
+        address: "西湖区 黄龙 室内 硬地",
+        courtType: "室内硬地",
+        priceRange: "120-200/小时",
         rating: 4.8,
-        tags: ['室内', '硬地', '专业'],
-        distance: '2.8km',
-        category: ['indoor', 'hard']
+        tags: ["室内", "硬地", "专业"],
+        distance: "2.8km",
+        category: ["indoor", "hard"],
       },
       {
         id: 2,
-        name: 'GS网球俱乐部（浙报店）',
-        image: '/static/venue2.jpg',
-        address: '拱墅区 浙报印务 室内 硬地',
-        courtType: '室内硬地',
-        priceRange: '100-150/小时',
+        name: "GS网球俱乐部（浙报店）",
+        image: "/static/venue2.jpg",
+        address: "拱墅区 浙报印务 室内 硬地",
+        courtType: "室内硬地",
+        priceRange: "100-150/小时",
         rating: 4.5,
-        tags: ['室内', '硬地'],
-        distance: '5.1km',
-        category: ['indoor', 'hard']
+        tags: ["室内", "硬地"],
+        distance: "5.1km",
+        category: ["indoor", "hard"],
       },
       {
         id: 3,
-        name: '城北体育公园-网球中心',
-        image: '/static/venue3.jpg',
-        address: '拱墅区 室内 硬地',
-        courtType: '室内硬地',
-        priceRange: '80-120/小时',
+        name: "城北体育公园-网球中心",
+        image: "/static/venue3.jpg",
+        address: "拱墅区 室内 硬地",
+        courtType: "室内硬地",
+        priceRange: "80-120/小时",
         rating: 4.3,
-        tags: ['室内', '硬地', '价格优惠'],
-        distance: '5.1km',
-        category: ['indoor', 'hard', 'cheap']
+        tags: ["室内", "硬地", "价格优惠"],
+        distance: "5.1km",
+        category: ["indoor", "hard", "cheap"],
       },
       {
         id: 4,
-        name: '西湖网球俱乐部',
-        image: '/static/venue4.jpg',
-        address: '余杭区 西湖 室外 硬地',
-        courtType: '室外硬地',
-        priceRange: '60-100/小时',
+        name: "西湖网球俱乐部",
+        image: "/static/venue4.jpg",
+        address: "余杭区 西湖 室外 硬地",
+        courtType: "室外硬地",
+        priceRange: "60-100/小时",
         rating: 4.2,
-        tags: ['室外', '硬地', '风景好'],
-        distance: '6.2km',
-        category: ['outdoor', 'hard']
+        tags: ["室外", "硬地", "风景好"],
+        distance: "6.2km",
+        category: ["outdoor", "hard"],
       },
       {
         id: 5,
-        name: '平击网球俱乐部',
-        image: '/static/venue5.jpg',
-        address: '余杭区 五常 室内 硬地',
-        courtType: '室内硬地',
-        priceRange: '90-140/小时',
+        name: "平击网球俱乐部",
+        image: "/static/venue5.jpg",
+        address: "余杭区 五常 室内 硬地",
+        courtType: "室内硬地",
+        priceRange: "90-140/小时",
         rating: 4.6,
-        tags: ['室内', '硬地'],
-        distance: '9.8km',
-        category: ['indoor', 'hard']
-      }
-    ]
-    loading.value = false
-  }, 1000)
+        tags: ["室内", "硬地"],
+        distance: "9.8km",
+        category: ["indoor", "hard"],
+      },
+    ];
+    loading.value = false;
+  }, 1000);
 }
 
 // 搜索场馆
 function searchVenues() {
   if (!searchKeyword.value.trim()) {
-    loadVenueList()
-    return
+    loadVenueList();
+    return;
   }
-  
-  loading.value = true
-  
+
+  loading.value = true;
+
   // 模拟搜索API调用
   setTimeout(() => {
-    venueList.value = venueList.value.filter(venue => 
-      venue.name.includes(searchKeyword.value) || 
-      venue.address.includes(searchKeyword.value)
-    )
-    loading.value = false
-  }, 500)
+    venueList.value = venueList.value.filter(
+      (venue) =>
+        venue.name.includes(searchKeyword.value) ||
+        venue.address.includes(searchKeyword.value)
+    );
+    loading.value = false;
+  }, 500);
 }
 
 // 切换筛选条件
 function toggleFilter(filterKey: string) {
-  const index = selectedFilters.value.indexOf(filterKey)
+  const index = selectedFilters.value.indexOf(filterKey);
   if (index > -1) {
-    selectedFilters.value.splice(index, 1)
+    selectedFilters.value.splice(index, 1);
   } else {
-    selectedFilters.value.push(filterKey)
+    selectedFilters.value.push(filterKey);
   }
 }
 
 // 跳转到场馆详情
 function goToVenueDetail(id: number) {
   uni.showToast({
-    title: '跳转到场馆详情',
-    icon: 'none'
-  })
+    title: "跳转到场馆详情",
+    icon: "none",
+  });
 }
 
 // 快速预订
 function quickBook(id: number) {
   uni.showModal({
-    title: '预订确认',
-    content: '是否立即预订该场馆？',
+    title: "预订确认",
+    content: "是否立即预订该场馆？",
     success: (res) => {
       if (res.confirm) {
         uni.showToast({
-          title: '预订成功',
-          icon: 'success'
-        })
+          title: "预订成功",
+          icon: "success",
+        });
       }
-    }
-  })
+    },
+  });
 }
 </script>
 

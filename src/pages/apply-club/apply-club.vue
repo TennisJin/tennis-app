@@ -11,42 +11,42 @@
       <!-- 俱乐部基本信息 -->
       <view class="form-section">
         <text class="section-title">俱乐部基本信息</text>
-        
+
         <view class="form-item">
           <text class="form-label">俱乐部名称 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.clubName" 
+          <input
+            class="form-input"
+            v-model="formData.clubName"
             placeholder="请输入俱乐部名称"
             maxlength="50"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">俱乐部简介 *</text>
-          <textarea 
-            class="form-textarea" 
-            v-model="formData.description" 
+          <textarea
+            class="form-textarea"
+            v-model="formData.description"
             placeholder="请简要介绍俱乐部的特色和服务"
             maxlength="500"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">俱乐部地址 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.address" 
+          <input
+            class="form-input"
+            v-model="formData.address"
             placeholder="请输入详细地址"
             maxlength="100"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">联系电话 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.phone" 
+          <input
+            class="form-input"
+            v-model="formData.phone"
             placeholder="请输入联系电话"
             type="number"
             maxlength="11"
@@ -57,36 +57,36 @@
       <!-- 场地信息 -->
       <view class="form-section">
         <text class="section-title">场地信息</text>
-        
+
         <view class="form-item">
           <text class="form-label">场地数量 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.courtCount" 
+          <input
+            class="form-input"
+            v-model="formData.courtCount"
             placeholder="请输入场地数量"
             type="number"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">场地类型 *</text>
-          <picker 
-            class="form-picker" 
-            :value="courtTypeIndex" 
-            :range="courtTypes" 
+          <picker
+            class="form-picker"
+            :value="courtTypeIndex"
+            :range="courtTypes"
             @change="onCourtTypeChange"
           >
             <view class="picker-text">
-              {{ courtTypes[courtTypeIndex] || '请选择场地类型' }}
+              {{ courtTypes[courtTypeIndex] || "请选择场地类型" }}
             </view>
           </picker>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">营业时间 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.businessHours" 
+          <input
+            class="form-input"
+            v-model="formData.businessHours"
             placeholder="例如：06:00-22:00"
             maxlength="20"
           />
@@ -96,14 +96,14 @@
       <!-- 资质证明 -->
       <view class="form-section">
         <text class="section-title">资质证明</text>
-        
+
         <view class="form-item">
           <text class="form-label">营业执照 *</text>
           <view class="upload-area" @click="uploadLicense">
-            <image 
-              v-if="formData.licenseImage" 
-              class="upload-image" 
-              :src="formData.licenseImage" 
+            <image
+              v-if="formData.licenseImage"
+              class="upload-image"
+              :src="formData.licenseImage"
               mode="aspectFill"
             />
             <view v-else class="upload-placeholder">
@@ -112,22 +112,22 @@
             </view>
           </view>
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">场地照片 *</text>
           <view class="upload-grid">
-            <view 
-              class="upload-item" 
-              v-for="(image, index) in formData.courtImages" 
+            <view
+              class="upload-item"
+              v-for="(image, index) in formData.courtImages"
               :key="index"
               @click="previewImage(image)"
             >
               <image class="upload-image" :src="image" mode="aspectFill" />
               <view class="delete-btn" @click.stop="deleteImage(index)">×</view>
             </view>
-            <view 
-              v-if="formData.courtImages.length < 6" 
-              class="upload-item upload-placeholder" 
+            <view
+              v-if="formData.courtImages.length < 6"
+              class="upload-item upload-placeholder"
               @click="uploadCourtImage"
             >
               <text class="upload-icon">+</text>
@@ -141,32 +141,32 @@
       <!-- 联系人信息 -->
       <view class="form-section">
         <text class="section-title">联系人信息</text>
-        
+
         <view class="form-item">
           <text class="form-label">联系人姓名 *</text>
-          <input 
-            class="form-input" 
-            v-model="formData.contactName" 
+          <input
+            class="form-input"
+            v-model="formData.contactName"
             placeholder="请输入联系人姓名"
             maxlength="20"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">联系人职位</text>
-          <input 
-            class="form-input" 
-            v-model="formData.contactPosition" 
+          <input
+            class="form-input"
+            v-model="formData.contactPosition"
             placeholder="请输入联系人职位"
             maxlength="30"
           />
         </view>
-        
+
         <view class="form-item">
           <text class="form-label">微信号</text>
-          <input 
-            class="form-input" 
-            v-model="formData.wechat" 
+          <input
+            class="form-input"
+            v-model="formData.wechat"
             placeholder="请输入微信号"
             maxlength="50"
           />
@@ -176,7 +176,11 @@
 
     <!-- 提交按钮 -->
     <view class="submit-container">
-      <button class="submit-btn" @click="submitApplication" :disabled="!isFormValid">
+      <button
+        class="submit-btn"
+        @click="submitApplication"
+        :disabled="!isFormValid"
+      >
         提交申请
       </button>
       <text class="submit-tip">提交后我们将在3个工作日内审核并回复</text>
@@ -185,143 +189,151 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref, computed, onMounted } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
 interface FormData {
-  clubName: string
-  description: string
-  address: string
-  phone: string
-  courtCount: string
-  courtType: string
-  businessHours: string
-  licenseImage: string
-  courtImages: string[]
-  contactName: string
-  contactPosition: string
-  wechat: string
+  clubName: string;
+  description: string;
+  address: string;
+  phone: string;
+  courtCount: string;
+  courtType: string;
+  businessHours: string;
+  licenseImage: string;
+  courtImages: string[];
+  contactName: string;
+  contactPosition: string;
+  wechat: string;
 }
 
 // 响应式数据
 const formData = ref<FormData>({
-  clubName: '',
-  description: '',
-  address: '',
-  phone: '',
-  courtCount: '',
-  courtType: '',
-  businessHours: '',
-  licenseImage: '',
+  clubName: "",
+  description: "",
+  address: "",
+  phone: "",
+  courtCount: "",
+  courtType: "",
+  businessHours: "",
+  licenseImage: "",
   courtImages: [],
-  contactName: '',
-  contactPosition: '',
-  wechat: ''
-})
+  contactName: "",
+  contactPosition: "",
+  wechat: "",
+});
 
-const courtTypes = ref(['室内硬地', '室外硬地', '红土场', '草地场', '人工草场'])
-const courtTypeIndex = ref(0)
+const courtTypes = ref([
+  "室内硬地",
+  "室外硬地",
+  "红土场",
+  "草地场",
+  "人工草场",
+]);
+const courtTypeIndex = ref(0);
 
 // 计算属性
 const isFormValid = computed(() => {
-  return formData.value.clubName && 
-         formData.value.description && 
-         formData.value.address && 
-         formData.value.phone && 
-         formData.value.courtCount && 
-         formData.value.courtType && 
-         formData.value.businessHours && 
-         formData.value.licenseImage && 
-         formData.value.courtImages.length > 0 && 
-         formData.value.contactName
-})
+  return (
+    formData.value.clubName &&
+    formData.value.description &&
+    formData.value.address &&
+    formData.value.phone &&
+    formData.value.courtCount &&
+    formData.value.courtType &&
+    formData.value.businessHours &&
+    formData.value.licenseImage &&
+    formData.value.courtImages.length > 0 &&
+    formData.value.contactName
+  );
+});
 
 // 页面加载
 onMounted(() => {
   // 初始化页面
-})
+});
 
 // 页面参数处理
 onLoad((options: any) => {
   // 处理页面参数
-})
+});
 
 // 场地类型选择
 function onCourtTypeChange(e: any) {
-  courtTypeIndex.value = e.detail.value
-  formData.value.courtType = courtTypes.value[e.detail.value]
+  courtTypeIndex.value = e.detail.value;
+  formData.value.courtType = courtTypes.value[e.detail.value];
 }
 
 // 上传营业执照
 function uploadLicense() {
   uni.chooseImage({
     count: 1,
-    sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sizeType: ["compressed"],
+    sourceType: ["album", "camera"],
     success: (res) => {
-      formData.value.licenseImage = res.tempFilePaths[0]
+      formData.value.licenseImage = res.tempFilePaths[0];
     },
     fail: (err) => {
-      console.log('上传失败:', err)
-    }
-  })
+      console.log("上传失败:", err);
+    },
+  });
 }
 
 // 上传场地照片
 function uploadCourtImage() {
-  const remainCount = 6 - formData.value.courtImages.length
+  const remainCount = 6 - formData.value.courtImages.length;
   uni.chooseImage({
     count: remainCount,
-    sizeType: ['compressed'],
-    sourceType: ['album', 'camera'],
+    sizeType: ["compressed"],
+    sourceType: ["album", "camera"],
     success: (res) => {
-      formData.value.courtImages.push(...res.tempFilePaths)
+      formData.value.courtImages.push(...res.tempFilePaths);
     },
     fail: (err) => {
-      console.log('上传失败:', err)
-    }
-  })
+      console.log("上传失败:", err);
+    },
+  });
 }
 
 // 预览图片
 function previewImage(image: string) {
   uni.previewImage({
     urls: [image],
-    current: image
-  })
+    current: image,
+  });
 }
 
 // 删除图片
 function deleteImage(index: number) {
-  formData.value.courtImages.splice(index, 1)
+  formData.value.courtImages.splice(index, 1);
 }
 
 // 提交申请
 function submitApplication() {
   if (!isFormValid.value) {
     uni.showToast({
-      title: '请填写完整信息',
-      icon: 'none'
-    })
-    return
+      title: "请填写完整信息",
+      icon: "none",
+    });
+    return;
   }
-  
+
   uni.showLoading({
-    title: '提交中...'
-  })
-  
+    title: "提交中...",
+  });
+
   // 模拟提交
   setTimeout(() => {
-    uni.hideLoading()
+    uni.hideLoading();
     uni.showModal({
-      title: '申请提交成功',
-      content: '我们将在3个工作日内审核您的申请，请耐心等待',
+      title: "申请提交成功",
+      content: "我们将在3个工作日内审核您的申请，请耐心等待",
       showCancel: false,
       success: () => {
-        uni.navigateBack()
-      }
-    })
-  }, 2000)
+        uni.navigateBack();
+      },
+    });
+  }, 2000);
 }
 </script>
 

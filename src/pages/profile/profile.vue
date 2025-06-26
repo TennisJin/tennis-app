@@ -3,7 +3,11 @@
     <!-- 用户信息卡片 -->
     <view class="user-card card">
       <view class="user-info">
-        <image class="user-avatar" :src="userInfo.avatar" mode="aspectFill"></image>
+        <image
+          class="user-avatar"
+          :src="userInfo.avatar"
+          mode="aspectFill"
+        ></image>
         <view class="user-details">
           <text class="user-name">{{ userInfo.name }}</text>
           <view class="user-rating">
@@ -19,11 +23,19 @@
     <view class="quick-menu">
       <view class="menu-row">
         <view class="menu-item" @click="goToOrders">
-          <image class="menu-icon" src="/static/icon-order.png" mode="aspectFit"></image>
+          <image
+            class="menu-icon"
+            src="/static/icon-order.png"
+            mode="aspectFit"
+          ></image>
           <text class="menu-text">订单</text>
         </view>
         <view class="menu-item" @click="goToWallet">
-          <image class="menu-icon" src="/static/icon-wallet.png" mode="aspectFit"></image>
+          <image
+            class="menu-icon"
+            src="/static/icon-wallet.png"
+            mode="aspectFit"
+          ></image>
           <text class="menu-text">卡包</text>
         </view>
       </view>
@@ -32,31 +44,51 @@
     <!-- 功能列表 -->
     <view class="function-list">
       <view class="list-item" @click="goToMyActivities">
-        <image class="item-icon" src="/static/icon-activity.png" mode="aspectFit"></image>
+        <image
+          class="item-icon"
+          src="/static/icon-activity.png"
+          mode="aspectFit"
+        ></image>
         <text class="item-text">我的活动</text>
         <text class="item-arrow">></text>
       </view>
-      
+
       <view class="list-item" @click="goToMatchRecords">
-        <image class="item-icon" src="/static/icon-match.png" mode="aspectFit"></image>
+        <image
+          class="item-icon"
+          src="/static/icon-match.png"
+          mode="aspectFit"
+        ></image>
         <text class="item-text">比赛记录</text>
         <text class="item-arrow">></text>
       </view>
-      
+
       <view class="list-item" @click="goToApplyClub">
-        <image class="item-icon" src="/static/icon-club.png" mode="aspectFit"></image>
+        <image
+          class="item-icon"
+          src="/static/icon-club.png"
+          mode="aspectFit"
+        ></image>
         <text class="item-text">申请创建俱乐部</text>
         <text class="item-arrow">></text>
       </view>
-      
+
       <view class="list-item" @click="goToApplyCoach">
-        <image class="item-icon" src="/static/icon-coach.png" mode="aspectFit"></image>
+        <image
+          class="item-icon"
+          src="/static/icon-coach.png"
+          mode="aspectFit"
+        ></image>
         <text class="item-text">申请成为教练或陪练</text>
         <text class="item-arrow">></text>
       </view>
-      
+
       <view class="list-item" @click="goToHelp">
-        <image class="item-icon" src="/static/icon-help.png" mode="aspectFit"></image>
+        <image
+          class="item-icon"
+          src="/static/icon-help.png"
+          mode="aspectFit"
+        ></image>
         <text class="item-text">帮助&反馈</text>
         <text class="item-arrow">></text>
       </view>
@@ -72,41 +104,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 interface UserInfo {
-  id: number
-  name: string
-  avatar: string
-  rating: number
-  utr: string
-  gender: string
+  id: number;
+  name: string;
+  avatar: string;
+  rating: number;
+  utr: string;
+  gender: string;
 }
 
 // 响应式数据
 const userInfo = ref<UserInfo>({
   id: 1,
-  name: '吐丝',
-  avatar: '/static/default-avatar.png',
+  name: "吐丝",
+  avatar: "/static/default-avatar.png",
   rating: 4.0,
-  utr: '6.77',
-  gender: 'male'
-})
+  utr: "6.77",
+  gender: "male",
+});
 
 // 页面加载时获取用户信息
 onMounted(() => {
-  loadUserInfo()
-})
+  loadUserInfo();
+});
 
 // 加载用户信息
 function loadUserInfo() {
   // 从本地存储获取用户信息
-  const storedUserInfo = uni.getStorageSync('userInfo')
+  const storedUserInfo = uni.getStorageSync("userInfo");
   if (storedUserInfo) {
-    userInfo.value = storedUserInfo
+    userInfo.value = storedUserInfo;
   } else {
     // 如果没有本地存储，调用API获取
-    fetchUserInfo()
+    fetchUserInfo();
   }
 }
 
@@ -114,69 +146,69 @@ function loadUserInfo() {
 function fetchUserInfo() {
   // 这里应该调用实际的API
   // 暂时使用模拟数据
-  console.log('获取用户信息')
+  console.log("获取用户信息");
 }
 
 // 跳转到订单页面
 function goToOrders() {
   uni.navigateTo({
-    url: '/pages/my-orders/my-orders'
-  })
+    url: "/pages/my-orders/my-orders",
+  });
 }
 
 // 跳转到卡包页面
 function goToWallet() {
   uni.showToast({
-    title: '功能开发中',
-    icon: 'none'
-  })
+    title: "功能开发中",
+    icon: "none",
+  });
 }
 
 // 跳转到我的活动
 function goToMyActivities() {
   uni.navigateTo({
-    url: '/pages/my-activities/my-activities'
-  })
+    url: "/pages/my-activities/my-activities",
+  });
 }
 
 // 跳转到比赛记录
 function goToMatchRecords() {
   uni.showToast({
-    title: '功能开发中',
-    icon: 'none'
-  })
+    title: "功能开发中",
+    icon: "none",
+  });
 }
 
 // 跳转到申请创建俱乐部
 function goToApplyClub() {
   uni.navigateTo({
-    url: '/pages/apply-club/apply-club'
-  })
+    url: "/pages/apply-club/apply-club",
+  });
 }
 
 // 跳转到申请成为教练
 function goToApplyCoach() {
   uni.navigateTo({
-    url: '/pages/apply-coach/apply-coach'
-  })
+    url: "/pages/apply-coach/apply-coach",
+  });
 }
 
 // 跳转到帮助页面
 function goToHelp() {
   uni.showToast({
-    title: '功能开发中',
-    icon: 'none'
-  })
+    title: "功能开发中",
+    icon: "none",
+  });
 }
 
 // 联系客服
 function contactService() {
   uni.showModal({
-    title: '联系客服',
-    content: '客服微信：tennis-service\n客服电话：400-123-4567',
+    title: "联系客服",
+    content: "客服微信：tennis-service\n客服电话：400-123-4567",
     showCancel: false,
-    confirmText: '知道了'
-  })
+    confirmText: "知道了",
+  });
 }
 </script>
 
