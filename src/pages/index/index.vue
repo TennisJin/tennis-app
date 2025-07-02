@@ -132,6 +132,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { UserService, CoachService, ActivityService } from "@/services/api";
 
 // 响应式数据
 const searchKeyword = ref("");
@@ -162,63 +163,110 @@ function searchVenues() {
 }
 
 // 加载教练列表
-function loadCoachList() {
-  // 模拟数据，实际应该调用API
-  coachList.value = [
-    {
-      id: 1,
-      name: "白影",
-      avatar: "/static/images/coaches/coach1.png",
-      level: "教练",
-      specialty: "陪练",
-      utr: "4.5",
-    },
-    {
-      id: 2,
-      name: "小罗",
-      avatar: "/static/images/coaches/coach2.png",
-      level: "教练",
-      specialty: "陪练",
-      utr: "5.2",
-    },
-    {
-      id: 3,
-      name: "陈小明",
-      avatar: "/static/images/coaches/coach3.png",
-      level: "陪练",
-      specialty: "基础",
-      utr: "3.8",
-    },
-  ];
+async function loadCoachList() {
+  try {
+    const response = await CoachService.getCoaches({
+      page: 1,
+      limit: 3,
+      featured: true, // 获取推荐教练
+    });
+
+    coachList.value = response.data.map((coach: any) => ({
+      id: coach.id,
+      name: coach.name,
+      avatar: coach.avatar || "/static/images/coaches/default.png",
+      level: coach.level || "教练",
+      specialty: coach.specialty || "综合",
+      utr: coach.utr || "0.0",
+    }));
+  } catch (error: any) {
+    console.error("获取教练列表失败:", error);
+    // 使用默认数据作为降级方案
+    coachList.value = [
+      {
+        id: 1,
+        name: "白影",
+        avatar: "/static/images/coaches/coach1.png",
+        level: "教练",
+        specialty: "陪练",
+        utr: "4.5",
+      },
+      {
+        id: 2,
+        name: "小罗",
+        avatar: "/static/images/coaches/coach2.png",
+        level: "教练",
+        specialty: "陪练",
+        utr: "5.2",
+      },
+      {
+        id: 3,
+        name: "陈小明",
+        avatar: "/static/images/coaches/coach3.png",
+        level: "陪练",
+        specialty: "基础",
+        utr: "3.8",
+      },
+    ];
+  }
 }
 
 // 加载活动列表
-function loadActivityList() {
-  // 模拟数据，实际应该调用API
-  activityList.value = [
-    {
-      id: 1,
-      title: "UTR网球积分赛3.0（蒙马体育）",
-      time: "06月26日 周四 09:30",
-      location: "城东体育网球训练中心",
-      utrRange: "2-4",
-      participants: 5,
-      maxParticipants: 8,
-      price: 120,
-      status: "open",
-    },
-    {
-      id: 2,
-      title: "UTR网球积分赛2.5『功量网球中心』",
-      time: "06月26日 周四 09:30",
-      location: "功量网球中心",
-      utrRange: "1.5-3",
-      participants: 3,
-      maxParticipants: 6,
-      price: 100,
-      status: "open",
-    },
-  ];
+async function loadActivityList() {
+  try {
+    const response = await ActivityService.getActivities({
+      page: 1,
+      limit: 10,
+      type: "TRAINING",
+      status: "UPCOMING", // 只获取开放报名的活动
+      featured: true, // 获取推荐活动
+    });
+
+    activityList.value = response.data.map((activity: any) => ({
+      id: activity.id,
+      title: activity.title,
+      time: new Date(activity.startTime).toLocaleString("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      location: activity.location,
+      utrRange: activity.utrRange || "不限",
+      participants: activity.currentParticipants || 0,
+      maxParticipants: activity.maxParticipants || 0,
+      price: activity.price || 0,
+      status: activity.status || "open",
+    }));
+  } catch (error: any) {
+    console.error("获取活动列表失败:", error);
+    // 使用默认数据作为降级方案
+    activityList.value = [
+      {
+        id: 1,
+        title: "UTR网球积分赛3.0（蒙马体育）",
+        time: "06月26日 周四 09:30",
+        location: "城东体育网球训练中心",
+        utrRange: "2-4",
+        participants: 5,
+        maxParticipants: 8,
+        price: 120,
+        status: "open",
+      },
+      {
+        id: 2,
+        title: "UTR网球积分赛2.5『功量网球中心』",
+        time: "06月26日 周四 09:30",
+        location: "功量网球中心",
+        utrRange: "1.5-3",
+        participants: 3,
+        maxParticipants: 6,
+        price: 100,
+        status: "open",
+      },
+    ];
+  }
 }
 
 // 获取活动状态文本

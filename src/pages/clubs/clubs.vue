@@ -80,6 +80,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { ClubService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface Club {
   id: number;
@@ -128,116 +130,159 @@ function getCityByLocation(latitude: number, longitude: number) {
 }
 
 // 加载我的俱乐部
-function loadMyClubs() {
-  // 模拟数据，实际应该调用API
-  myClubs.value = [
-    {
-      id: 1,
-      name: "律动网球俱乐部",
-      logo: "/static/images/venues/club1.png",
-      location: "余杭区 良渚 室外 硬地",
-      tags: ["室外", "硬地"],
-      memberCount: 127,
-      distance: "5.7km",
-    },
-    {
-      id: 2,
-      name: "阿蓝网球俱乐部",
-      logo: "/static/images/venues/club2.png",
-      location: "拱墅区 良渚 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 128,
-      distance: "6.2km",
-    },
-  ];
+async function loadMyClubs() {
+  try {
+    if (!AuthManager.isLoggedIn()) {
+      myClubs.value = [];
+      return;
+    }
+
+    const response = await ClubService.getMyClubs();
+    myClubs.value = response.data.map((club: any) => ({
+      id: club.id,
+      name: club.name,
+      logo: club.logo || "/static/images/venues/default.png",
+      location: `${club.district || ""} ${club.area || ""} ${
+        club.courtType || ""
+      }`,
+      tags: club.tags || [club.courtType || "硬地"],
+      memberCount: club.memberCount || 0,
+      distance: club.distance || "0km",
+    }));
+  } catch (error: any) {
+    console.error("获取我的俱乐部失败:", error);
+    // 使用默认数据作为降级方案
+    myClubs.value = [
+      {
+        id: 1,
+        name: "律动网球俱乐部",
+        logo: "/static/images/venues/club1.png",
+        location: "余杭区 良渚 室外 硬地",
+        tags: ["室外", "硬地"],
+        memberCount: 127,
+        distance: "5.7km",
+      },
+      {
+        id: 2,
+        name: "阿蓝网球俱乐部",
+        logo: "/static/images/venues/club2.png",
+        location: "拱墅区 良渚 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 128,
+        distance: "6.2km",
+      },
+    ];
+  }
 }
 
 // 加载推荐俱乐部
-function loadRecommendClubs() {
-  // 模拟数据，实际应该调用API
-  recommendClubs.value = [
-    {
-      id: 3,
-      name: "溪上网球",
-      logo: "/static/images/venues/club3.png",
-      location: "拱墅区 拱墅 室外 硬地",
-      tags: ["室外", "硬地"],
-      memberCount: 127,
-      distance: "2.8km",
-    },
-    {
-      id: 4,
-      name: "黄龙体育中心",
-      logo: "/static/images/venues/club4.png",
-      location: "西湖区 黄龙 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 100,
-      distance: "2.8km",
-    },
-    {
-      id: 5,
-      name: "GS网球俱乐部（浙报店）",
-      logo: "/static/images/venues/club5.png",
-      location: "拱墅区 浙报印务 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 41,
-      distance: "5.1km",
-    },
-    {
-      id: 6,
-      name: "城北体育公园-网球中心",
-      logo: "/static/images/venues/club6.png",
-      location: "拱墅区 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 194,
-      distance: "5.1km",
-    },
-    {
-      id: 7,
-      name: "西湖网球俱乐部",
-      logo: "/static/club7.jpg",
-      location: "余杭区 西湖 室外 硬地",
-      tags: ["室外", "硬地"],
-      memberCount: 34,
-      distance: "6.2km",
-    },
-    {
-      id: 8,
-      name: "享趣网球",
-      logo: "/static/club8.jpg",
-      location: "拱墅区 拱墅 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 92,
-      distance: "7.4km",
-    },
-    {
-      id: 9,
-      name: "52网球俱乐部",
-      logo: "/static/club9.jpg",
-      location: "拱墅区 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 41,
-      distance: "7.6km",
-    },
-    {
-      id: 10,
-      name: "飞纳网球俱乐部",
-      logo: "/static/club10.jpg",
-      location: "拱墅区 牛山 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 194,
-      distance: "9.3km",
-    },
-    {
-      id: 11,
-      name: "平击网球俱乐部",
-      logo: "/static/club11.jpg",
-      location: "余杭区 五常 室内 硬地",
-      tags: ["室内", "硬地"],
-      memberCount: 34,
-      distance: "9.8km",
-    },
-  ];
+async function loadRecommendClubs() {
+  try {
+    const response = await ClubService.getClubs({
+      page: 1,
+      limit: 10,
+      city: currentCity.value,
+      featured: true, // 获取推荐俱乐部
+    });
+
+    recommendClubs.value = response.data.map((club: any) => ({
+      id: club.id,
+      name: club.name,
+      logo: club.logo || "/static/images/venues/default.png",
+      location: `${club.district || ""} ${club.area || ""} ${
+        club.courtType || ""
+      }`,
+      tags: club.tags || [club.courtType || "硬地"],
+      memberCount: club.memberCount || 0,
+      distance: club.distance || "0km",
+    }));
+  } catch (error: any) {
+    console.error("获取推荐俱乐部失败:", error);
+    // 使用默认数据作为降级方案
+    recommendClubs.value = [
+      {
+        id: 3,
+        name: "溪上网球",
+        logo: "/static/images/venues/club3.png",
+        location: "拱墅区 拱墅 室外 硬地",
+        tags: ["室外", "硬地"],
+        memberCount: 127,
+        distance: "2.8km",
+      },
+      {
+        id: 4,
+        name: "黄龙体育中心",
+        logo: "/static/images/venues/club4.png",
+        location: "西湖区 黄龙 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 100,
+        distance: "2.8km",
+      },
+      {
+        id: 5,
+        name: "GS网球俱乐部（浙报店）",
+        logo: "/static/images/venues/club5.png",
+        location: "拱墅区 浙报印务 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 41,
+        distance: "5.1km",
+      },
+      {
+        id: 6,
+        name: "城北体育公园-网球中心",
+        logo: "/static/images/venues/club6.png",
+        location: "拱墅区 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 194,
+        distance: "5.1km",
+      },
+      {
+        id: 7,
+        name: "西湖网球俱乐部",
+        logo: "/static/club7.jpg",
+        location: "余杭区 西湖 室外 硬地",
+        tags: ["室外", "硬地"],
+        memberCount: 34,
+        distance: "6.2km",
+      },
+      {
+        id: 8,
+        name: "享趣网球",
+        logo: "/static/club8.jpg",
+        location: "拱墅区 拱墅 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 92,
+        distance: "7.4km",
+      },
+      {
+        id: 9,
+        name: "52网球俱乐部",
+        logo: "/static/club9.jpg",
+        location: "拱墅区 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 41,
+        distance: "7.6km",
+      },
+      {
+        id: 10,
+        name: "飞纳网球俱乐部",
+        logo: "/static/club10.jpg",
+        location: "拱墅区 牛山 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 194,
+        distance: "9.3km",
+      },
+      {
+        id: 11,
+        name: "平击网球俱乐部",
+        logo: "/static/club11.jpg",
+        location: "余杭区 五常 室内 硬地",
+        tags: ["室内", "硬地"],
+        memberCount: 34,
+        distance: "9.8km",
+      },
+    ];
+  }
 }
 
 // 加载城市列表

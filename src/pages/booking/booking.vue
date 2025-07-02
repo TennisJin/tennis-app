@@ -100,6 +100,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { VenueService } from "@/services/api";
 
 interface Venue {
   id: number;
@@ -165,95 +166,136 @@ onLoad((options: any) => {
 });
 
 // 加载场馆列表
-function loadVenueList() {
+async function loadVenueList() {
   loading.value = true;
 
-  // 模拟数据，实际应该调用API
-  setTimeout(() => {
-    venueList.value = [
-      {
-        id: 1,
-        name: "黄龙体育中心",
-        image: "/static/images/venues/venue1.jpg",
-        address: "西湖区 黄龙 室内 硬地",
-        courtType: "室内硬地",
-        priceRange: "120-200/小时",
-        rating: 4.8,
-        tags: ["室内", "硬地", "专业"],
-        distance: "2.8km",
-        category: ["indoor", "hard"],
-      },
-      {
-        id: 2,
-        name: "GS网球俱乐部（浙报店）",
-        image: "/static/images/venues/venue2.jpg",
-        address: "拱墅区 浙报印务 室内 硬地",
-        courtType: "室内硬地",
-        priceRange: "100-150/小时",
-        rating: 4.5,
-        tags: ["室内", "硬地"],
-        distance: "5.1km",
-        category: ["indoor", "hard"],
-      },
-      {
-        id: 3,
-        name: "城北体育公园-网球中心",
-        image: "/static/images/venues/venue3.jpg",
-        address: "拱墅区 室内 硬地",
-        courtType: "室内硬地",
-        priceRange: "80-120/小时",
-        rating: 4.3,
-        tags: ["室内", "硬地", "价格优惠"],
-        distance: "5.1km",
-        category: ["indoor", "hard", "cheap"],
-      },
-      {
-        id: 4,
-        name: "西湖网球俱乐部",
-        image: "/static/images/venues/venue4.jpg",
-        address: "余杭区 西湖 室外 硬地",
-        courtType: "室外硬地",
-        priceRange: "60-100/小时",
-        rating: 4.2,
-        tags: ["室外", "硬地", "风景好"],
-        distance: "6.2km",
-        category: ["outdoor", "hard"],
-      },
-      {
-        id: 5,
-        name: "平击网球俱乐部",
-        image: "/static/images/venues/venue5.jpg",
-        address: "余杭区 五常 室内 硬地",
-        courtType: "室内硬地",
-        priceRange: "90-140/小时",
-        rating: 4.6,
-        tags: ["室内", "硬地"],
-        distance: "9.8km",
-        category: ["indoor", "hard"],
-      },
-    ];
-    loading.value = false;
-  }, 1000);
+  try {
+    const response = await VenueService.getVenues({
+      page: 1,
+      limit: 20,
+      keyword: searchKeyword.value,
+      filters: selectedFilters.value,
+    });
+
+    venueList.value = response.data.map((venue: any) => ({
+      id: venue.id,
+      name: venue.name,
+      image: venue.image || "/static/images/venues/default.jpg",
+      address: `${venue.location} ${venue.courtType}`,
+      courtType: venue.courtType || "硬地",
+      priceRange: `${venue.minPrice || 80}-${venue.maxPrice || 200}/小时`,
+      rating: venue.rating || 4.5,
+      tags: venue.tags || [],
+      distance: venue.distance || "0km",
+      category: venue.category || [],
+    }));
+  } catch (error: any) {
+    console.error("获取场馆列表失败:", error);
+    // 使用默认数据作为降级方案
+    setTimeout(() => {
+      venueList.value = [
+        {
+          id: 1,
+          name: "黄龙体育中心",
+          image: "/static/images/venues/venue1.jpg",
+          address: "西湖区 黄龙 室内 硬地",
+          courtType: "室内硬地",
+          priceRange: "120-200/小时",
+          rating: 4.8,
+          tags: ["室内", "硬地", "专业"],
+          distance: "2.8km",
+          category: ["indoor", "hard"],
+        },
+        {
+          id: 2,
+          name: "GS网球俱乐部（浙报店）",
+          image: "/static/images/venues/venue2.jpg",
+          address: "拱墅区 浙报印务 室内 硬地",
+          courtType: "室内硬地",
+          priceRange: "100-150/小时",
+          rating: 4.5,
+          tags: ["室内", "硬地"],
+          distance: "5.1km",
+          category: ["indoor", "hard"],
+        },
+        {
+          id: 3,
+          name: "城北体育公园-网球中心",
+          image: "/static/images/venues/venue3.jpg",
+          address: "拱墅区 室内 硬地",
+          courtType: "室内硬地",
+          priceRange: "80-120/小时",
+          rating: 4.3,
+          tags: ["室内", "硬地", "价格优惠"],
+          distance: "5.1km",
+          category: ["indoor", "hard", "cheap"],
+        },
+        {
+          id: 4,
+          name: "西湖网球俱乐部",
+          image: "/static/images/venues/venue4.jpg",
+          address: "余杭区 西湖 室外 硬地",
+          courtType: "室外硬地",
+          priceRange: "60-100/小时",
+          rating: 4.2,
+          tags: ["室外", "硬地", "风景好"],
+          distance: "6.2km",
+          category: ["outdoor", "hard"],
+        },
+        {
+          id: 5,
+          name: "平击网球俱乐部",
+          image: "/static/images/venues/venue5.jpg",
+          address: "余杭区 五常 室内 硬地",
+          courtType: "室内硬地",
+          priceRange: "90-140/小时",
+          rating: 4.6,
+          tags: ["室内", "硬地"],
+          distance: "9.8km",
+          category: ["indoor", "hard"],
+        },
+      ];
+      loading.value = false;
+    }, 1000);
+  }
 }
 
 // 搜索场馆
-function searchVenues() {
+async function searchVenues() {
   if (!searchKeyword.value.trim()) {
-    loadVenueList();
+    await loadVenueList();
     return;
   }
 
   loading.value = true;
 
-  // 模拟搜索API调用
-  setTimeout(() => {
-    venueList.value = venueList.value.filter(
-      (venue) =>
-        venue.name.includes(searchKeyword.value) ||
-        venue.address.includes(searchKeyword.value)
-    );
-    loading.value = false;
-  }, 500);
+  try {
+    const response = await VenueService.getVenues({
+      page: 1,
+      limit: 20,
+      keyword: searchKeyword.value,
+      filters: selectedFilters.value,
+    });
+
+    venueList.value = response.data.map((venue: any) => ({
+      id: venue.id,
+      name: venue.name,
+      image: venue.image || "/static/images/venues/default.jpg",
+      address: `${venue.location} ${venue.courtType}`,
+      courtType: venue.courtType || "硬地",
+      priceRange: `${venue.minPrice || 80}-${venue.maxPrice || 200}/小时`,
+      rating: venue.rating || 4.5,
+      tags: venue.tags || [],
+      distance: venue.distance || "0km",
+      category: venue.category || [],
+    }));
+  } catch (error: any) {
+    console.error("搜索场馆失败:", error);
+    // 搜索失败时显示空结果
+    venueList.value = [];
+  }
+
+  loading.value = false;
 }
 
 // 切换筛选条件

@@ -139,6 +139,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { CoachService } from "@/services/api";
 
 interface Video {
   id: number;
@@ -223,11 +224,37 @@ onMounted(() => {
 });
 
 // 加载教练列表
-function loadCoachList() {
+async function loadCoachList() {
   loading.value = true;
 
-  // 模拟数据，实际应该调用API
-  setTimeout(() => {
+  try {
+    const response = await CoachService.getCoaches({
+      page: 1,
+      limit: 20,
+      keyword: searchKeyword.value,
+      filters: selectedFilters.value
+    });
+    
+    coachList.value = response.data.map((coach: any) => ({
+      id: coach.id,
+      name: coach.name,
+      avatar: coach.avatar || "/static/images/coaches/default.png",
+      gender: coach.gender || "male",
+      level: coach.level || "专业教练",
+      experience: coach.experience || 0,
+      utr: coach.utr || "4.0",
+      price: coach.price || 200,
+      specialties: coach.specialties || ["技术指导"],
+      introduction: coach.introduction || "专业网球教练，经验丰富。",
+      videos: coach.videos || [],
+      rating: coach.rating || 4.8,
+      reviewCount: coach.reviewCount || 0,
+      location: coach.location || "未知位置",
+      category: coach.category || ["coach"]
+    }));
+  } catch (error: any) {
+    console.error("获取教练列表失败:", error);
+    // 使用默认数据作为降级方案
     coachList.value = [
       {
         id: 1,
@@ -340,14 +367,15 @@ function loadCoachList() {
         category: ["sparring", "intermediate", "male"],
       },
     ];
+  } finally {
     loading.value = false;
-  }, 1000);
+  }
 }
 
 // 搜索教练
 function searchCoaches() {
-  // 搜索逻辑已在computed中处理
-  console.log("搜索教练:", searchKeyword.value);
+  // 重新加载教练列表，应用搜索关键词
+  loadCoachList();
 }
 
 // 切换筛选条件

@@ -105,6 +105,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { UserService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface UserInfo {
   id: number;
@@ -143,10 +145,43 @@ function loadUserInfo() {
 }
 
 // 获取用户信息API
-function fetchUserInfo() {
-  // 这里应该调用实际的API
-  // 暂时使用模拟数据
-  console.log("获取用户信息");
+async function fetchUserInfo() {
+  try {
+    if (!AuthManager.isLoggedIn()) {
+      // 如果未登录，显示默认信息或跳转到登录页
+      uni.showModal({
+        title: "提示",
+        content: "请先登录查看个人信息",
+        showCancel: false,
+        success: () => {
+          uni.navigateTo({
+            url: "/pages/login/login"
+          });
+        }
+      });
+      return;
+    }
+
+    const response = await UserService.getProfile();
+    userInfo.value = {
+      id: response.id,
+      name: response.name || response.nickname || "用户",
+      avatar: response.avatar || "/static/images/avatars/avatar1.png",
+      rating: response.rating || 0,
+      utr: response.utr || "0.00",
+      gender: response.gender || "male"
+    };
+    
+    // 保存到本地存储
+    uni.setStorageSync("userInfo", userInfo.value);
+  } catch (error: any) {
+    console.error("获取用户信息失败:", error);
+    uni.showToast({
+      title: "获取用户信息失败",
+      icon: "none",
+      duration: 2000
+    });
+  }
 }
 
 // 跳转到订单页面

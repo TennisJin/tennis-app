@@ -82,6 +82,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { OrderService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface Order {
   id: number;
@@ -131,19 +133,48 @@ onMounted(() => {
   loadOrderList();
 });
 
-// 页面参数处理
-onLoad((options: any) => {
-  if (options.status) {
-    currentStatus.value = options.status;
-  }
-});
-
 // 加载订单列表
-function loadOrderList() {
+async function loadOrderList() {
   loading.value = true;
 
-  // 模拟数据
-  setTimeout(() => {
+  try {
+    // 检查登录状态
+    if (!AuthManager.isLoggedIn()) {
+      uni.showModal({
+        title: "提示",
+        content: "请先登录后查看我的订单",
+        showCancel: false,
+        success: () => {
+          uni.navigateTo({
+            url: "/pages/login/login"
+          });
+        }
+      });
+      return;
+    }
+
+    const response = await OrderService.getMyOrders({
+      page: 1,
+      limit: 20,
+      status: currentStatus.value === 'all' ? undefined : currentStatus.value
+    });
+    
+    orderList.value = response.data.map((order: any) => ({
+      id: order.id,
+      orderNumber: order.orderNumber,
+      venueName: order.venueName,
+      venueImage: order.venueImage || "/static/images/venues/default.jpg",
+      courtType: order.courtType || "硬地",
+      courtNumber: order.courtNumber || 1,
+      date: new Date(order.date).toLocaleDateString('zh-CN'),
+      timeSlot: order.timeSlot,
+      totalPrice: order.totalPrice || 0,
+      status: order.status || "pending",
+      createTime: new Date(order.createTime).toLocaleString('zh-CN')
+    }));
+  } catch (error: any) {
+    console.error("获取我的订单列表失败:", error);
+    // 使用默认数据作为降级方案
     orderList.value = [
       {
         id: 1,
@@ -172,9 +203,24 @@ function loadOrderList() {
         createTime: "2024-01-14 15:20:00",
       },
     ];
-    loading.value = false;
-  }, 1000);
+  }
+  
+  loading.value = false;
 }
+
+// 页面加载
+onMounted(() => {
+  loadOrderList();
+});
+
+// 页面参数处理
+onLoad((options: any) => {
+  if (options.status) {
+    currentStatus.value = options.status;
+  }
+});
+
+
 
 // 切换状态
 function switchStatus(status: string) {
@@ -193,11 +239,11 @@ function getStatusText(status: string) {
 }
 
 // 取消订单
-function cancelOrder(orderId: number) {
+async function cancelOrder(orderId: number) {
   uni.showModal({
     title: "确认取消",
     content: "确定要取消这个订单吗？",
-    success: (res) => {
+    success: async (res) => {
       if (res.confirm) {
         // 处理取消逻辑
         console.log("取消订单:", orderId);

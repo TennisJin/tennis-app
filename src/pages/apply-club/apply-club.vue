@@ -191,6 +191,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { ClubService, UploadService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface FormData {
   clubName: string;
@@ -309,7 +311,7 @@ function deleteImage(index: number) {
 }
 
 // 提交申请
-function submitApplication() {
+async function submitApplication() {
   if (!isFormValid.value) {
     uni.showToast({
       title: "请填写完整信息",
@@ -318,12 +320,58 @@ function submitApplication() {
     return;
   }
 
+  // 检查登录状态
+  if (!AuthManager.isLoggedIn()) {
+    uni.showModal({
+      title: "提示",
+      content: "请先登录后再申请创建俱乐部",
+      showCancel: false,
+      success: () => {
+        uni.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
+    });
+    return;
+  }
+
   uni.showLoading({
     title: "提交中...",
   });
 
-  // 模拟提交
-  setTimeout(() => {
+  try {
+    // 上传营业执照图片
+    let licenseUrl = "";
+    if (formData.value.licenseImage) {
+      const licenseResult = await UploadService.uploadImage(formData.value.licenseImage);
+      licenseUrl = licenseResult.url;
+    }
+
+    // 上传场地照片
+    const courtImageUrls: string[] = [];
+    for (const imagePath of formData.value.courtImages) {
+      const imageResult = await UploadService.uploadImage(imagePath);
+      courtImageUrls.push(imageResult.url);
+    }
+
+    // 提交申请数据
+    const applicationData = {
+      name: formData.value.clubName,
+      description: formData.value.description,
+      address: formData.value.address,
+      phone: formData.value.phone,
+      courtCount: parseInt(formData.value.courtCount),
+      courtType: formData.value.courtType,
+      businessHours: formData.value.businessHours,
+      licenseImage: licenseUrl,
+      courtImages: courtImageUrls,
+      contactName: formData.value.contactName,
+      contactPosition: formData.value.contactPosition,
+      wechat: formData.value.wechat
+    };
+
+    await ClubService.createClubApplication(applicationData);
+
     uni.hideLoading();
     uni.showModal({
       title: "申请提交成功",
@@ -333,7 +381,14 @@ function submitApplication() {
         uni.navigateBack();
       },
     });
-  }, 2000);
+  } catch (error: any) {
+    uni.hideLoading();
+    uni.showToast({
+      title: error.message || "提交失败，请重试",
+      icon: "none",
+      duration: 2000
+    });
+  }
 }
 </script>
 

@@ -287,6 +287,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { UserService, UploadService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface FormData {
   realName: string;
@@ -476,7 +478,7 @@ function previewImage(image: string) {
 }
 
 // 提交申请
-function submitApplication() {
+async function submitApplication() {
   if (!isFormValid.value) {
     uni.showToast({
       title: "请填写完整信息",
@@ -485,12 +487,70 @@ function submitApplication() {
     return;
   }
 
+  // 检查登录状态
+  if (!AuthManager.isLoggedIn()) {
+    uni.showModal({
+      title: "提示",
+      content: "请先登录后再申请成为教练",
+      showCancel: false,
+      success: () => {
+        uni.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
+    });
+    return;
+  }
+
   uni.showLoading({
     title: "提交中...",
   });
 
-  // 模拟提交
-  setTimeout(() => {
+  try {
+    // 上传身份证照片
+    let idCardFrontUrl = "";
+    let idCardBackUrl = "";
+    
+    if (formData.value.idCardFront) {
+      const frontResult = await UploadService.uploadImage(formData.value.idCardFront);
+      idCardFrontUrl = frontResult.url;
+    }
+    
+    if (formData.value.idCardBack) {
+      const backResult = await UploadService.uploadImage(formData.value.idCardBack);
+      idCardBackUrl = backResult.url;
+    }
+
+    // 上传证书照片
+    const certificateUrls: string[] = [];
+    for (const certPath of formData.value.certificates) {
+      const certResult = await UploadService.uploadImage(certPath);
+      certificateUrls.push(certResult.url);
+    }
+
+    // 提交申请数据
+    const applicationData = {
+      realName: formData.value.realName,
+      gender: formData.value.gender,
+      age: parseInt(formData.value.age),
+      phone: formData.value.phone,
+      city: formData.value.city,
+      experience: formData.value.experience,
+      skills: formData.value.skills,
+      introduction: formData.value.introduction,
+      level: formData.value.level,
+      certificates: certificateUrls,
+      idCardFront: idCardFrontUrl,
+      idCardBack: idCardBackUrl,
+      privatePrice: parseFloat(formData.value.privatePrice),
+      groupPrice: parseFloat(formData.value.groupPrice),
+      sparringPrice: parseFloat(formData.value.sparringPrice),
+      weekdayTime: formData.value.weekdayTime,
+      weekendTime: formData.value.weekendTime
+    };
+
+    await UserService.createCoachApplication(applicationData);
+
     uni.hideLoading();
     uni.showModal({
       title: "申请提交成功",
@@ -500,7 +560,14 @@ function submitApplication() {
         uni.navigateBack();
       },
     });
-  }, 2000);
+  } catch (error: any) {
+    uni.hideLoading();
+    uni.showToast({
+      title: error.message || "提交失败，请重试",
+      icon: "none",
+      duration: 2000
+    });
+  }
 }
 </script>
 

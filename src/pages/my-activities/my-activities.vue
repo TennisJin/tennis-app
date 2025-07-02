@@ -82,6 +82,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { ActivityService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface Activity {
   id: number;
@@ -129,25 +131,65 @@ onMounted(() => {
   loadActivityList();
 });
 
-// 页面参数处理
-onLoad((options: any) => {
-  if (options.status) {
-    currentStatus.value = options.status;
-  }
-});
-
 // 加载活动列表
-function loadActivityList() {
+async function loadActivityList() {
   loading.value = true;
 
-  // 模拟数据
-  setTimeout(() => {
+  try {
+    // 检查登录状态
+    if (!AuthManager.isLoggedIn()) {
+      uni.showModal({
+        title: "提示",
+        content: "请先登录后查看我的活动",
+        showCancel: false,
+        success: () => {
+          uni.navigateTo({
+            url: "/pages/login/login",
+          });
+        },
+      });
+      return;
+    }
+
+    const response = await ActivityService.getMyActivities({
+      page: 1,
+      limit: 20,
+      status: currentStatus.value === "all" ? undefined : currentStatus.value,
+    });
+
+    activityList.value = response.data.map((activity: any) => ({
+      id: activity.id,
+      title: activity.title,
+      time:
+        new Date(activity.startTime).toLocaleString("zh-CN", {
+          month: "2-digit",
+          day: "2-digit",
+          weekday: "short",
+          hour: "2-digit",
+          minute: "2-digit",
+        }) +
+        "-" +
+        new Date(activity.endTime).toLocaleString("zh-CN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      location: activity.location,
+      utrRange: activity.utrRange || "不限",
+      participants: activity.currentParticipants || 0,
+      maxParticipants: activity.maxParticipants || 0,
+      status: activity.status || "registered",
+      registerTime: new Date(activity.registerTime).toLocaleString("zh-CN"),
+      fee: activity.fee || 0,
+    }));
+  } catch (error: any) {
+    console.error("获取我的活动列表失败:", error);
+    // 使用默认数据作为降级方案
     activityList.value = [
       {
         id: 1,
-        title: "周末UTR积分赛",
-        time: "2024-01-20 14:00-18:00",
-        location: "星河网球俱乐部",
+        title: "周末双打友谊赛",
+        time: "01-20 周六 14:00-16:00",
+        location: "黄龙体育中心",
         utrRange: "4.0-6.0",
         participants: 8,
         maxParticipants: 16,
@@ -158,7 +200,7 @@ function loadActivityList() {
       {
         id: 2,
         title: "新手友谊赛",
-        time: "2024-01-18 16:00-18:00",
+        time: "01-18 周四 16:00-18:00",
         location: "蓝天网球中心",
         utrRange: "2.0-4.0",
         participants: 12,
@@ -168,9 +210,17 @@ function loadActivityList() {
         fee: 50,
       },
     ];
-    loading.value = false;
-  }, 1000);
+  }
+
+  loading.value = false;
 }
+
+// 页面参数处理
+onLoad((options: any) => {
+  if (options.status) {
+    currentStatus.value = options.status;
+  }
+});
 
 // 切换状态
 function switchStatus(status: string) {
@@ -188,14 +238,38 @@ function getStatusText(status: string) {
 }
 
 // 取消报名
-function cancelActivity(activityId: number) {
+async function cancelActivity(activityId: number) {
   uni.showModal({
     title: "确认取消",
     content: "确定要取消报名吗？",
-    success: (res) => {
+    success: async (res) => {
       if (res.confirm) {
-        // 处理取消逻辑
-        console.log("取消报名:", activityId);
+        try {
+          uni.showLoading({
+            title: "取消中...",
+          });
+
+          await ActivityService.cancelActivity(activityId);
+
+          // 更新本地数据
+          const activity = activityList.value.find((a) => a.id === activityId);
+          if (activity) {
+            activity.status = "cancelled";
+          }
+
+          uni.hideLoading();
+          uni.showToast({
+            title: "取消成功",
+            icon: "success",
+          });
+        } catch (error: any) {
+          uni.hideLoading();
+          uni.showToast({
+            title: error.message || "取消失败，请重试",
+            icon: "none",
+            duration: 2000,
+          });
+        }
       }
     },
   });

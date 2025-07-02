@@ -161,6 +161,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { ActivityService } from "@/services/api";
+import { AuthManager } from "@/utils/auth";
 
 interface Activity {
   id: number;
@@ -242,12 +244,45 @@ onMounted(() => {
 });
 
 // 加载活动列表
-function loadActivityList() {
+async function loadActivityList() {
   loading.value = true;
 
-  // 模拟数据，实际应该调用API
-  setTimeout(() => {
-    activityList.value = [
+  try {
+    const response = await ActivityService.getActivities({
+      page: 1,
+      limit: 20,
+      keyword: searchKeyword.value,
+      filters: selectedFilters.value
+    });
+    
+    activityList.value = response.data.map((activity: any) => ({
+      id: activity.id,
+      title: activity.title,
+      time: new Date(activity.startTime).toLocaleString('zh-CN', {
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
+      location: `${activity.location} | ${activity.distance || '0km'}`,
+      utrRange: activity.utrRange || "不限",
+      ageRange: activity.ageRange,
+      gender: activity.gender,
+      participants: activity.currentParticipants || 0,
+      maxParticipants: activity.maxParticipants || 0,
+      price: activity.price || 0,
+      status: activity.status || "open",
+      tags: activity.tags || [],
+      category: activity.category || [],
+      level: activity.level || "intermediate",
+      type: activity.type || "singles"
+    }));
+  } catch (error: any) {
+    console.error("获取活动列表失败:", error);
+    // 使用默认数据作为降级方案
+    setTimeout(() => {
+      activityList.value = [
       {
         id: 1,
         title: "UTR网球积分赛3.0（蒙马体育）",
@@ -372,8 +407,9 @@ function loadActivityList() {
         type: "match",
       },
     ];
-    loading.value = false;
-  }, 1000);
+      loading.value = false;
+    }, 1000);
+  }
 }
 
 // 搜索活动
@@ -421,27 +457,58 @@ function goToActivityDetail(id: number) {
 }
 
 // 报名活动
-function joinActivity(id: number) {
+async function joinActivity(id: number) {
   const activity = activityList.value.find((a) => a.id === id);
   if (!activity || activity.status !== "open") {
+    return;
+  }
+
+  // 检查登录状态
+  if (!AuthManager.isLoggedIn()) {
+    uni.showModal({
+      title: "提示",
+      content: "请先登录后再报名活动",
+      showCancel: false,
+      success: () => {
+        uni.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
+    });
     return;
   }
 
   uni.showModal({
     title: "确认报名",
     content: `确认报名参加「${activity.title}」？\n费用：¥${activity.price}`,
-    success: (res) => {
+    success: async (res) => {
       if (res.confirm) {
-        // 模拟报名成功
-        activity.participants++;
-        if (activity.participants >= activity.maxParticipants) {
-          activity.status = "full";
-        }
+        try {
+          uni.showLoading({
+            title: "报名中..."
+          });
+          
+          await ActivityService.joinActivity(id);
+          
+          // 更新本地数据
+          activity.participants++;
+          if (activity.participants >= activity.maxParticipants) {
+            activity.status = "full";
+          }
 
-        uni.showToast({
-          title: "报名成功",
-          icon: "success",
-        });
+          uni.hideLoading();
+          uni.showToast({
+            title: "报名成功",
+            icon: "success",
+          });
+        } catch (error: any) {
+          uni.hideLoading();
+          uni.showToast({
+            title: error.message || "报名失败，请重试",
+            icon: "none",
+            duration: 2000
+          });
+        }
       }
     },
   });
